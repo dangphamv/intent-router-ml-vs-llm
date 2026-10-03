@@ -118,7 +118,9 @@ async def main():
     plot_tradeoff(results, hybrid)
 
     MODELS.mkdir(exist_ok=True)
-    joblib.dump({"model": models["A"], "threshold": hybrid["A"]["chosen_threshold"], "labels": LABELS}, MODELS / "tfidf_lr.joblib")
+    # Deployment model: refit on train+val; the threshold was tuned on out-of-fold train+val predictions.
+    router_model = ex.tfidf_lr().fit(T["trva"], trva.label.values)
+    joblib.dump({"model": router_model, "threshold": hybrid["A"]["chosen_threshold"], "labels": LABELS}, MODELS / "tfidf_lr.joblib")
     print((RESULTS / "comparison.md").read_text())
 
 

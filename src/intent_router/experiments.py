@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, f1_score
+from sklearn.metrics import confusion_matrix, f1_score, precision_recall_fscore_support
 from sklearn.model_selection import StratifiedKFold
 from sklearn.pipeline import FeatureUnion, make_pipeline
 from sklearn.utils.class_weight import compute_sample_weight
@@ -23,23 +23,24 @@ def macro_f1(y_true, y_pred) -> float:
     return f1_score(y_true, y_pred, labels=LABELS, average="macro", zero_division=0)
 
 
-def tfidf_lr():
+def tfidf_lr(balanced: bool = True):
     """Word 1-2 grams catch keywords ("hủy", "giá"); char 2-5 grams survive missing diacritics and typos."""
     features = FeatureUnion([
         ("word", TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, min_df=1)),
         ("char", TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 5), sublinear_tf=True, min_df=2)),
     ])
-    return make_pipeline(features, LogisticRegression(C=10, class_weight="balanced", max_iter=5000))
+    return make_pipeline(features, LogisticRegression(C=10, class_weight="balanced" if balanced else None, max_iter=5000))
 
 
-def emb_lr():
-    return LogisticRegression(C=10, class_weight="balanced", max_iter=5000)
+def emb_lr(balanced: bool = True):
+    return LogisticRegression(C=10, class_weight="balanced" if balanced else None, max_iter=5000)
 
 
 class EmbXGB:
     """XGBoost over embeddings with balanced sample weights; exposes sklearn-style string labels."""
 
-    def __init__(self):
+    def __init__(self, balanced: bool = True):
+        self.balanced = balanced
         self.model = XGBClassifier(
             n_estimators=400, max_depth=4, learning_rate=0.08, subsample=0.8,
             colsample_bytree=0.4, tree_method="hist", random_state=SEED, n_jobs=-1,
@@ -48,7 +49,7 @@ class EmbXGB:
 
     def fit(self, X, y):
         y_id = np.array([LABEL_ID[l] for l in y])
-        self.model.fit(X, y_id, sample_weight=compute_sample_weight("balanced", y_id))
+        self.model.fit(X, y_id, sample_weight=compute_sample_weight("balanced", y_id) if self.balanced else None)
         return self
 
     def predict_proba(self, X):
@@ -154,3 +155,28 @@ def pick_threshold(curve: pd.DataFrame, target_f1: float) -> float:
     if ok.empty:
         ok = curve[curve.macro_f1 == curve.macro_f1.max()]
     return float(ok.sort_values(["cost_per_100k", "threshold"]).iloc[0].threshold)
+
+
+def rare_class_ablation(key: str, X, y, rare: str, keep_frac: float, folds: int = 5) -> list[dict]:
+    """CV with and without class weighting; `rare` is subsampled to `keep_frac` in each training fold only.
+
+    Test folds keep the natural distribution, so scores stay comparable across settings.
+    """
+    skf = StratifiedKFold(n_splits=folds, shuffle=True, random_state=SEED)
+    y = np.asarray(y)
+    rng = np.random.default_rng(SEED)
+    rows = []
+    for fold, (tr, te) in enumerate(skf.split(np.zeros(len(y)), y)):
+        rare_idx = tr[y[tr] == rare]
+        drop = rng.choice(rare_idx, int(len(rare_idx) * (1 - keep_frac)), replace=False)
+        tr = np.setdiff1d(tr, drop)
+        for balanced in (False, True):
+            m = FACTORIES[key](balanced=balanced).fit(_take(X, tr), y[tr])
+            pred = m.predict(_take(X, te))
+            p, r, f, _ = precision_recall_fscore_support(y[te], pred, labels=[rare], zero_division=0)
+            rows.append({
+                "method": key, "keep_frac": keep_frac, "rare_share_train": float((y[tr] == rare).mean()),
+                "balanced": balanced, "fold": fold, "macro_f1": macro_f1(y[te], pred),
+                "rare_precision": float(p[0]), "rare_recall": float(r[0]), "rare_f1": float(f[0]),
+            })
+    return rows

@@ -37,9 +37,23 @@ Confusion matrix: [`results/confusion_matrices.png`](results/confusion_matrices.
 | Sinh + gán nhãn bằng LLM | 1.700 tin — sinh bằng `gpt-4o-mini`, gán nhãn độc lập bằng `gpt-4o` |
 | Annotator LLM vs người (300 seed) | accuracy 99,0%, Cohen's κ 0,987 |
 | Kiểm tra mẫu 100 tin LLM-gán-nhãn | đồng thuận 95% (`data/audit_sample.csv`); nhãn sửa được ghi đè vào dataset |
-| Lớp hiếm | `cancellation` ~10% → class weight cân bằng + stratified split |
+| Lớp hiếm | `cancellation` ~10% → class weight cân bằng + stratified split; ablation bên dưới |
 
 > Seed và audit được soạn / review cùng Claude Code theo guideline. Hãy review lại `data/seed_raw.tsv` và `data/audit_sample.csv` trước khi dùng làm ground truth.
+
+### Lớp hiếm: class weight có giúp không?
+
+CV 5-fold trên train+val. Ở kịch bản "ép hiếm", chỉ giữ 25% số tin `cancellation` trong train fold; fold đánh giá giữ nguyên phân bố ([`results/rare_class_ablation.md`](results/rare_class_ablation.md)).
+
+| Cách | `cancellation` trong train | Recall không weight → balanced | F1 lớp hiếm không weight → balanced |
+|---|---|---|---|
+| A. TF-IDF + LR | 10,5% | 0,84 → 0,88 | 0,90 → 0,91 |
+| A. TF-IDF + LR | 2,9% | 0,57 → **0,72** | 0,73 → **0,83** |
+| B. Embedding + LR | 10,5% | 0,89 → 0,90 | 0,93 → 0,91 |
+| B. Embedding + LR | 2,9% | 0,64 → **0,84** | 0,77 → **0,90** |
+| C. Embedding + XGBoost | 2,9% | 0,47 → 0,54 | 0,63 → 0,70 |
+
+Ở ~10%, class weight gần như không thay đổi kết quả. Khi lớp hiếm còn ~3%, không có weight thì model bỏ sót gần nửa số tin muốn hủy gói. Vì vậy `balanced` được giữ làm mặc định.
 
 ## Chạy
 
@@ -55,6 +69,7 @@ uv run jupyter lab notebooks/intent_router.ipynb
 cp .env.example .env              # điền OPENAI_API_KEY
 uv run scripts/build_dataset.py   # sinh → gán nhãn → đo đồng thuận → audit → split
 uv run scripts/run_experiments.py # A–D, CV, latency, hybrid → results/
+uv run scripts/rare_class_ablation.py  # class weight vs lớp hiếm (không gọi API)
 
 # Router cho dự án #3
 uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "ko muốn xài nữa, ngưng giúp mình"
@@ -63,7 +78,7 @@ uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "ko muốn xài nữa, n
 ```python
 from intent_router.router import IntentRouter
 
-router = IntentRouter.load()               # TF-IDF + LR, ngưỡng 0,72 → gpt-4o-mini
+router = IntentRouter.load()               # TF-IDF + LR (fit trên train+val), ngưỡng 0,72 → gpt-4o-mini
 route = await router.route("app bị lỗi 500 khi lưu task")
 route.label, route.confidence, route.handled_by
 ```
@@ -84,9 +99,9 @@ src/intent_router/
   embed.py               embedding + đo latency, cache
   experiments.py         model A/B/C, CV, bootstrap CI, hybrid curve, chọn ngưỡng
   router.py              IntentRouter (dùng lại cho dự án #3)
-scripts/                 build_dataset.py · run_experiments.py · route.py
+scripts/                 build_dataset.py · run_experiments.py · rare_class_ablation.py · route.py
 notebooks/               intent_router.ipynb
-results/                 metrics.json, comparison.md, confusion_matrices.png, tradeoff.png, hybrid_*.csv
+results/                 metrics.json, comparison.md, confusion_matrices.png, tradeoff.png, hybrid_*.csv, rare_class_ablation.*
 docs/                    blog
 ```
 

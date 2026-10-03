@@ -34,6 +34,18 @@ Ba điều đáng chú ý:
 
 LLM thắng khoảng 4 điểm macro-F1, nhưng **chậm hơn khoảng 1.000 lần** so với A và **đắt hơn khoảng 50 lần** so với B.
 
+### Lớp hiếm: class weight có cần không?
+
+Ở tỷ lệ tự nhiên ~10%, `class_weight="balanced"` gần như không thay đổi gì (F1 của `cancellation` 0,90 → 0,91 với A, 0,93 → 0,91 với B). Để thấy rõ hơn, tôi ép lớp này còn ~2,9% trong train fold, giữ nguyên fold đánh giá:
+
+| | Recall `cancellation` không weight | Có weight |
+|---|---|---|
+| A. TF-IDF + LR | 0,57 | **0,72** |
+| B. Embedding + LR | 0,64 | **0,84** |
+| C. Embedding + XGBoost | 0,47 | 0,54 |
+
+Không có weight, model **bỏ sót gần nửa số khách muốn hủy**. Có weight, F1 lớp hiếm tăng 7–13 điểm, trong khi precision gần như giữ nguyên (≥ 0,97). XGBoost chịu lớp hiếm kém nhất, thêm một lý do để chọn mô hình tuyến tính.
+
 ## Model hay nhầm ở đâu?
 
 | Cặp nhầm (thật → đoán) | A | B | C | D |
