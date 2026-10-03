@@ -1,0 +1,134 @@
+{
+  "n_total": 2000,
+  "label_counts": {
+    "pricing": 433,
+    "complaint": 411,
+    "cancellation": 209,
+    "tech_support": 551,
+    "other": 396
+  },
+  "annotator_model": "gpt-4o",
+  "generator_model": "gpt-4o-mini",
+  "seed_agreement": {
+    "n": 300,
+    "accuracy": 0.99,
+    "cohen_kappa": 0.987329297479938,
+    "per_class": {
+      "pricing": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 70.0
+      },
+      "complaint": {
+        "precision": 0.9558823529411765,
+        "recall": 1.0,
+        "f1-score": 0.9774436090225563,
+        "support": 65.0
+      },
+      "cancellation": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 35.0
+      },
+      "tech_support": {
+        "precision": 1.0,
+        "recall": 0.96,
+        "f1-score": 0.9795918367346939,
+        "support": 75.0
+      },
+      "other": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 55.0
+      },
+      "accuracy": 0.99,
+      "macro avg": {
+        "precision": 0.9911764705882353,
+        "recall": 0.992,
+        "f1-score": 0.99140708915145,
+        "support": 300.0
+      },
+      "weighted avg": {
+        "precision": 0.9904411764705882,
+        "recall": 0.99,
+        "f1-score": 0.9900107411385606,
+        "support": 300.0
+      }
+    },
+    "disagreements": [
+      {
+        "text": "Báo cáo bị lệch số so với dữ liệu thực tế, kiểm tra giúp mình",
+        "human": "tech_support",
+        "llm": "complaint"
+      },
+      {
+        "text": "Không thấy dữ liệu tuần trước trên dashboard",
+        "human": "tech_support",
+        "llm": "complaint"
+      },
+      {
+        "text": "tìm kiếm không ra kết quả dù task có tồn tại",
+        "human": "tech_support",
+        "llm": "complaint"
+      }
+    ]
+  },
+  "generation_intent_agreement": 0.8947058823529411,
+  "audit": {
+    "n": 100,
+    "agreement": 0.95,
+    "disagreements": [
+      {
+        "text": "Nhân viên văn phòng báo cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.",
+        "llm_label": "cancellation",
+        "human_label": "complaint"
+      },
+      {
+        "text": "Cảm giác như một số tính năng còn phức tạp hơn mình nghĩ. Có must-have nào không?",
+        "llm_label": "other",
+        "human_label": "tech_support"
+      },
+      {
+        "text": "Nếu mình gia hạn mà ko sử dụng thì có được hoàn lại ko?",
+        "llm_label": "cancellation",
+        "human_label": "pricing"
+      },
+      {
+        "text": "Các bạn có bí kíp nào dùng tốt hơn không?",
+        "llm_label": "other",
+        "human_label": "tech_support"
+      },
+      {
+        "text": "Làm ơn cho mình biết là có diễn đàn hỗ trợ trực tuyến không? Mình thích tham gia với các anh chị em khác. Thank you!",
+        "llm_label": "tech_support",
+        "human_label": "other"
+      }
+    ]
+  },
+  "split_counts": {
+    "train": {
+      "pricing": 303,
+      "complaint": 288,
+      "cancellation": 146,
+      "tech_support": 386,
+      "other": 277
+    },
+    "val": {
+      "pricing": 65,
+      "complaint": 61,
+      "cancellation": 32,
+      "tech_support": 82,
+      "other": 60
+    },
+    "test": {
+      "pricing": 65,
+      "complaint": 62,
+      "cancellation": 31,
+      "tech_support": 83,
+      "other": 59
+    }
+  }
+}

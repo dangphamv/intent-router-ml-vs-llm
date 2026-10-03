@@ -1,0 +1,301 @@
+text,label,split,source,pred_A,pred_B,pred_C,pred_D
+Cho mình hỏi bảng giá cho team 20 người,pricing,test,human,pricing,pricing,pricing,pricing
+Nếu nâng cấp giữa tháng thì tính tiền thế nào?,pricing,test,human,pricing,pricing,pricing,pricing
+Dung lượng lưu trữ gói Pro là bao nhiêu GB?,pricing,test,human,pricing,pricing,pricing,pricing
+Có xuất hóa đơn đỏ khi mua gói năm không?,pricing,test,human,pricing,pricing,pricing,pricing
+Gói Starter có còn bán không hay bỏ rồi?,pricing,test,human,pricing,pricing,pricing,pricing
+gói pro bn tiền v,pricing,test,human,pricing,pricing,pricing,pricing
+Cho hỏi chính sách giá cho reseller,pricing,test,human,pricing,pricing,pricing,pricing
+Startup mới thành lập có chương trình hỗ trợ giá không?,pricing,test,human,pricing,pricing,pricing,pricing
+Có tính phí cho tài khoản khách (guest) không?,pricing,test,human,pricing,pricing,pricing,pricing
+Có thể trả góp gói năm không?,pricing,test,human,pricing,pricing,pricing,pricing
+Bảng giá mới áp dụng từ khi nào?,pricing,test,human,pricing,pricing,pricing,pricing
+"Tự nhiên khóa tài khoản của tôi không một lời báo trước, quá vô lý",complaint,test,human,complaint,tech_support,tech_support,complaint
+Thẻ bị trừ 3 lần cho cùng một hóa đơn!!!,complaint,test,human,complaint,complaint,complaint,complaint
+Tại sao đổi chính sách mà không hỏi ý kiến khách hàng,complaint,test,human,tech_support,complaint,complaint,complaint
+Đề nghị bồi thường cho thời gian hệ thống ngừng hoạt động,complaint,test,human,complaint,cancellation,cancellation,complaint
+khách hàng lâu năm mà bị đối xử thế này à,complaint,test,human,complaint,complaint,complaint,complaint
+Không hiểu sao hóa đơn tháng này cao gấp đôi tháng trước,complaint,test,human,complaint,complaint,complaint,complaint
+"Team giải thể rồi, đóng tài khoản công ty giúp mình",cancellation,test,human,cancellation,tech_support,tech_support,cancellation
+"Mình chuyển sang dùng phần mềm khác rồi, hủy giúp nhé",cancellation,test,human,cancellation,cancellation,cancellation,cancellation
+Hủy subscription và xóa thông tin thanh toán của tôi,cancellation,test,human,cancellation,cancellation,cancellation,cancellation
+Cách xuất dữ liệu ra file Excel?,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+Upload file lớn hơn 100MB bị lỗi,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+Tích hợp Zapier báo lỗi authentication failed,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+Thông báo đẩy trên máy tính không hiện,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+"Mình vừa thanh toán, cần làm gì để kích hoạt tính năng Pro?",tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+Cách cài app trên Windows?,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+API endpoint lấy danh sách task bị timeout,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+"Báo cáo bị lệch số so với dữ liệu thực tế, kiểm tra giúp mình",tech_support,test,human,tech_support,tech_support,tech_support,complaint
+SAML config xong vẫn không login được,tech_support,test,human,tech_support,tech_support,tech_support,tech_support
+Chào bạn,other,test,human,other,other,other,other
+Văn phòng công ty ở đâu vậy?,other,test,human,other,other,other,other
+Bạn có thể giới thiệu về sản phẩm một chút không?,other,test,human,other,other,other,other
+Mình muốn tham gia chương trình beta tester,other,test,human,other,other,other,other
+Có bản tiếng Anh của tài liệu điều khoản sử dụng không?,other,test,human,tech_support,tech_support,pricing,other
+Có podcast hay blog nào của công ty không?,other,test,human,other,other,other,other
+"Đợi chút nhé, để mình hỏi sếp đã",other,test,human,cancellation,other,other,other
+Có kênh Discord cộng đồng không?,other,test,human,other,other,other,other
+Mình nghe bảo gói này có giảm giá cho freelancer mà sao không thấy?,pricing,test,llm,pricing,pricing,pricing,pricing
+bao nhiêu seat dc dùng cho gói này?,pricing,test,llm,pricing,pricing,pricing,pricing
+Có cái gói nào giá tốt mà ít tính năng ko?,pricing,test,llm,pricing,pricing,pricing,pricing
+Cho mình biết gói trả trước và sau có gì khác nhau về giá không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Có gói nào phù hợp cho startup ko vậy?,pricing,test,llm,pricing,pricing,pricing,pricing
+mình muốn biết giá gói pro nếu trả theo quý thì tính thế nào?,pricing,test,llm,pricing,pricing,pricing,pricing
+Gói Pro có giảm giá cho doanh nghiệp lớn ko vậy?,pricing,test,llm,pricing,pricing,pricing,pricing
+Có khuyến mãi nào cho gói Business không nhỉ?,pricing,test,llm,pricing,pricing,pricing,pricing
+cho hỏi gói dùng thử thì sẽ tự động chuyển thành gói nào sau khi hết hạn?,pricing,test,llm,pricing,cancellation,pricing,pricing
+"Em nghe nói là gói Pro có thể được giảm giá nếu thanh toán một lần, đúng không ạ?",pricing,test,llm,pricing,pricing,pricing,pricing
+gói cho tập thể dục là 200k/seat hay sao á?,pricing,test,llm,pricing,pricing,pricing,pricing
+Gói của tôi có thể thêm 2 seat nữa không và giá là bao nhiêu?,pricing,test,llm,pricing,pricing,pricing,pricing
+mình có thể dùng thử tất cả tính năng của gói cao nhất trước khi quyết định không?,pricing,test,llm,pricing,other,other,pricing
+giá gói này đã ổn định chưa hay có thể thay đổi trong thời gian tới?,pricing,test,llm,pricing,complaint,pricing,pricing
+Tại sao không thấy thông tin giá gói business trên web thế?,pricing,test,llm,pricing,pricing,pricing,pricing
+"Mình muốn hỏi định giá cho gói Pro, có chiết khấu gì không?",pricing,test,llm,pricing,pricing,pricing,pricing
+gói pro có cần cam kết sử dụng lâu dài ko nhỉ?,pricing,test,llm,pricing,pricing,pricing,pricing
+Tính năng SSO tính phí thêm à?,pricing,test,llm,pricing,pricing,pricing,pricing
+Mình có thể dùng thử gói Premium không?,pricing,test,llm,pricing,pricing,pricing,pricing
+"Thời gian sử dụng của từng gói không rõ ràng lắm, phối hợp kịp không?",other,test,llm,pricing,complaint,pricing,pricing
+Có cách nào để nâng cấp gói mà không mất phí ngay một lúc không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Cho mình hỏi liệu có dịch vụ hoàn tiền nếu không hài lòng không?,complaint,test,llm,complaint,pricing,complaint,complaint
+Tôi muốn biết xem gói Premium có khác biệt gì so với gói Pro không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Chi phí cho 15 seat là bao nhiêu vậy?,pricing,test,llm,pricing,pricing,pricing,pricing
+"mình định mua gói dịch vụ này cho một sự kiện, có hỗ trợ giá cả không?",pricing,test,llm,pricing,pricing,pricing,pricing
+Cần gói nào để phù hợp cho 20 người?,pricing,test,llm,pricing,pricing,pricing,pricing
+"Tôi không thấy thông tin giá trên website, có thể cho biết giá gói Free khong?",pricing,test,llm,pricing,pricing,pricing,pricing
+I was wondering if there are any discounts available for long-term subscriptions?,pricing,test,llm,pricing,pricing,pricing,pricing
+"мình nhìn thấy giá khác nhau trên trang khác, giá chính thức thì sao?",pricing,test,llm,pricing,complaint,complaint,pricing
+"Công ty mình đông nhân viên, nếu mua nhiều seat có chiết khấu không?",pricing,test,llm,pricing,pricing,pricing,pricing
+Liệu có chương trình giảm giá nữa không vậy?,pricing,test,llm,pricing,pricing,pricing,pricing
+Giá tăng thêm seat có cao không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Khi nào có đợt giảm giá mới vậy ạ?,pricing,test,llm,pricing,pricing,pricing,pricing
+Mình cần báo giá cho việc nâng cấp lên gói kèm thêm tính năng dự toán chi phí cho dự án nhé!,pricing,test,llm,pricing,pricing,pricing,pricing
+Nếu team mình tháng tới giảm xuống còn 6 người thì liệu có ăn gian được giá ko nhỉ?,pricing,test,llm,pricing,pricing,pricing,pricing
+Cho mình hỏi gói Business có bảo mật dữ liệu không?,pricing,test,llm,pricing,other,pricing,pricing
+có gói dịch vụ nào không tính phí khởi kiện không bạn?,pricing,test,llm,pricing,pricing,cancellation,pricing
+Có free trial cho phần mềm ko?,pricing,test,llm,pricing,pricing,pricing,pricing
+Có gói dùng thử nào cho các doanh nghiệp lớn không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Làm ơn cho biết gói rẻ hơn đi!,pricing,test,llm,pricing,pricing,pricing,pricing
+"mình có nghe nhiều về kế hoạch giá phù hợp cho doanh nghiệp nhỏ, vậy cụ thể là như nào?",pricing,test,llm,pricing,pricing,pricing,pricing
+"Em đang thắc mắc là giá cho từng tháng của gói Enterprise có linh hoạt không, hay tính theo năm luôn vậy?",pricing,test,llm,pricing,pricing,pricing,pricing
+Is there an additional cost for extra users or features in the Pro package?,pricing,test,llm,pricing,pricing,pricing,pricing
+giá gói Free cho giáo viên có khác gì không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Nếu mình muốn thử trước khi quyết định thì có bản dùng thử nào cho gói Business không?,pricing,test,llm,pricing,pricing,pricing,pricing
+"Chào ad, cho mình hỏi nếu chỉ dùng 1 tháng thì có gói nào phù hợp ko?",pricing,test,llm,pricing,pricing,pricing,pricing
+Gói Pro có thể sử dụng cho bao nhiêu người tối đa?,pricing,test,llm,pricing,pricing,pricing,pricing
+Gói Pro của mình tính tiền như thế nào?,pricing,test,llm,pricing,pricing,pricing,pricing
+Bây giờ mà đăng ký gói Free có thể nâng cấp lên Pro ngay không?,pricing,test,llm,pricing,pricing,pricing,pricing
+giá của gói Pro có bao nhiêu tháng không?,pricing,test,llm,pricing,pricing,pricing,pricing
+Sao lại không ai thông báo việc thay đổi chính sách giá trước khi tính phí? Tôi đã hẹn hợp đồng mà giờ lại thấy bị trừ nhiều hơn dự kiến.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Bị trừ tiền nhưng không dùng nữa, ai hoàn tiền cho tôi?",complaint,test,llm,complaint,complaint,complaint,cancellation
+"Tôi không hài lòng với cách các bạn xử lý vấn đề, hỗ trợ thật kém!",complaint,test,llm,complaint,complaint,complaint,complaint
+"Mình cảm thấy rất nản về khoản phí phải trả, rõ ràng dùng không hết!",complaint,test,llm,complaint,complaint,complaint,complaint
+"hóa đơn tháng này có vẻ bị cao bất thường, có ai làm gì sai không????",complaint,test,llm,complaint,complaint,complaint,complaint
+Người chăm sóc khách hàng của bạn vừa hỗ trợ tôi nhưng lại thiếu thông tin cần thiết.,complaint,test,llm,complaint,complaint,complaint,complaint
+"báo cáo doanh thu bị sai, không thể tin tưởng vào dịch vụ này nữa",complaint,test,llm,complaint,complaint,complaint,complaint
+"My billing information was supposed to be processed automatically, but I was charged extra!",complaint,test,llm,tech_support,complaint,complaint,complaint
+Hy vọng các bạn làm nhanh chóng hơn trong việc trả lời các khiếu nại của khách hàng. Tình hình của chúng tôi đang hết sức căng thẳng do phải kiện tụng.,complaint,test,llm,other,complaint,complaint,complaint
+Chả hiểu sao lại bị tính phí tháng này.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Làm ơn xem lại khoản tiền đang bị trừ hàng tháng đi, đúng là không hiểu nổi!",complaint,test,llm,complaint,complaint,complaint,complaint
+Tôi đang rất thất vọng khi mà không có ai trong đội ngũ làm việc để giải quyết vấn đề của tôi.,complaint,test,llm,complaint,complaint,complaint,complaint
+Sao mà không ai trả lời email của tôi? Bực ghê!,complaint,test,llm,complaint,complaint,complaint,complaint
+"việc trì hoãn hoàn tiền đến 7 ngày là quá lâu, có thể làm nhanh hơn được không?",complaint,test,llm,complaint,complaint,complaint,complaint
+Làm ơn cho tôi biết sao lại bị trừ tiền khi tôi đã hủy gói từ tháng trước?,complaint,test,llm,complaint,complaint,complaint,complaint
+Sao cứ mỗi lần tôi gửi yêu cầu hỗ trợ đều gây khó khăn và không được phản hồi?,complaint,test,llm,complaint,complaint,complaint,complaint
+Có ai đó ở bên không? Tôi cần hỗ trợ ngay!,other,test,llm,other,other,other,tech_support
+Sao lại có thêm phí duy trì dịch vụ hàng tháng mà lúc đăng ký không có thông báo gì về việc này?,complaint,test,llm,complaint,complaint,complaint,complaint
+"Gửi email để hỏi mà vẫn không thấy ai trả lời, thật thất vọng!",complaint,test,llm,complaint,complaint,complaint,complaint
+Tại sao phí dịch vụ lại tăng mà không có thông báo gửi trước cho tôi vậy?,complaint,test,llm,complaint,complaint,complaint,pricing
+"Dịch vụ dùng mà giá không xứng đáng, ngồi chờ cả tiếng đồng hồ không thấy ai!",complaint,test,llm,complaint,complaint,complaint,complaint
+Dịch vụ sai sót liên tục khiến tôi phải tốn thời gian!,complaint,test,llm,complaint,complaint,complaint,complaint
+Mong ad xem lại vụ bị lỗi hủy gói mà ko cho! Thang này bị thu 2 lần mệt ghê!,cancellation,test,llm,complaint,complaint,complaint,complaint
+Các bạn có biết là nhân viên của tôi đang gặp khó khăn với việc đăng nhập không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Cảm thấy rất khó chịu khi không ai giải thích về sai sót này.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền, rất bất tiện.",cancellation,test,llm,complaint,complaint,cancellation,cancellation
+"Vẫn chưa giải quyết xong vụ trừ tiền tháng trước, tôi bực quá!",complaint,test,llm,complaint,complaint,complaint,complaint
+Tôi rất thất vọng với chất lượng dịch vụ liên tục gặp lỗi.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Cảm thấy không hài lòng với sự phục vụ, nhân viên không hỗ trợ tốt như trước.",complaint,test,llm,complaint,complaint,complaint,complaint
+Không vui tí nào khi không hài lòng với dịch vụ sau khi đã sử dụng nhiều tháng.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Hóa đơn tháng này không khớp với những gì tôi sử dụng, không biết làm sao!",complaint,test,llm,complaint,complaint,complaint,complaint
+"Hệ thống vừa bị lỗi khi tôi cố gắng xuất báo cáo, điều này thật sự gây khó khăn cho công việc của chúng tôi.",tech_support,test,llm,complaint,complaint,complaint,tech_support
+"Bên bạn công bố giảm giá nhưng hóa đơn vẫn như cũ, tôi cảm thấy bị lừa!",complaint,test,llm,complaint,complaint,complaint,complaint
+Tháng trước tôi có báo lỗi nhưng vẫn chưa thấy ai xử lý cả.,complaint,test,llm,complaint,complaint,complaint,complaint
+"I feel misled by your pricing plans, it's not what you advertised!",complaint,test,llm,pricing,complaint,complaint,complaint
+"Tôi đã nói rõ với support rằng tôi không muốn gia hạn, mà vẫn bị trừ tiền, thật không thể chấp nhận được!",complaint,test,llm,complaint,complaint,complaint,complaint
+Trước đây tôi đã thanh toán gói nhưng giờ lại thấy thiếu tính năng quan trọng. Ai có thể giúp tôi giải quyết việc này?,complaint,test,llm,complaint,complaint,tech_support,complaint
+Hệ thống báo lỗi liên tục làm gián đoạn công việc của tôi. Tôi không thể chắc chắn liệu mình đang bị tính thêm phí cho những gián đoạn này hay không?,complaint,test,llm,complaint,complaint,complaint,complaint
+"Có lần tôi thấy bị tính phí không đúng, có ai xem giúp tôi không?",complaint,test,llm,complaint,complaint,complaint,complaint
+Sao không có ai nói với tôi về quy trình hủy khi cần?,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Thực sự bực mình khi mất tiền oan mà không ai thông báo trước, ai cũng bảo dịch vụ này tuyệt vời mà sao không thấy yêu cầu của tôi được xử lý.",complaint,test,llm,complaint,complaint,complaint,complaint
+"Bị trừ tiền mà không ai báo trước, thật là thất vọng!",complaint,test,llm,complaint,complaint,complaint,complaint
+Lần trước tôi cũng đã phản ánh tình hình nhưng mà không thấy ai quan tâm.,complaint,test,llm,complaint,complaint,complaint,complaint
+Có ai ở đó không? Tôi cần hỗ trợ khẩn cấp nhưng không thấy ai trả lời.,complaint,test,llm,complaint,complaint,complaint,complaint
+Tháng này không biết ai đã trừ tiền mà tôi thì không hề sử dụng dịch vụ thêm.,complaint,test,llm,complaint,complaint,complaint,complaint
+Bạn cần cải thiện cách xử lý vấn đề ngay lập tức!,complaint,test,llm,other,other,other,complaint
+"Lỗi 404 mà cũng không ai phản hồi rõ ràng cho tôi, nản quá!",complaint,test,llm,complaint,complaint,complaint,complaint
+Tôi nghĩ rằng ứng dụng này không đáp ứng đúng yêu cầu của chúng tôi và thật sự không hài lòng.,complaint,test,llm,complaint,complaint,complaint,complaint
+"Tôi đã gửi yêu cầu hoàn tiền nhưng không thấy hồi đáp, quá tệ!",complaint,test,llm,complaint,complaint,complaint,complaint
+"Dịch vụ quá kém, mọi thứ đều không như cam kết!",complaint,test,llm,complaint,complaint,complaint,complaint
+"Mỗi lần dùng là có lỗi, không thể nào yên tâm làm việc hơn được!",tech_support,test,llm,tech_support,complaint,complaint,complaint
+"Mỗi lần dùng đều không thấy ai hỗ trợ, chán thật sự!",complaint,test,llm,complaint,complaint,complaint,complaint
+Thật sự quá thất vọng về dịch vụ này!,complaint,test,llm,complaint,complaint,complaint,complaint
+Tại sao tháng này bị trừ tiền nhiều hơn tháng trước thế?,complaint,test,llm,complaint,complaint,complaint,pricing
+"Chi phí gia hạn tự động không hợp lý, tôi muốn biết thêm thông tin về điều này.",cancellation,test,llm,cancellation,pricing,pricing,pricing
+Tôi cảm thấy thật bất lực với cách làm việc này!,complaint,test,llm,complaint,complaint,complaint,complaint
+rất thất vọng với chất lượng phần mềm này,complaint,test,llm,complaint,other,other,complaint
+đã gửi thắc mắc rồi mà vẫn chưa thấy ai hồi âm,complaint,test,llm,complaint,complaint,complaint,complaint
+Mấy hôm trước gọi hỏi mà giờ vẫn chưa thấy ai xong!,complaint,test,llm,complaint,complaint,complaint,complaint
+Sao tháng này tự dưng bị trừ thêm một khoản phí không rõ lý do vậy? Kiểm tra giùm tôi.,complaint,test,llm,complaint,complaint,complaint,complaint
+đã quyết định phải xóa tài khoản,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Hủy luôn tài khoản của mình nhé, mất niềm tin thật rồi",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Hơi thất vọng, thôi hủy luôn cho đơn giản",cancellation,test,llm,cancellation,complaint,cancellation,cancellation
+"Cảm giác ko muốn tiếp tục, làm ơn hủy tài khoản giúp mình",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình không hài lòng, đang cân nhắc hủy đăng ký mà thấy không biết làm sao hủy?",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Hạ xuống plan Free, được không?",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Tôi muốn dừng gói Pro lại nhé.,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình cần hủy gói đăng ký vì không có thời gian sử dụng, bạn có thể giúp mình không?",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Mình muốn dừng lại gói dịch vụ này ngay lập tức. Mọi thứ không như mong muốn!,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình vừa nghĩ lại, hãy hủy gói mà mình đã đăng ký",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình chán không muốn dùng nữa, làm ơn hủy cho mình.",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Please cancel my subscription ASAP.,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Thực sự mình không muốn tiếp tục sử dụng dịch vụ này. Làm cách nào để tắt tự động gia hạn?,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình không còn sử dụng nữa, hủy tài khoản giúp mình nhé!",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình muốn tạm ngưng dịch vụ, cần tắt gia hạn, xin hướng dẫn giúp mình!",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Can you cancel my Pro plan, thks!",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Mình cảm thấy không phù hợp với gói này nữa, có thể hủy gói này không?",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Cho mình hỏi thủ tục để hủy gói đăng ký là gì? Mình không muốn gia hạn thêm tháng này.,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Đã hết thời gian dùng, close account đi nhé.",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Chả hiểu sao mà giờ đây không muốn dùng nữa, hủy cái này đi.",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"Hủy hợp đồng của tôi ngay lập tức, tôi rất nghiêm túc!",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+"hủy hết mọi thứ luôn đi, làm ơn!",cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Sao không có lựa chọn hủy luôn trong cài đặt thế nhỉ?,cancellation,test,llm,tech_support,cancellation,tech_support,cancellation
+"Quên mật khẩu nhưng không thấy mã reset gửi về, phải làm sao tiếp theo đây?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có ai biết cách lấy access token không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Sao mà hôm nay không coi được báo cáo trên dashboard nhỉ, để em TK trước hen?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Bạn có biết lỗi 500 là gì không? Tôi gặp phải khi cố gắng lưu thay đổi trong dự án.,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+How to connect the project management tool with Google Calendar? Anyway to make this work?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Getting an API rate limit error, any ideas?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"giấy tờ yêu cầu trên hệ thống không thể tải về được, có ai biết tại sao không ạ?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+App bên mình vừa update giờ nó k còn load dc!,tech_support,test,llm,other,other,tech_support,tech_support
+Cái nút save bị đơ rồi!!!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Bây giờ vào không thấy nhiệm vụ nào, chắc là do công việc trước chưa lưu lại, phải làm sao?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Làm sao để cài đặt quyền truy cập cho thành viên trong dự án mới tạo?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Mình cần thay đổi một số thông tin tài khoản nhưng không tìm thấy chỗ này ở đâu cả.,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Cách truy cập API thông qua Postman thì như thế nào, có tài liệu nào rõ ràng không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+có cách nào để xem lại buổi họp video không? tôi không nhớ rõ,tech_support,test,llm,tech_support,tech_support,other,tech_support
+"Mình muốn biết cách chỉnh sửa quyền của từng thành viên trong nhóm, nó rối quá, ai giúp mình với?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Stuck on loading page for too long now!,tech_support,test,llm,other,tech_support,tech_support,tech_support
+còn cách nào sửa lỗi syncing giữa các device không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Mình đang xài gói free, ko hiểu sao có tính năng mà lẽ ra phải trả tiền, ai biết điều này ko?",complaint,test,llm,complaint,pricing,pricing,pricing
+"Xin chào, tôi không rõ cách tích hợp Slack với phần mềm của bạn. Ai đó giúp với!",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Mình thấy bị đóng băng tài khoản mà không có thông báo gì cả, có biết tại sao không?",complaint,test,llm,complaint,complaint,tech_support,complaint
+Tại sao tính năng chia sẻ tài liệu không hoạt động?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Hướng dẫn mình cách xuất file CSV nhé,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Hướng dẫn tôi cách tải xuống nội dung từ tài khoản của mình nhé!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"giao diện mới thấy khó dùng ghê, có ai giúp mk không?",tech_support,test,llm,other,tech_support,tech_support,tech_support
+Thông báo báo lỗi không rõ nguyên nhân,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"tks vì phần mềm tuyệt vời, cho mình hỏi cách thay đổi tên dự án với, cảm ơn!",other,test,llm,other,other,tech_support,tech_support
+"mình đang cần xuất báo cáo dự án ra file excel mà không biết làm thế nào, có ai hướng dẫn mình với được không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Làm ơn giúp tôi với việc kết nối với API, thấy mã lỗi ở đâu không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có thể cho tôi biết chi tiết về cách sử dụng phần mềm cho lớp học trực tuyến không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Lỗi thời gian phản hồi API quá lâu, gis cách fix?",tech_support,test,llm,complaint,tech_support,tech_support,tech_support
+Tôi gặp vấn đề với chức năng phân quyền trong nhóm làm việc. Có ai có thể giúp tôi tìm hiểu cách thiết lập vai trò cho các thành viên không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+có tài liệu nào chi tiết hơn về việc tích hợp hệ thống với Slack không ạ?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+mình không biết làm sao để sửa lỗi giao diện trên mobile,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Làm ơn giúp mình điều chỉnh notification cho tất cả thành viên trong team được không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có ai từng gặp cảnh không đăng nhập được trên điện thoại không vậy?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Cách nào để xem các task đã hoàn tất trong hệ thống?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Gửi lên server but receive 500 Internal Server Error. Em phải làm sao giờ?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Chúc ngày mới tốt lành, tôi cần hướng dẫn cụ thể về cách tạo một bảng điều khiển tùy chỉnh. Có thể cho tôi biết quy trình được không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Mình mới sử dụng phần mềm này và có thắc mắc về cách chèn file đính kèm trong dự án. Bạn có thể chỉ mình cách thực hiện không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Đăng nhập không thành công, lỗi gì vậy?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Cách xóa một task đã hoàn thành?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Mình không thể đăng nhập vào tài khoản, có ai giúp không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+why does the app keep crashing on my laptop?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Góc làm việc của mình đang bị lag liên tục, phần mềm có giúp khắc phục không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Error 500 when accessing the admin panel...,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Tải file mẫu xuống mà dữ liệu bị thiếu!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"I need help with exporting data, can you guide me through this?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Can’t upload files today... what’s going on?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Sau khi cập nhật phiên bản mới, ứng dụng khởi động rất lâu, có cách nào khắc phục không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Gửi đội ngũ, làm thế nào để cấu hình thông báo qua email cho các thay đổi trong dự án?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"freelancer mà, không sử dụng được tính năng nào của gói Pro hết, ai có giải pháp giúp mình với?",tech_support,test,llm,pricing,tech_support,tech_support,tech_support
+biên soạn tài liệu cho team mà không thấy hỗ trợ markdown?!,tech_support,test,llm,complaint,tech_support,tech_support,tech_support
+Làm thế nào để thêm nhiều người vào nhóm hiện tại trong dự án?,tech_support,test,llm,tech_support,other,tech_support,tech_support
+Mình không biết lỗi này nghĩa là gì: 'error 500'? Có ai hiểu giúp không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có ai đó có thể chỉ cho tôi cách thay đổi thông tin tài khoản không? Tôi muốn cập nhật địa chỉ email của mình!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Hôm qua mình nhận đc thông báo hệ thống có lỗi, mà giờ mình không thấy data đâu hết. Có ai biết phải làm sao không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Sao lỗi không tìm thấy đường dẫn tự động?h,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Nghe nói phần mềm này có tính năng mới, mình không tìm thấy ở đâu hết, ai có thông tin không?",other,test,llm,other,other,other,other
+"Tôi không thể tìm thấy chỗ để xem lịch sử thay đổi trong dự án, có cách nào giúp tôi không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+gop tag support dc ko?,other,test,llm,other,tech_support,other,tech_support
+"Chỉnh sửa thông tin tài khoản không hoạt động, làm ơn giúp!",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Mình đã nhập đúng thông tin tài khoản mà vẫn không đăng nhập được. Nhờ kiểm tra giúp với!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có cách nào để chia sẻ báo cáo với các thành viên không? Mình tìm mãi mà không thấy!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Mình bị lỗi khi muốn thay đổi thông tin thanh toán, ai biết có cách nào không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Tôi đang nghiên cứu cách liên kết phần mềm này với một ứng dụng bên thứ ba. Bạn có thể hướng dẫn tôi những bước cần làm được không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có tính năng nào có thể đổi mã dự án không?,other,test,llm,tech_support,tech_support,tech_support,tech_support
+"Em muốn biết cách thiết lập thông báo qua Slack, ai chỉ cho em với.",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Mình muốn hỏi về cách sao lưu dữ liệu cá nhân, có cách nào không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Bạn có ông nào trong team sales không? Mình muốn trao đổi một số dự án.,other,test,llm,other,other,other,other
+"Mình thấy có một số vấn đề nhỏ trong phần báo cáo, không biết ai có thể kiểm tra giúp mình không?",tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+Có ai biết thứ Bảy này liệu có meetup nào không?,other,test,llm,other,other,other,other
+Bạn có phiếu giảm giá không?,pricing,test,llm,pricing,pricing,pricing,pricing
+"Mình nghe nói có một sự kiện online sẽ diễn ra, mong là không bỏ lỡ!",other,test,llm,other,other,other,other
+"Mình thấy giao diện của phần mềm rất bắt mắt, không biết có thể tùy chỉnh nó được không?",other,test,llm,tech_support,tech_support,tech_support,other
+"Hey there, any chance I could get a custom demo?",other,test,llm,other,other,other,other
+"Hey, có người nhận chat không?",other,test,llm,tech_support,other,other,other
+what's the update on the project?,other,test,llm,tech_support,other,other,other
+lần sau có thể cho mình biết thêm về các buổi đào tạo không?,other,test,llm,other,other,other,other
+"Cảm ơn các bạn đã làm việc chăm chỉ, sản phẩm đang rất ổn.",other,test,llm,other,other,other,other
+"Đánh giá chất lượng sản phẩm khá tốt, cảm ơn các bạn!",other,test,llm,other,other,other,other
+Mong các bạn sẽ phát triển thêm nhiều tính năng hữu ích!,other,test,llm,other,other,other,other
+"Hôm qua mình tò mò đọc về quá trình phát triển sản phẩm của các bạn, rất hay!",other,test,llm,other,other,other,other
+"Trời ơi, sao ban ngày cũng lag nhỉ?",tech_support,test,llm,other,other,tech_support,tech_support
+Các bạn có tính năng quản lý thời gian không?,tech_support,test,llm,other,other,other,tech_support
+"By the way, what's your favorite feature of the software?",other,test,llm,other,other,other,other
+"Mình nhớ lần trước có nói về việc cải thiện tốc độ phần mềm, không biết có ý kiến gì mới không?",other,test,llm,other,other,other,other
+"Hôm qua mình đọc một bài viết về cách tăng năng suất làm việc, thấy có nhắc tới phần mềm của các bạn. Có thể cho mình biết thêm thông tin không?",other,test,llm,other,other,other,other
+Hy vọng lần tới sẽ có nhiều buổi hội thảo hơn để mọi người có thể học hỏi lẫn nhau.,other,test,llm,other,other,other,other
+Tôi chỉ muốn nói rằng ứng dụng rất tốt!,other,test,llm,other,other,other,other
+"Thực sự cảm ơn các bạn đã cho mình trải nghiệm thử sản phẩm, mình đã thấy nó hữu ích cho nhóm mình. Hy vọng sẽ có nhiều cập nhật mới!",other,test,llm,other,other,other,other
+"Chào các bạn, mình đang tìm hiểu về các ứng dụng hỗ trợ cho quản lý dự án. Có ai có kinh nghiệm dùng phần mềm này không nhỉ?",other,test,llm,other,other,other,other
+"Đang tìm kiếm tư liệu cho bài thuyết trình, ai có share không?",other,test,llm,other,other,other,other
+"sẽ chia sẻ các tính năng yêu thích của mình với team, cảm ơn các bạn đã làm một sản phẩm tốt!",other,test,llm,other,other,other,other
+"Tôi đã sử dụng sản phẩm của các bạn được một thời gian và muốn cho ý kiến, có một số điểm cần cải thiện!",other,test,llm,other,other,other,other
+Chờ code cũ khắc phục xong cho cái lớp đi!!!,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"Uh, cho tôi hỏi, bài viết trên blog có tính phí không?",other,test,llm,pricing,pricing,pricing,pricing
+Cảm ơn đã giúp đỡ!,other,test,llm,other,other,other,other
+"hihi, mình vừa phát hiện một tính năng thú vị trong app, hết sức bất ngờ!",other,test,llm,other,other,other,other
+"Chào cả nhà, mình có câu hỏi nhẹ xíu nha",other,test,llm,tech_support,other,other,other
+Các bạn có kế hoạch ra mắt sản phẩm mới không?,other,test,llm,other,other,other,other
+"Cảm ơn bạn, mình rất thích giao diện mới này!",other,test,llm,other,other,other,other
+Bên bạn có giải pháp nào cho học sinh không?,other,test,llm,other,tech_support,tech_support,other
+"Chúc các bạn luôn phát triển, không biết trong tương lai sẽ có bản dùng thử cho gói Enterprise không?",pricing,test,llm,other,other,pricing,other
+Mong chương trình khuyến mãi sớm quay lại!,pricing,test,llm,pricing,other,complaint,pricing
+cảm ơn bạn đã hỗ trợ,other,test,llm,other,other,other,other
+"Hello team! I'm enjoying the features, but I think a blog with tips would be great.",other,test,llm,other,other,other,other
+"Mình thấy phần mềm này rất hay, nhưng đôi khi gặp khó khăn trong việc tìm hiểu các tính năng, các bạn có thể sản xuất video hướng dẫn không?",tech_support,test,llm,tech_support,other,tech_support,other
+có ai đó nghe nhạc trong giờ làm không nhỉ?,other,test,llm,other,other,other,other
+"Cảm ơn vì đã tạo ra tool xịn như vậy, rất thuận tiện cho mình!",other,test,llm,other,other,other,other
+Bạn có thể cho mình biết công ty có tổ chức các hoạt động ngoại khóa không?,other,test,llm,other,other,other,other
+Cảm ơn các bạn đã hỗ trợ. Sản phẩm này thực sự giúp ích cho nhóm của mình nhiều.,other,test,llm,other,other,other,other
+Có video hướng dẫn nào không?,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+"mình thấy cách làm việc của đội ngũ rất chuyên nghiệp, cảm ơn các bạn!",other,test,llm,other,other,other,other
+Làm ơn cho mình biết số điện thoại chăm sóc khách hàng nhé. Cảm ơn nhiều!,other,test,llm,other,other,other,other
+đã từng có lần bị trừ phí sai,complaint,test,llm,complaint,complaint,complaint,complaint
+Tìm hiểu về API nhưng chưa hiểu rõ lắm.,tech_support,test,llm,tech_support,tech_support,tech_support,tech_support
+làm ơn cho mình hỏi là có event offline nào không?,other,test,llm,other,other,other,other
+"Mình đang tìm kiếm một giải pháp quản lý dự án cho nhóm, tự dưng thấy app của bạn, có cách nào để sử dụng thử không?",other,test,llm,tech_support,tech_support,tech_support,other
+"Học kỳ này bận quá, không biết có thể nào dùng thử mà không tính phí không?",pricing,test,llm,pricing,pricing,pricing,pricing
+Mọi người có ai biết cách dùng tính năng mới không?,tech_support,test,llm,tech_support,tech_support,other,tech_support
+"Chào các bạn, mình thích sản phẩm của các bạn lắm, không biết có chương trình nào cho khởi nghiệp không nhỉ?",pricing,test,llm,other,pricing,other,pricing
+Cảm ơn vì đã làm việc vất vả để hỗ trợ tụi mình.,other,test,llm,other,other,other,other
+"thực sự rất hài lòng với hỗ trợ từ các bạn, cảm ơn!",other,test,llm,other,other,other,other
+"Chào bạn, mình có một chút góp ý cho tính năng mới, nhìn rất hay nhưng hơi khó sử dụng.",other,test,llm,other,other,other,other
+Làm ơn hãy cho mình mình biết kế hoạch sắp tới đi!,other,test,llm,other,other,other,other
+Ai biết công ty này có tuyển dụng không nhỉ?,other,test,llm,other,other,other,other
+Do you have any resources on best practices for using your tool?,other,test,llm,other,other,other,other
+Gần hết hạn sử dụng rồi!!,cancellation,test,llm,cancellation,cancellation,cancellation,cancellation
+Tôi hay gặp lỗi khi sử dụng trên điện thoại.,tech_support,test,llm,tech_support,complaint,complaint,tech_support
+Không biết liệu có thể dùng thử lâu hơn không?,pricing,test,llm,pricing,other,other,other

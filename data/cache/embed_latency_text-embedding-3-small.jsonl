@@ -1,0 +1,445 @@
+{"text": "Dung lượng lưu trữ gói Pro là bao nhiêu GB?", "latency_ms": 610.0811249925755, "input_tokens": 22}
+{"text": "Cho mình hỏi bảng giá cho team 20 người", "latency_ms": 615.5060000019148, "input_tokens": 17}
+{"text": "Giá đã bao gồm VAT chưa?", "latency_ms": 622.5470409845002, "input_tokens": 12}
+{"text": "Mình đang xài free, lên Pro thì mất bao nhiêu 1 tháng", "latency_ms": 662.2590830083936, "input_tokens": 26}
+{"text": "gói pro bn tiền v", "latency_ms": 227.86512502352707, "input_tokens": 8}
+{"text": "Gói Starter có còn bán không hay bỏ rồi?", "latency_ms": 233.43525000382215, "input_tokens": 18}
+{"text": "Có tính phí cho tài khoản khách (guest) không?", "latency_ms": 223.05241602589376, "input_tokens": 18}
+{"text": "Gói Business tối thiểu bao nhiêu user?", "latency_ms": 216.87770797871053, "input_tokens": 17}
+{"text": "Thẻ bị trừ 3 lần cho cùng một hóa đơn!!!", "latency_ms": 198.67625000188127, "input_tokens": 22}
+{"text": "Có thể trả góp gói năm không?", "latency_ms": 219.84233299735934, "input_tokens": 16}
+{"text": "Tại sao đổi chính sách mà không hỏi ý kiến khách hàng", "latency_ms": 211.45204099593684, "input_tokens": 23}
+{"text": "Tự nhiên khóa tài khoản của tôi không một lời báo trước, quá vô lý", "latency_ms": 247.5239170016721, "input_tokens": 33}
+{"text": "Đề nghị bồi thường cho thời gian hệ thống ngừng hoạt động", "latency_ms": 207.31062500271946, "input_tokens": 30}
+{"text": "khách hàng lâu năm mà bị đối xử thế này à", "latency_ms": 296.8082500156015, "input_tokens": 20}
+{"text": "Không hiểu sao hóa đơn tháng này cao gấp đôi tháng trước", "latency_ms": 273.17620898247696, "input_tokens": 29}
+{"text": "Dịch vụ tệ quá, hủy luôn cho tôi", "latency_ms": 271.78416698006913, "input_tokens": 19}
+{"text": "Mình chuyển sang dùng phần mềm khác rồi, hủy giúp nhé", "latency_ms": 199.40029198187403, "input_tokens": 27}
+{"text": "Cách xuất dữ liệu ra file Excel?", "latency_ms": 205.86937500047497, "input_tokens": 11}
+{"text": "Upload file lớn hơn 100MB bị lỗi", "latency_ms": 208.32495798822492, "input_tokens": 14}
+{"text": "Tạm ngưng tài khoản 3 tháng được không?", "latency_ms": 227.52958300407045, "input_tokens": 18}
+{"text": "Cách đặt lịch gửi báo cáo tự động hằng tuần?", "latency_ms": 204.74666700465605, "input_tokens": 27}
+{"text": "Cách cài app trên Windows?", "latency_ms": 214.823541988153, "input_tokens": 9}
+{"text": "API endpoint lấy danh sách task bị timeout", "latency_ms": 318.1384170020465, "input_tokens": 10}
+{"text": "tài khoản bị khóa sau 5 lần nhập sai, mở lại sao ạ", "latency_ms": 301.8266659928486, "input_tokens": 23}
+{"text": "Báo cáo bị lệch số so với dữ liệu thực tế, kiểm tra giúp mình", "latency_ms": 237.72912498679943, "input_tokens": 29}
+{"text": "SAML config xong vẫn không login được", "latency_ms": 292.0545839879196, "input_tokens": 12}
+{"text": "Biểu đồ Gantt không hiển thị đúng ngày", "latency_ms": 202.81129202339798, "input_tokens": 17}
+{"text": "Văn phòng công ty ở đâu vậy?", "latency_ms": 225.4823329858482, "input_tokens": 16}
+{"text": "Chào bạn", "latency_ms": 230.30854199896567, "input_tokens": 4}
+{"text": "Bạn có thể giới thiệu về sản phẩm một chút không?", "latency_ms": 219.70033401157707, "input_tokens": 19}
+{"text": "Mình muốn tham gia chương trình beta tester", "latency_ms": 205.67995801684447, "input_tokens": 14}
+{"text": "Có bản tiếng Anh của tài liệu điều khoản sử dụng không?", "latency_ms": 282.99245800008066, "input_tokens": 25}
+{"text": "Có podcast hay blog nào của công ty không?", "latency_ms": 282.5821669830475, "input_tokens": 13}
+{"text": "Đợi chút nhé, để mình hỏi sếp đã", "latency_ms": 202.3492919979617, "input_tokens": 19}
+{"text": "Có kênh Discord cộng đồng không?", "latency_ms": 201.28066700999625, "input_tokens": 14}
+{"text": "Mình nghe bảo gói này có giảm giá cho freelancer mà sao không thấy?", "latency_ms": 211.8003750219941, "input_tokens": 27}
+{"text": "Có cái gói nào giá tốt mà ít tính năng ko?", "latency_ms": 211.5422080096323, "input_tokens": 25}
+{"text": "Thắc mắc chút về cách thanh toán cho gói Pro, có dễ dàng không?", "latency_ms": 207.5555410119705, "input_tokens": 31}
+{"text": "Cho mình biết gói trả trước và sau có gì khác nhau về giá không?", "latency_ms": 225.96537502249703, "input_tokens": 28}
+{"text": "gói nào phù hợp cho doanh nghiệp nhỏ với ngân sách thấp?", "latency_ms": 209.78587502031587, "input_tokens": 29}
+{"text": "Gói Starter có giá thế nào, mình chỉ cần 5 seat thôi!", "latency_ms": 315.90991700068116, "input_tokens": 25}
+{"text": "Em muốn hỏi biếu phí 1 tháng cho 5 người.", "latency_ms": 227.10366698447615, "input_tokens": 22}
+{"text": "Giá bao nhiêu nếu mình muốn tạm dừng gói dịch vụ này?", "latency_ms": 210.24766698246822, "input_tokens": 32}
+{"text": "Hạn mức cho gói Free này là bao nhiêu?", "latency_ms": 310.2631250221748, "input_tokens": 18}
+{"text": "Em nghe nói là gói Pro có thể được giảm giá nếu thanh toán một lần, đúng không ạ?", "latency_ms": 204.01016701362096, "input_tokens": 38}
+{"text": "Gói Pro có giảm giá cho doanh nghiệp lớn ko vậy?", "latency_ms": 220.1566659787204, "input_tokens": 25}
+{"text": "cho hỏi gói dùng thử thì sẽ tự động chuyển thành gói nào sau khi hết hạn?", "latency_ms": 256.88599998829886, "input_tokens": 38}
+{"text": "gói cho tập thể dục là 200k/seat hay sao á?", "latency_ms": 210.79391698003747, "input_tokens": 21}
+{"text": "Mình cần báo giá ngay cho tháng tới, không thể chậm trễ được.", "latency_ms": 210.7069999910891, "input_tokens": 28}
+{"text": "Mình cần báo giá cho 50 seat cho gói Pro.", "latency_ms": 258.3071249828208, "input_tokens": 18}
+{"text": "Cho em hỏi có khuyến mãi nào cho các bạn sinh viên khi mua gói này không ạ?", "latency_ms": 300.4337080055848, "input_tokens": 30}
+{"text": "Hệ thống báo giá có miễn phí cho các tín đồ công nghệ học online không?", "latency_ms": 216.0781670245342, "input_tokens": 30}
+{"text": "tôi nghe nói có ưu đãi khi thanh toán trước, điều đó có chính xác không?", "latency_ms": 294.90229199291207, "input_tokens": 36}
+{"text": "Có thể gửi bảng giá gói này qua email không?", "latency_ms": 210.53933398798108, "input_tokens": 20}
+{"text": "Nếu tôi nâng cấp từ gói Free lên gói Pro thì giá trị ra sao?", "latency_ms": 216.030875017168, "input_tokens": 32}
+{"text": "Có giảm giá cho nhóm sử dụng lâu không?", "latency_ms": 222.47516698553227, "input_tokens": 20}
+{"text": "Gói Free có hạn mức ra sao?", "latency_ms": 214.7106249758508, "input_tokens": 13}
+{"text": "Giá để thêm tính năng báo cáo là bao nhiêu vậy?", "latency_ms": 314.0328750014305, "input_tokens": 24}
+{"text": "Thời gian sử dụng của từng gói không rõ ràng lắm, phối hợp kịp không?", "latency_ms": 312.58091700146906, "input_tokens": 35}
+{"text": "mua gói 1 năm giảm 20% hả?", "latency_ms": 204.23504200880416, "input_tokens": 18}
+{"text": "Cho mình hỏi liệu có dịch vụ hoàn tiền nếu không hài lòng không?", "latency_ms": 198.7466660211794, "input_tokens": 25}
+{"text": "mình muốn biết thêm về mức giá cho các add-on nếu chúng tôi quyết định mở rộng tính năng.", "latency_ms": 232.99008299363777, "input_tokens": 43}
+{"text": "Có gói nào cho tổ chức phi lợi nhuận dc giảm giá ko?", "latency_ms": 276.61129098851234, "input_tokens": 28}
+{"text": "Gói cơ bản với gói pro chênh lệch giá là bao nhiêu vậy?", "latency_ms": 265.39162499830127, "input_tokens": 32}
+{"text": "gói free thì cho dc bao nhiêu user z?", "latency_ms": 223.02595898509026, "input_tokens": 17}
+{"text": "mình đang xem xét về giá gói Business cho 15 người, có thể gửi thông tin cụ thể không?", "latency_ms": 283.22308300994337, "input_tokens": 36}
+{"text": "trong trường hợp mình muốn thay đổi gói từ Free lên Pro, liệu có mất phí gì không?", "latency_ms": 240.43195901322179, "input_tokens": 35}
+{"text": "khi nào thì có chương trình khuyến mãi cho gói dịch vụ này?", "latency_ms": 242.75441697682254, "input_tokens": 28}
+{"text": "I was wondering if there are any discounts available for long-term subscriptions?", "latency_ms": 216.370874986751, "input_tokens": 14}
+{"text": "Mình nghe nói gói Business có ưu đãi hơn cho các tổ chức phi lợi nhuận ko?", "latency_ms": 212.12312500574626, "input_tokens": 34}
+{"text": "Cần giải đáp về phương thức thanh toán của gói Pro!", "latency_ms": 212.25312500610016, "input_tokens": 23}
+{"text": "Cho tôi hỏi là có điều kiện nào không khi nâng cấp từ mức thuê bao miễn phí?", "latency_ms": 234.59795798407868, "input_tokens": 39}
+{"text": "Cho tôi hỏi, там нужно ли подтвердить оплату для бесплатного тарифа?", "latency_ms": 279.27062500384636, "input_tokens": 32}
+{"text": "có giảm giá cho doanh nghiệp mới hay không, và điều kiện như thế nào?", "latency_ms": 210.91333299409598, "input_tokens": 32}
+{"text": "Cho mình hỏi về thủ tục nâng cấp một chút, có mất thời gian không?", "latency_ms": 210.86300001479685, "input_tokens": 35}
+{"text": "Nếu team mình tháng tới giảm xuống còn 6 người thì liệu có ăn gian được giá ko nhỉ?", "latency_ms": 287.13175002485514, "input_tokens": 38}
+{"text": "Mình muốn biết điều kiện để chuyển từ gói Free sang Pro là gì?", "latency_ms": 244.1751669975929, "input_tokens": 27}
+{"text": "Cho mình hỏi liệu rằng có thể trả trước cho 1 năm sử dụng gói Pro không?", "latency_ms": 288.0095840082504, "input_tokens": 35}
+{"text": "giá cho gói học sinh có bao gồm tax chưa ạ?", "latency_ms": 297.26516699884087, "input_tokens": 21}
+{"text": "Do có 1 vài dự án mới, muốn biết mức giá hiện tại là bnh?", "latency_ms": 200.0102500023786, "input_tokens": 29}
+{"text": "Có cả gói riêng cho freelancer không nhỉ?", "latency_ms": 240.65766599960625, "input_tokens": 16}
+{"text": "Chưa thấy thông tin gói mới trên trang, có chiết khấu cho doanh nghiệp không?", "latency_ms": 210.48350000637583, "input_tokens": 30}
+{"text": "Cho tôi hỏi, gói này nếu thanh toán trước 1 năm có chiết khấu không?", "latency_ms": 205.7507080025971, "input_tokens": 33}
+{"text": "mình có nghe nhiều về kế hoạch giá phù hợp cho doanh nghiệp nhỏ, vậy cụ thể là như nào?", "latency_ms": 321.9907500024419, "input_tokens": 47}
+{"text": "Trả theo năm có giảm giá gì không?", "latency_ms": 279.0863749978598, "input_tokens": 16}
+{"text": "M muốn hỏi gói Business có giá bao nhiêu?", "latency_ms": 221.28354100277647, "input_tokens": 21}
+{"text": "Gói Pro có thể sử dụng cho bao nhiêu người tối đa?", "latency_ms": 221.23583298525773, "input_tokens": 26}
+{"text": "Cho mình hỏi là gói nào tối ưu cho doanh nghiệp 50 người?", "latency_ms": 221.41845800797455, "input_tokens": 30}
+{"text": "Chi phí nếu tăng thêm 10 seat sẽ là bao nhiêu nhỉ?", "latency_ms": 219.13837498868816, "input_tokens": 25}
+{"text": "Bị trừ tiền nhưng không dùng nữa, ai hoàn tiền cho tôi?", "latency_ms": 201.1682079755701, "input_tokens": 27}
+{"text": "Sao lại không ai thông báo việc thay đổi chính sách giá trước khi tính phí? Tôi đã hẹn hợp đồng mà giờ lại thấy bị trừ nhiều hơn dự kiến.", "latency_ms": 300.5222089996096, "input_tokens": 67}
+{"text": "Chào ad, cho mình hỏi nếu chỉ dùng 1 tháng thì có gói nào phù hợp ko?", "latency_ms": 641.5719999931753, "input_tokens": 37}
+{"text": "Tôi không hài lòng với cách các bạn xử lý vấn đề, hỗ trợ thật kém!", "latency_ms": 207.21720799338073, "input_tokens": 32}
+{"text": "hóa đơn tháng này có vẻ bị cao bất thường, có ai làm gì sai không????", "latency_ms": 192.40412500221282, "input_tokens": 30}
+{"text": "Người chăm sóc khách hàng của bạn vừa hỗ trợ tôi nhưng lại thiếu thông tin cần thiết.", "latency_ms": 205.07383299991488, "input_tokens": 35}
+{"text": "báo cáo doanh thu bị sai, không thể tin tưởng vào dịch vụ này nữa", "latency_ms": 250.39337502676062, "input_tokens": 29}
+{"text": "Mình cảm thấy rất nản về khoản phí phải trả, rõ ràng dùng không hết!", "latency_ms": 415.38233298342675, "input_tokens": 32}
+{"text": "My billing information was supposed to be processed automatically, but I was charged extra!", "latency_ms": 209.7695420088712, "input_tokens": 16}
+{"text": "Hy vọng các bạn làm nhanh chóng hơn trong việc trả lời các khiếu nại của khách hàng. Tình hình của chúng tôi đang hết sức căng thẳng do phải kiện tụng.", "latency_ms": 311.416292010108, "input_tokens": 67}
+{"text": "Chả hiểu sao lại bị tính phí tháng này.", "latency_ms": 266.61600000807084, "input_tokens": 19}
+{"text": "Làm ơn xem lại khoản tiền đang bị trừ hàng tháng đi, đúng là không hiểu nổi!", "latency_ms": 205.81200000015087, "input_tokens": 36}
+{"text": "Nhân viên văn phòng báo cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.", "latency_ms": 212.33429099083878, "input_tokens": 37}
+{"text": "phiền bên bạn xem lại invoice cho tôi, tháng này sai quá nhiều chỗ", "latency_ms": 208.85770898894407, "input_tokens": 27}
+{"text": "Gói dịch vụ của các bạn không phù hợp với nhu cầu thực tế của đội ngũ chúng tôi, vui lòng giải quyết vấn đề này.", "latency_ms": 218.80329202394933, "input_tokens": 56}
+{"text": "mình đã liên hệ nhưng không thấy phản hồi, cuối cùng thì ai sẽ chịu trách nhiệm cho vấn đề này?", "latency_ms": 267.7168329828419, "input_tokens": 46}
+{"text": "Làm ơn hãy giải quyết vấn đề này, bực mình quá đi", "latency_ms": 207.91741600260139, "input_tokens": 27}
+{"text": "Có ai đó ở bên không? Tôi cần hỗ trợ ngay!", "latency_ms": 216.00266700261272, "input_tokens": 23}
+{"text": "Khi nào bên bạn mới sửa lỗi thanh toán? Tôi đã viết 3 lần nhưng không thấy hồi âm.", "latency_ms": 225.54854198824614, "input_tokens": 40}
+{"text": "I’m really disappointed, promised features are never delivered. Fix this ASAP!", "latency_ms": 217.0615840004757, "input_tokens": 15}
+{"text": "Gửi email để hỏi mà vẫn không thấy ai trả lời, thật thất vọng!", "latency_ms": 252.222624985734, "input_tokens": 32}
+{"text": "Dịch vụ sai sót liên tục khiến tôi phải tốn thời gian!", "latency_ms": 277.4215829849709, "input_tokens": 29}
+{"text": "Chúng tôi đã chọn gói dịch vụ này dựa trên thông tin mà nhân viên cung cấp, giờ lại có vấn đề gì đó sai lệch.", "latency_ms": 287.98841702518985, "input_tokens": 54}
+{"text": "Tôi đã xem qua nhiều lần mà billing vẫn sai, cần kiểm tra lại gấp!", "latency_ms": 208.92670899047516, "input_tokens": 32}
+{"text": "Các bạn có biết là nhân viên của tôi đang gặp khó khăn với việc đăng nhập không?", "latency_ms": 252.70883401390165, "input_tokens": 34}
+{"text": "Làm ơn giải thích sao tự dưng tăng phí vậy?!", "latency_ms": 205.2242919744458, "input_tokens": 25}
+{"text": "Gói Pro cứ tăng phí mà tính năng mới thì toàn lỗi, tệ quá!", "latency_ms": 209.0711249911692, "input_tokens": 29}
+{"text": "Tôi đã gọi điện hỏi nhiều lần mà vẫn chưa ai giải quyết vấn đề này.", "latency_ms": 233.67099999450147, "input_tokens": 39}
+{"text": "Trừ tiền không thông báo gì cả!", "latency_ms": 272.12787501048297, "input_tokens": 14}
+{"text": "Dịch vụ hỗ trợ không giúp gì cho tôi, thật sự quá tệ!", "latency_ms": 210.58837499003857, "input_tokens": 29}
+{"text": "Một tháng rồi mà tôi chưa nhận được hóa đơn, làm ơn cho tôi biết đã bị trễ ở đâu.", "latency_ms": 203.55341598042287, "input_tokens": 45}
+{"text": "Tôi muốn phản hồi về điều khoản hủy, cảm thấy rất không công bằng khi bị phạt vì hủy trước hạn.", "latency_ms": 304.059457994299, "input_tokens": 52}
+{"text": "I expected better from your service, now I'm seriously reconsidering my options", "latency_ms": 230.15941699850373, "input_tokens": 15}
+{"text": "Và còn cái khoản service khách hàng, chờ đợi lâu lắm mà chưa nhận được gì!", "latency_ms": 202.15237501543015, "input_tokens": 35}
+{"text": "Tôi cảm thấy không hài lòng vì dịch vụ nhanh chóng, ký hợp đồng 3 tháng mà không thấy ai gọi lại hỗ trợ.", "latency_ms": 202.4242919869721, "input_tokens": 54}
+{"text": "Có ai kiểm tra giúp tôi sao báo sai tài khoản không? Chuyện này không vui chút nào!", "latency_ms": 216.1522080132272, "input_tokens": 37}
+{"text": "Cả tháng trời đợi support giải quyết mà chẳng thấy ai động tĩnh, thật bực mình!!", "latency_ms": 292.5035420048516, "input_tokens": 41}
+{"text": "Hệ thống báo lỗi liên tục làm gián đoạn công việc của tôi. Tôi không thể chắc chắn liệu mình đang bị tính thêm phí cho những gián đoạn này hay không?", "latency_ms": 231.16366702015512, "input_tokens": 67}
+{"text": "đã thanh toán mà vẫn không sử dụng được", "latency_ms": 229.06074998900294, "input_tokens": 19}
+{"text": "Hỗ trợ khách hàng của các bạn không chuyên nghiệp, tôi mong các bạn cải thiện nhanh chóng!", "latency_ms": 203.43254200997762, "input_tokens": 36}
+{"text": "Bị trừ tiền mà không ai báo trước, thật là thất vọng!", "latency_ms": 213.781291997293, "input_tokens": 26}
+{"text": "Biết là tình hình khó khăn nhưng cái app này chậm quá, dự án đang bị ảnh hưởng", "latency_ms": 254.4449999986682, "input_tokens": 40}
+{"text": "Ko hiểu sao tháng này bị tính phí cao hơn tháng trước?!", "latency_ms": 361.8128749949392, "input_tokens": 28}
+{"text": "Tháng này không biết ai đã trừ tiền mà tôi thì không hề sử dụng dịch vụ thêm.", "latency_ms": 209.71166697563604, "input_tokens": 37}
+{"text": "Tôi cần gỡ bỏ tài khoản ngay, dịch vụ không đáp ứng được yêu cầu của chúng tôi.", "latency_ms": 303.1280830036849, "input_tokens": 43}
+{"text": "Dịch vụ hỗ trợ của bạn quá chậm, tôi đang cần gấp phản hồi mà không ai trả lời.", "latency_ms": 261.3757500075735, "input_tokens": 42}
+{"text": "Why am I getting charged for features that I never used?", "latency_ms": 260.92199998674914, "input_tokens": 12}
+{"text": "Không biết có ai chịu trách nhiệm cho việc này không?", "latency_ms": 226.96341699338518, "input_tokens": 22}
+{"text": "Tại sao lại thu phí hằng tháng mà không có ai hỗ trợ khi tôi gặp sự cố thế này?", "latency_ms": 207.86854199832305, "input_tokens": 39}
+{"text": "Dịch vụ quá kém, mọi thứ đều không như cam kết!", "latency_ms": 210.08787499158643, "input_tokens": 25}
+{"text": "Chắc chắn là tôi chưa hủy mà?", "latency_ms": 214.94395899935625, "input_tokens": 18}
+{"text": "Liên hệ hỗ trợ mà chẳng ai trả lời, thực sự rất bực mình!", "latency_ms": 211.23495799838565, "input_tokens": 32}
+{"text": "Chi phí gia hạn tự động không hợp lý, tôi muốn biết thêm thông tin về điều này.", "latency_ms": 197.17541601858102, "input_tokens": 37}
+{"text": "Thật sự quá thất vọng về dịch vụ này!", "latency_ms": 204.7234589990694, "input_tokens": 20}
+{"text": "Tại sao tháng này bị trừ tiền nhiều hơn tháng trước thế?", "latency_ms": 311.71158302458934, "input_tokens": 30}
+{"text": "Làm ơn giải quyết cho tôi, rất bức xúc với phí này!", "latency_ms": 207.12208398617804, "input_tokens": 28}
+{"text": "rất thất vọng với chất lượng phần mềm này", "latency_ms": 207.05854101106524, "input_tokens": 19}
+{"text": "đã gửi thắc mắc rồi mà vẫn chưa thấy ai hồi âm", "latency_ms": 282.7618339797482, "input_tokens": 30}
+{"text": "Mấy hôm trước gọi hỏi mà giờ vẫn chưa thấy ai xong!", "latency_ms": 219.75291601847857, "input_tokens": 29}
+{"text": "Sao tháng này tự dưng bị trừ thêm một khoản phí không rõ lý do vậy? Kiểm tra giùm tôi.", "latency_ms": 241.87358299968764, "input_tokens": 44}
+{"text": "Hủy gói doanh nghiệp cho mình với, tôi muốn dừng sử dụng ngay lập tức!", "latency_ms": 206.60687499912456, "input_tokens": 41}
+{"text": "gửi hỗ trợ hủy gói cho tôi đi", "latency_ms": 228.35858399048448, "input_tokens": 18}
+{"text": "Tôi muốn xóa tài khoản vĩnh viễn, cảm ơn!", "latency_ms": 305.9126659936737, "input_tokens": 27}
+{"text": "hủy đăng ký, không muốn dùng nữa", "latency_ms": 266.04124999721535, "input_tokens": 17}
+{"text": "Mình đã tìm một sự thay thế, hãy hủy giúp", "latency_ms": 228.33283399813809, "input_tokens": 24}
+{"text": "Hạ xuống plan Free, được không?", "latency_ms": 229.31374999461696, "input_tokens": 10}
+{"text": "Đóng cái tài khoản này đi.", "latency_ms": 205.39679200737737, "input_tokens": 12}
+{"text": "Nhờ bạn hủy đăng ký cho tôi, đã không sử dụng được thời gian dài.", "latency_ms": 210.22283300408162, "input_tokens": 31}
+{"text": "Cần huỷ gói dùng thử, vui lòng giúp mình nhé!", "latency_ms": 232.2547499788925, "input_tokens": 24}
+{"text": "hủy dịch vụ này lập tức, cảm ơn", "latency_ms": 201.19925000471994, "input_tokens": 20}
+{"text": "Please cancel my account!", "latency_ms": 200.85537497652695, "input_tokens": 5}
+{"text": "cần hủy gói tháng này, cực kỳ bất tiện", "latency_ms": 286.32462499081157, "input_tokens": 22}
+{"text": "Tôi ko còn nhu cầu sử dụng nữa, hãy hủy tài khoản giùm", "latency_ms": 217.57554198848084, "input_tokens": 33}
+{"text": "Mình đã bị tính phí nhưng không dùng dịch vụ, làm thế nào để hủy cho đúng quy trình?", "latency_ms": 216.14329097792506, "input_tokens": 41}
+{"text": "Mình đã quyết định, xin hãy hủy gói Pro này", "latency_ms": 204.36450000852346, "input_tokens": 23}
+{"text": "Dịch vụ chưa hợp nhu cầu của mình và mình quyết định hủy.", "latency_ms": 518.7244589906186, "input_tokens": 30}
+{"text": "Chào, xin hãy hủy dịch vụ giúp mình.", "latency_ms": 208.28683298896067, "input_tokens": 23}
+{"text": "I need to cancel my account but I don’t know the steps, help please!", "latency_ms": 204.87683298415504, "input_tokens": 17}
+{"text": "hủy hết mọi thứ luôn đi, làm ơn!", "latency_ms": 200.67058299900964, "input_tokens": 19}
+{"text": "Dừng lại mọi thứ, không cần dùng nữa", "latency_ms": 215.917041990906, "input_tokens": 19}
+{"text": "Chả hiểu sao mà giờ đây không muốn dùng nữa, hủy cái này đi.", "latency_ms": 313.609999982873, "input_tokens": 32}
+{"text": "Sao không có lựa chọn hủy luôn trong cài đặt thế nhỉ?", "latency_ms": 209.2272920126561, "input_tokens": 25}
+{"text": "Quên mật khẩu nhưng không thấy mã reset gửi về, phải làm sao tiếp theo đây?", "latency_ms": 251.06791697908193, "input_tokens": 34}
+{"text": "Mình không ưu tiên dùng Offline nhưng lại không biết cách tắt chế độ này, ai chỉ giúp mình với.", "latency_ms": 203.28954100841656, "input_tokens": 39}
+{"text": "Bạn có biết lỗi 500 là gì không? Tôi gặp phải khi cố gắng lưu thay đổi trong dự án.", "latency_ms": 308.4384580142796, "input_tokens": 40}
+{"text": "Gần đây mình không thể nhận thông báo từ phần mềm, không biết có thể kiểm tra cài đặt gì không để phục hồi tính năng này?", "latency_ms": 220.5877919914201, "input_tokens": 51}
+{"text": "giấy tờ yêu cầu trên hệ thống không thể tải về được, có ai biết tại sao không ạ?", "latency_ms": 203.44962499802932, "input_tokens": 36}
+{"text": "Cái nút save bị đơ rồi!!!", "latency_ms": 201.71616700827144, "input_tokens": 15}
+{"text": "App bên mình vừa update giờ nó k còn load dc!", "latency_ms": 208.51658398169093, "input_tokens": 21}
+{"text": "Bây giờ vào không thấy nhiệm vụ nào, chắc là do công việc trước chưa lưu lại, phải làm sao?", "latency_ms": 304.55383300432004, "input_tokens": 45}
+{"text": "Cách nào để xóa task bị trùng trong danh sách vậy?", "latency_ms": 214.51554200029932, "input_tokens": 20}
+{"text": "Mình cần thay đổi một số thông tin tài khoản nhưng không tìm thấy chỗ này ở đâu cả.", "latency_ms": 214.14116700179875, "input_tokens": 37}
+{"text": "Mình không tìm ra trang dashboard, có ai giúp mình vào đây không nhỉ? Tìm mãi không thấy.", "latency_ms": 222.68820798490196, "input_tokens": 35}
+{"text": "Làm ơn cho tôi hỏi cách để xuất báo cáo dự án ra file Excel? Tôi đang cần gấp để gửi cho khách hàng.", "latency_ms": 223.62137501477264, "input_tokens": 48}
+{"text": "Cách truy cập API thông qua Postman thì như thế nào, có tài liệu nào rõ ràng không?", "latency_ms": 200.0637079763692, "input_tokens": 34}
+{"text": "Mình muốn biết cách chỉnh sửa quyền của từng thành viên trong nhóm, nó rối quá, ai giúp mình với?", "latency_ms": 211.8113339820411, "input_tokens": 41}
+{"text": "Có cách nào để thêm nhiều người vào dự án không?", "latency_ms": 219.7627910063602, "input_tokens": 23}
+{"text": "Kiểm tra cầu hình server ở đâu nhỉ?", "latency_ms": 298.2129580050241, "input_tokens": 16}
+{"text": "Mình đang thử tích hợp hệ thống một cách tự động nhưng không biết dùng API thế nào cho cả 2 bên. Có ai hướng dẫn cho mình được không?", "latency_ms": 290.05462501663715, "input_tokens": 62}
+{"text": "Mình đang xài gói free, ko hiểu sao có tính năng mà lẽ ra phải trả tiền, ai biết điều này ko?", "latency_ms": 205.8222919877153, "input_tokens": 44}
+{"text": "Xin chào, tôi không rõ cách tích hợp Slack với phần mềm của bạn. Ai đó giúp với!", "latency_ms": 205.16650000354275, "input_tokens": 39}
+{"text": "Sao dạo này mình hay bị mất kết nối khi dùng phần mềm vậy? Có cách nào khắc phục ko nhỉ?", "latency_ms": 190.9215839987155, "input_tokens": 44}
+{"text": "Hơi thấy phiền, sao không có ai phản hồi ticket của tôi vậy?", "latency_ms": 207.44887500768527, "input_tokens": 27}
+{"text": "Tại sao tính năng chia sẻ tài liệu không hoạt động?", "latency_ms": 243.7340840115212, "input_tokens": 24}
+{"text": "Hướng dẫn mình cách xuất file CSV nhé", "latency_ms": 245.56012501125224, "input_tokens": 17}
+{"text": "giao diện mới thấy khó dùng ghê, có ai giúp mk không?", "latency_ms": 208.70554199791513, "input_tokens": 22}
+{"text": "Hướng dẫn tôi cách tải xuống nội dung từ tài khoản của mình nhé!", "latency_ms": 333.2632920064498, "input_tokens": 31}
+{"text": "Mình thắc mắc về cách bảo mật cho tài khoản. Có hướng dẫn chi tiết nào không?", "latency_ms": 288.8914999784902, "input_tokens": 40}
+{"text": "tks vì phần mềm tuyệt vời, cho mình hỏi cách thay đổi tên dự án với, cảm ơn!", "latency_ms": 288.1437499891035, "input_tokens": 44}
+{"text": "Làm ơn giúp tôi với việc kết nối với API, thấy mã lỗi ở đâu không?", "latency_ms": 305.7304169924464, "input_tokens": 36}
+{"text": "Có thể cho tôi biết chi tiết về cách sử dụng phần mềm cho lớp học trực tuyến không?", "latency_ms": 208.60091701615602, "input_tokens": 40}
+{"text": "cach ket noi voi zapier ak?", "latency_ms": 213.05412499350496, "input_tokens": 9}
+{"text": "Lỗi thời gian phản hồi API quá lâu, gis cách fix?", "latency_ms": 252.74375002481975, "input_tokens": 25}
+{"text": "Sao không upload đc file?", "latency_ms": 207.537374983076, "input_tokens": 8}
+{"text": "Tôi gặp vấn đề với chức năng phân quyền trong nhóm làm việc. Có ai có thể giúp tôi tìm hiểu cách thiết lập vai trò cho các thành viên không?", "latency_ms": 317.781791993184, "input_tokens": 64}
+{"text": "mình không biết làm sao để sửa lỗi giao diện trên mobile", "latency_ms": 256.6287500085309, "input_tokens": 21}
+{"text": "có tài liệu nào chi tiết hơn về việc tích hợp hệ thống với Slack không ạ?", "latency_ms": 298.32916700979695, "input_tokens": 34}
+{"text": "Làm sao để kiểm tra nhật ký hoạt động của người dùng? Cảm ơn các bạn rất nhiều!", "latency_ms": 285.5359170062002, "input_tokens": 39}
+{"text": "Gửi lên server but receive 500 Internal Server Error. Em phải làm sao giờ?", "latency_ms": 204.89354198798537, "input_tokens": 24}
+{"text": "Làm ơn giúp mình điều chỉnh notification cho tất cả thành viên trong team được không?", "latency_ms": 209.46237500174902, "input_tokens": 28}
+{"text": "Cách nào để xem các task đã hoàn tất trong hệ thống?", "latency_ms": 258.01945800776593, "input_tokens": 21}
+{"text": "Tôi đang bị lỗi không thể truy cập dashboard, đã xóa cache mà vẫn không được. Làm ơn, giúp tôi với!", "latency_ms": 206.49858299293555, "input_tokens": 46}
+{"text": "Mình mới sử dụng phần mềm này và có thắc mắc về cách chèn file đính kèm trong dự án. Bạn có thể chỉ mình cách thực hiện không?", "latency_ms": 308.3821249892935, "input_tokens": 58}
+{"text": "Chúc ngày mới tốt lành, tôi cần hướng dẫn cụ thể về cách tạo một bảng điều khiển tùy chỉnh. Có thể cho tôi biết quy trình được không?", "latency_ms": 313.16699998569675, "input_tokens": 67}
+{"text": "Đăng nhập không thành công, lỗi gì vậy?", "latency_ms": 261.5826669789385, "input_tokens": 15}
+{"text": "Cảm giác mình đã bị mất dữ liệu rồi, làm sao để lấy lại đây?", "latency_ms": 215.35500002210028, "input_tokens": 31}
+{"text": "Lỗi đăng nhập khiến mình không làm việc được!", "latency_ms": 204.89466699655168, "input_tokens": 17}
+{"text": "Cách xóa một task đã hoàn thành?", "latency_ms": 213.54016699478962, "input_tokens": 12}
+{"text": "why does the app keep crashing on my laptop?", "latency_ms": 242.73683401406743, "input_tokens": 10}
+{"text": "Error 500 when accessing the admin panel...", "latency_ms": 227.43762499885634, "input_tokens": 9}
+{"text": "Tải file mẫu xuống mà dữ liệu bị thiếu!", "latency_ms": 214.05479198438115, "input_tokens": 19}
+{"text": "I need help with exporting data, can you guide me through this?", "latency_ms": 210.76029201503843, "input_tokens": 14}
+{"text": "Can’t upload files today... what’s going on?", "latency_ms": 284.9309169978369, "input_tokens": 11}
+{"text": "Sau khi cập nhật phiên bản mới, ứng dụng khởi động rất lâu, có cách nào khắc phục không?", "latency_ms": 222.88908300106414, "input_tokens": 44}
+{"text": "freelancer mà, không sử dụng được tính năng nào của gói Pro hết, ai có giải pháp giúp mình với?", "latency_ms": 293.1512499926612, "input_tokens": 43}
+{"text": "Gửi đội ngũ, làm thế nào để cấu hình thông báo qua email cho các thay đổi trong dự án?", "latency_ms": 298.64362499210984, "input_tokens": 40}
+{"text": "Làm thế nào để thêm nhiều người vào nhóm hiện tại trong dự án?", "latency_ms": 200.0239579938352, "input_tokens": 30}
+{"text": "trong phần thiết lập không thấy chỗ chỉnh quyền cho từng người dùng, có sao không?", "latency_ms": 232.24875002051704, "input_tokens": 31}
+{"text": "Có ai đó có thể chỉ cho tôi cách thay đổi thông tin tài khoản không? Tôi muốn cập nhật địa chỉ email của mình!", "latency_ms": 231.3499579904601, "input_tokens": 46}
+{"text": "Mình đang dùng Pro mà muốn biết cách tạo đội nhóm trong phòng làm việc, ai giúp với!", "latency_ms": 230.10829099803232, "input_tokens": 39}
+{"text": "Sao lỗi không tìm thấy đường dẫn tự động?h", "latency_ms": 302.93670800165273, "input_tokens": 23}
+{"text": "Nghe nói phần mềm này có tính năng mới, mình không tìm thấy ở đâu hết, ai có thông tin không?", "latency_ms": 287.7617090125568, "input_tokens": 40}
+{"text": "Chào các bạn, mình cần hướng dẫn cách thêm tài liệu vào thư viện, không thực sự rõ về bước này.", "latency_ms": 306.77516700234264, "input_tokens": 44}
+{"text": "Mình thấy có lỗi khi tạo báo cáo tháng, không xuất ra được dữ liệu, mong được giúp đỡ.", "latency_ms": 208.02024999284185, "input_tokens": 36}
+{"text": "gop tag support dc ko?", "latency_ms": 313.89537500217557, "input_tokens": 7}
+{"text": "Giữ sao để không bị thoát khỏi tài khoản khi đang làm việc nữa? Нереально!!!", "latency_ms": 256.9192920054775, "input_tokens": 35}
+{"text": "Chỉnh sửa thông tin tài khoản không hoạt động, làm ơn giúp!", "latency_ms": 208.22383297490887, "input_tokens": 27}
+{"text": "Tôi không thể tìm được thông tin hướng dẫn sử dụng các tính năng mới nhất, giúp tôi với!", "latency_ms": 221.81645801174454, "input_tokens": 42}
+{"text": "Lỗi không kết nối được với cơ sở dữ liệu, dù đã kiểm tra mọi thứ. Ai có thể chỉ ra vấn đề không?", "latency_ms": 302.571459003957, "input_tokens": 43}
+{"text": "Mình đã nhập đúng thông tin tài khoản mà vẫn không đăng nhập được. Nhờ kiểm tra giúp với!", "latency_ms": 263.56849999865517, "input_tokens": 36}
+{"text": "Có cách nào để chia sẻ báo cáo với các thành viên không? Mình tìm mãi mà không thấy!", "latency_ms": 195.56845899205655, "input_tokens": 37}
+{"text": "Có tính năng nào có thể đổi mã dự án không?", "latency_ms": 214.35679201385938, "input_tokens": 21}
+{"text": "Tôi đang nghiên cứu cách liên kết phần mềm này với một ứng dụng bên thứ ba. Bạn có thể hướng dẫn tôi những bước cần làm được không?", "latency_ms": 305.956750002224, "input_tokens": 67}
+{"text": "Có ai gặp lỗi khi thực hiện thanh toán không? Tại sao mình không thể hoàn tất giao dịch nhỉ?", "latency_ms": 216.0129169933498, "input_tokens": 40}
+{"text": "Bạn có ông nào trong team sales không? Mình muốn trao đổi một số dự án.", "latency_ms": 205.37545799743384, "input_tokens": 30}
+{"text": "Mình rất thích giao diện của phần mềm, nhưng chưa rõ có hỗ trợ tiếng Việt không?", "latency_ms": 208.09091700357385, "input_tokens": 38}
+{"text": "Có ai biết thứ Bảy này liệu có meetup nào không?", "latency_ms": 210.42745900922455, "input_tokens": 19}
+{"text": "HR mình đang muốn triển khai công cụ này nhiều hơn với các phòng ban khác, không biết có cách nào để tích hợp không?", "latency_ms": 306.80454199318774, "input_tokens": 48}
+{"text": "Trời ơi, sếp mình vừa mới hỏi về phần mềm quản lý dự án. Ko biết có chương trình dùng thử nào ko nhỉ?", "latency_ms": 279.7987910162192, "input_tokens": 55}
+{"text": "Mình thấy giao diện của phần mềm rất bắt mắt, không biết có thể tùy chỉnh nó được không?", "latency_ms": 294.953958975384, "input_tokens": 39}
+{"text": "Hey there, any chance I could get a custom demo?", "latency_ms": 207.8242920106277, "input_tokens": 12}
+{"text": "Mình nghe nói có một sự kiện online sẽ diễn ra, mong là không bỏ lỡ!", "latency_ms": 344.8677080159541, "input_tokens": 33}
+{"text": "Hey, có người nhận chat không?", "latency_ms": 199.56754200393334, "input_tokens": 10}
+{"text": "lần sau có thể cho mình biết thêm về các buổi đào tạo không?", "latency_ms": 203.65295800729655, "input_tokens": 25}
+{"text": "what's the update on the project?", "latency_ms": 218.29808299662545, "input_tokens": 8}
+{"text": "Cảm ơn các bạn đã làm việc chăm chỉ, sản phẩm đang rất ổn.", "latency_ms": 276.17566598928533, "input_tokens": 27}
+{"text": "Đánh giá chất lượng sản phẩm khá tốt, cảm ơn các bạn!", "latency_ms": 266.3609579904005, "input_tokens": 25}
+{"text": "Chào các bạn, mình rất thích phần mềm của các bạn, nhưng chưa hiểu hết về tính năng của nó. Liệu có thể tổ chức một buổi hướng dẫn cho nhóm mình không?", "latency_ms": 221.09674999956042, "input_tokens": 69}
+{"text": "Mong các bạn sẽ phát triển thêm nhiều tính năng hữu ích!", "latency_ms": 237.0342499925755, "input_tokens": 27}
+{"text": "Hôm qua mình tò mò đọc về quá trình phát triển sản phẩm của các bạn, rất hay!", "latency_ms": 208.19616699009202, "input_tokens": 31}
+{"text": "Mình nhớ lần trước có nói về việc cải thiện tốc độ phần mềm, không biết có ý kiến gì mới không?", "latency_ms": 224.86099999514408, "input_tokens": 46}
+{"text": "Có cách nào để mình đóng góp ý tưởng cho bên bạn không nhỉ?", "latency_ms": 218.45174999907613, "input_tokens": 30}
+{"text": "có ai đã thử tính năng mới chưa nhỉ? Thấy trên website ghi là rất ấn tượng!", "latency_ms": 214.5143750240095, "input_tokens": 32}
+{"text": "Bây giờ mình có thể kêu bạn bè dùng thử dc ko?", "latency_ms": 209.8435419902671, "input_tokens": 23}
+{"text": "mình thấy giao diện mới hơi khó sử dụng, có thể góp ý thêm không?", "latency_ms": 294.7534589911811, "input_tokens": 32}
+{"text": "Các bạn có bí kíp nào dùng tốt hơn không?", "latency_ms": 195.5285420117434, "input_tokens": 21}
+{"text": "Chào, mình muốn tìm hiểu về lịch sử phát triển của phần mềm này, có tài liệu nào không?", "latency_ms": 210.77879102085717, "input_tokens": 43}
+{"text": "Đang tìm kiếm tư liệu cho bài thuyết trình, ai có share không?", "latency_ms": 205.76454198453575, "input_tokens": 25}
+{"text": "sẽ chia sẻ các tính năng yêu thích của mình với team, cảm ơn các bạn đã làm một sản phẩm tốt!", "latency_ms": 203.68783301091753, "input_tokens": 44}
+{"text": "Mình mới vào làm, cần được hướng dẫn chút ít!", "latency_ms": 203.211874992121, "input_tokens": 23}
+{"text": "Tôi đã sử dụng sản phẩm của các bạn được một thời gian và muốn cho ý kiến, có một số điểm cần cải thiện!", "latency_ms": 241.7696249904111, "input_tokens": 45}
+{"text": "Uh, cho tôi hỏi, bài viết trên blog có tính phí không?", "latency_ms": 207.8800000017509, "input_tokens": 24}
+{"text": "Cảm ơn đã giúp đỡ!", "latency_ms": 205.66300000064075, "input_tokens": 13}
+{"text": "hihi, mình vừa phát hiện một tính năng thú vị trong app, hết sức bất ngờ!", "latency_ms": 288.66916699917056, "input_tokens": 35}
+{"text": "Chào cả nhà, mình có câu hỏi nhẹ xíu nha", "latency_ms": 267.0027500134893, "input_tokens": 24}
+{"text": "Các bạn có kế hoạch ra mắt sản phẩm mới không?", "latency_ms": 214.25833299872465, "input_tokens": 18}
+{"text": "Cảm ơn bạn, mình rất thích giao diện mới này!", "latency_ms": 219.08029200858437, "input_tokens": 21}
+{"text": "Bên bạn có giải pháp nào cho học sinh không?", "latency_ms": 206.4962089934852, "input_tokens": 18}
+{"text": "Mong chương trình khuyến mãi sớm quay lại!", "latency_ms": 206.87245900626294, "input_tokens": 18}
+{"text": "cảm ơn bạn đã hỗ trợ", "latency_ms": 219.01137501117773, "input_tokens": 11}
+{"text": "Cảm giác như một số tính năng còn phức tạp hơn mình nghĩ. Có must-have nào không?", "latency_ms": 207.12245898903348, "input_tokens": 40}
+{"text": "Tôi thấy sản phẩm của bạn có nhiều tiềm năng. Có thể hỗ trợ để phát triển tính năng mới không?", "latency_ms": 199.62533400394022, "input_tokens": 40}
+{"text": "Mình thấy phần mềm này rất hay, nhưng đôi khi gặp khó khăn trong việc tìm hiểu các tính năng, các bạn có thể sản xuất video hướng dẫn không?", "latency_ms": 209.350541990716, "input_tokens": 63}
+{"text": "Cảm ơn team vì những cải tiến gần đây, hy vọng sẽ có nhiều tính năng hữu ích trong tương lai!", "latency_ms": 302.4521250044927, "input_tokens": 48}
+{"text": "Bạn có thể cho mình biết công ty có tổ chức các hoạt động ngoại khóa không?", "latency_ms": 211.17624998441897, "input_tokens": 30}
+{"text": "Could you share your company's mission statement?", "latency_ms": 203.04766698973253, "input_tokens": 9}
+{"text": "Có video hướng dẫn nào không?", "latency_ms": 229.62291701696813, "input_tokens": 15}
+{"text": "Cuối tuần rồi, cùng nhau đi cà phê không?", "latency_ms": 210.76995800831355, "input_tokens": 19}
+{"text": "Mình có góp ý nhỏ về tính năng, hi vọng sẽ thêm tính năng đó nhé!", "latency_ms": 262.59208301780745, "input_tokens": 35}
+{"text": "đã từng có lần bị trừ phí sai", "latency_ms": 241.03658300009556, "input_tokens": 15}
+{"text": "làm ơn cho mình hỏi là có event offline nào không?", "latency_ms": 214.35725002083927, "input_tokens": 20}
+{"text": "Mình đang tìm kiếm một giải pháp quản lý dự án cho nhóm, tự dưng thấy app của bạn, có cách nào để sử dụng thử không?", "latency_ms": 211.26133398502134, "input_tokens": 56}
+{"text": "Mọi người có ai biết cách dùng tính năng mới không?", "latency_ms": 257.6776250207331, "input_tokens": 20}
+{"text": "Tôi cần sức mạnh quảng bá thêm.", "latency_ms": 200.0838329840917, "input_tokens": 18}
+{"text": "Chào các bạn, mình thích sản phẩm của các bạn lắm, không biết có chương trình nào cho khởi nghiệp không nhỉ?", "latency_ms": 204.28000000538304, "input_tokens": 43}
+{"text": "thực sự rất hài lòng với hỗ trợ từ các bạn, cảm ơn!", "latency_ms": 286.19220899417996, "input_tokens": 25}
+{"text": "Chào bạn, mình có một chút góp ý cho tính năng mới, nhìn rất hay nhưng hơi khó sử dụng.", "latency_ms": 201.97337499121204, "input_tokens": 45}
+{"text": "Tìm hiểu sản phẩm của bạn trên mạng, thấy hay ghê, cần thử nghiệm!", "latency_ms": 248.15366600523703, "input_tokens": 31}
+{"text": "có cập nhật gì cho phiên bản mới không?", "latency_ms": 241.02008301997557, "input_tokens": 16}
+{"text": "Do you have any resources on best practices for using your tool?", "latency_ms": 215.9307920082938, "input_tokens": 13}
+{"text": "Gần hết hạn sử dụng rồi!!", "latency_ms": 205.80291698570363, "input_tokens": 15}
+{"text": "Nếu nâng cấp giữa tháng thì tính tiền thế nào?", "latency_ms": 806.7263329867274, "input_tokens": 26}
+{"text": "Cho hỏi chính sách giá cho reseller", "latency_ms": 808.0343329929747, "input_tokens": 13}
+{"text": "Startup mới thành lập có chương trình hỗ trợ giá không?", "latency_ms": 815.7577500096522, "input_tokens": 18}
+{"text": "Có xuất hóa đơn đỏ khi mua gói năm không?", "latency_ms": 838.017417001538, "input_tokens": 20}
+{"text": "Bảng giá mới áp dụng từ khi nào?", "latency_ms": 208.82820800761692, "input_tokens": 17}
+{"text": "Hủy subscription và xóa thông tin thanh toán của tôi", "latency_ms": 216.52458401513286, "input_tokens": 17}
+{"text": "Team giải thể rồi, đóng tài khoản công ty giúp mình", "latency_ms": 233.4702920052223, "input_tokens": 23}
+{"text": "Tích hợp Zapier báo lỗi authentication failed", "latency_ms": 245.63749998924322, "input_tokens": 14}
+{"text": "Thông báo đẩy trên máy tính không hiện", "latency_ms": 223.64799998467788, "input_tokens": 15}
+{"text": "Mình vừa thanh toán, cần làm gì để kích hoạt tính năng Pro?", "latency_ms": 223.60279099666514, "input_tokens": 30}
+{"text": "bao nhiêu seat dc dùng cho gói này?", "latency_ms": 233.29329199623317, "input_tokens": 15}
+{"text": "Có gói nào phù hợp cho startup ko vậy?", "latency_ms": 230.3393330075778, "input_tokens": 20}
+{"text": "mình muốn biết giá gói pro nếu trả theo quý thì tính thế nào?", "latency_ms": 278.5562920034863, "input_tokens": 31}
+{"text": "Gói của tôi có thể thêm 2 seat nữa không và giá là bao nhiêu?", "latency_ms": 239.4924580003135, "input_tokens": 30}
+{"text": "Có khuyến mãi nào cho gói Business không nhỉ?", "latency_ms": 266.77337498404086, "input_tokens": 19}
+{"text": "mình có thể dùng thử tất cả tính năng của gói cao nhất trước khi quyết định không?", "latency_ms": 228.38641700218432, "input_tokens": 37}
+{"text": "giá gói này đã ổn định chưa hay có thể thay đổi trong thời gian tới?", "latency_ms": 216.64887500810437, "input_tokens": 32}
+{"text": "Tại sao không thấy thông tin giá gói business trên web thế?", "latency_ms": 235.63524999190122, "input_tokens": 21}
+{"text": "Mình muốn hỏi định giá cho gói Pro, có chiết khấu gì không?", "latency_ms": 235.8697080053389, "input_tokens": 29}
+{"text": "gói pro có cần cam kết sử dụng lâu dài ko nhỉ?", "latency_ms": 238.0222500069067, "input_tokens": 24}
+{"text": "Tính năng SSO tính phí thêm à?", "latency_ms": 270.88587498292327, "input_tokens": 15}
+{"text": "Có cách nào để nâng cấp gói mà không mất phí ngay một lúc không?", "latency_ms": 255.45862500439398, "input_tokens": 33}
+{"text": "Tôi muốn biết xem gói Premium có khác biệt gì so với gói Pro không?", "latency_ms": 265.47337500960566, "input_tokens": 31}
+{"text": "Mình có thể dùng thử gói Premium không?", "latency_ms": 281.5467920154333, "input_tokens": 15}
+{"text": "Chi phí cho 15 seat là bao nhiêu vậy?", "latency_ms": 214.3562919809483, "input_tokens": 18}
+{"text": "Tôi không thấy thông tin giá trên website, có thể cho biết giá gói Free khong?", "latency_ms": 221.504916989943, "input_tokens": 29}
+{"text": "mình định mua gói dịch vụ này cho một sự kiện, có hỗ trợ giá cả không?", "latency_ms": 226.2482079968322, "input_tokens": 35}
+{"text": "Cần gói nào để phù hợp cho 20 người?", "latency_ms": 228.75337497680448, "input_tokens": 20}
+{"text": "мình nhìn thấy giá khác nhau trên trang khác, giá chính thức thì sao?", "latency_ms": 279.7480830049608, "input_tokens": 32}
+{"text": "Công ty mình đông nhân viên, nếu mua nhiều seat có chiết khấu không?", "latency_ms": 274.0581249818206, "input_tokens": 28}
+{"text": "Liệu có chương trình giảm giá nữa không vậy?", "latency_ms": 272.463917004643, "input_tokens": 20}
+{"text": "Giá tăng thêm seat có cao không?", "latency_ms": 270.2217919868417, "input_tokens": 12}
+{"text": "có gói dịch vụ nào không tính phí khởi kiện không bạn?", "latency_ms": 209.32291701319627, "input_tokens": 26}
+{"text": "Mình cần báo giá cho việc nâng cấp lên gói kèm thêm tính năng dự toán chi phí cho dự án nhé!", "latency_ms": 229.37233399716206, "input_tokens": 47}
+{"text": "Khi nào có đợt giảm giá mới vậy ạ?", "latency_ms": 235.47654200228862, "input_tokens": 21}
+{"text": "Cho mình hỏi gói Business có bảo mật dữ liệu không?", "latency_ms": 242.32316701090895, "input_tokens": 21}
+{"text": "Có free trial cho phần mềm ko?", "latency_ms": 306.91650000517257, "input_tokens": 12}
+{"text": "Có gói dùng thử nào cho các doanh nghiệp lớn không?", "latency_ms": 297.13845800142735, "input_tokens": 25}
+{"text": "Làm ơn cho biết gói rẻ hơn đi!", "latency_ms": 299.4306250184309, "input_tokens": 18}
+{"text": "Em đang thắc mắc là giá cho từng tháng của gói Enterprise có linh hoạt không, hay tính theo năm luôn vậy?", "latency_ms": 296.37087500304915, "input_tokens": 44}
+{"text": "Gói Pro của mình tính tiền như thế nào?", "latency_ms": 200.76570799574256, "input_tokens": 19}
+{"text": "giá gói Free cho giáo viên có khác gì không?", "latency_ms": 214.18512499076314, "input_tokens": 17}
+{"text": "Nếu mình muốn thử trước khi quyết định thì có bản dùng thử nào cho gói Business không?", "latency_ms": 217.05391598516144, "input_tokens": 38}
+{"text": "Is there an additional cost for extra users or features in the Pro package?", "latency_ms": 233.4467909822706, "input_tokens": 15}
+{"text": "Bây giờ mà đăng ký gói Free có thể nâng cấp lên Pro ngay không?", "latency_ms": 293.01095797563903, "input_tokens": 31}
+{"text": "Sao mà không ai trả lời email của tôi? Bực ghê!", "latency_ms": 268.8875420135446, "input_tokens": 22}
+{"text": "giá của gói Pro có bao nhiêu tháng không?", "latency_ms": 283.9144579775166, "input_tokens": 19}
+{"text": "Tôi đang rất thất vọng khi mà không có ai trong đội ngũ làm việc để giải quyết vấn đề của tôi.", "latency_ms": 291.00033300346695, "input_tokens": 46}
+{"text": "Sao lại có thêm phí duy trì dịch vụ hàng tháng mà lúc đăng ký không có thông báo gì về việc này?", "latency_ms": 215.28241600026377, "input_tokens": 44}
+{"text": "Làm ơn cho tôi biết sao lại bị trừ tiền khi tôi đã hủy gói từ tháng trước?", "latency_ms": 239.14858300122432, "input_tokens": 40}
+{"text": "Sao cứ mỗi lần tôi gửi yêu cầu hỗ trợ đều gây khó khăn và không được phản hồi?", "latency_ms": 239.9286250001751, "input_tokens": 43}
+{"text": "việc trì hoãn hoàn tiền đến 7 ngày là quá lâu, có thể làm nhanh hơn được không?", "latency_ms": 328.711416979786, "input_tokens": 38}
+{"text": "Tại sao phí dịch vụ lại tăng mà không có thông báo gửi trước cho tôi vậy?", "latency_ms": 289.95420900173485, "input_tokens": 35}
+{"text": "Mong ad xem lại vụ bị lỗi hủy gói mà ko cho! Thang này bị thu 2 lần mệt ghê!", "latency_ms": 271.2035839795135, "input_tokens": 39}
+{"text": "Dịch vụ dùng mà giá không xứng đáng, ngồi chờ cả tiếng đồng hồ không thấy ai!", "latency_ms": 274.4170410151128, "input_tokens": 39}
+{"text": "Cảm thấy rất khó chịu khi không ai giải thích về sai sót này.", "latency_ms": 244.45612498675473, "input_tokens": 27}
+{"text": "Tôi rất thất vọng với chất lượng dịch vụ liên tục gặp lỗi.", "latency_ms": 218.77508400939405, "input_tokens": 32}
+{"text": "Vẫn chưa giải quyết xong vụ trừ tiền tháng trước, tôi bực quá!", "latency_ms": 225.67379198153503, "input_tokens": 35}
+{"text": "Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền, rất bất tiện.", "latency_ms": 229.05125000397675, "input_tokens": 41}
+{"text": "Cảm thấy không hài lòng với sự phục vụ, nhân viên không hỗ trợ tốt như trước.", "latency_ms": 204.22612500260584, "input_tokens": 35}
+{"text": "Không vui tí nào khi không hài lòng với dịch vụ sau khi đã sử dụng nhiều tháng.", "latency_ms": 203.9938750094734, "input_tokens": 36}
+{"text": "Hóa đơn tháng này không khớp với những gì tôi sử dụng, không biết làm sao!", "latency_ms": 295.4274590010755, "input_tokens": 36}
+{"text": "Hệ thống vừa bị lỗi khi tôi cố gắng xuất báo cáo, điều này thật sự gây khó khăn cho công việc của chúng tôi.", "latency_ms": 302.86991700995713, "input_tokens": 57}
+{"text": "Bên bạn công bố giảm giá nhưng hóa đơn vẫn như cũ, tôi cảm thấy bị lừa!", "latency_ms": 282.23091599647887, "input_tokens": 43}
+{"text": "Tháng trước tôi có báo lỗi nhưng vẫn chưa thấy ai xử lý cả.", "latency_ms": 285.11024999897927, "input_tokens": 33}
+{"text": "I feel misled by your pricing plans, it's not what you advertised!", "latency_ms": 216.74508298747241, "input_tokens": 15}
+{"text": "Tôi đã nói rõ với support rằng tôi không muốn gia hạn, mà vẫn bị trừ tiền, thật không thể chấp nhận được!", "latency_ms": 229.97941600624472, "input_tokens": 53}
+{"text": "Trước đây tôi đã thanh toán gói nhưng giờ lại thấy thiếu tính năng quan trọng. Ai có thể giúp tôi giải quyết việc này?", "latency_ms": 233.92699999385513, "input_tokens": 57}
+{"text": "Có lần tôi thấy bị tính phí không đúng, có ai xem giúp tôi không?", "latency_ms": 214.35054199537262, "input_tokens": 32}
+{"text": "Sao không có ai nói với tôi về quy trình hủy khi cần?", "latency_ms": 281.23162500560284, "input_tokens": 26}
+{"text": "Thực sự bực mình khi mất tiền oan mà không ai thông báo trước, ai cũng bảo dịch vụ này tuyệt vời mà sao không thấy yêu cầu của tôi được xử lý.", "latency_ms": 268.1002909957897, "input_tokens": 69}
+{"text": "Lần trước tôi cũng đã phản ánh tình hình nhưng mà không thấy ai quan tâm.", "latency_ms": 266.12879199092276, "input_tokens": 35}
+{"text": "Có ai ở đó không? Tôi cần hỗ trợ khẩn cấp nhưng không thấy ai trả lời.", "latency_ms": 243.5837080120109, "input_tokens": 37}
+{"text": "Tôi nghĩ rằng ứng dụng này không đáp ứng đúng yêu cầu của chúng tôi và thật sự không hài lòng.", "latency_ms": 209.36270800302736, "input_tokens": 50}
+{"text": "Lỗi 404 mà cũng không ai phản hồi rõ ràng cho tôi, nản quá!", "latency_ms": 240.3170829929877, "input_tokens": 31}
+{"text": "Bạn cần cải thiện cách xử lý vấn đề ngay lập tức!", "latency_ms": 284.45787497912534, "input_tokens": 26}
+{"text": "Tôi đã gửi yêu cầu hoàn tiền nhưng không thấy hồi đáp, quá tệ!", "latency_ms": 242.17537499498576, "input_tokens": 34}
+{"text": "Mỗi lần dùng là có lỗi, không thể nào yên tâm làm việc hơn được!", "latency_ms": 302.37095800112, "input_tokens": 30}
+{"text": "Mỗi lần dùng đều không thấy ai hỗ trợ, chán thật sự!", "latency_ms": 274.26554198609665, "input_tokens": 25}
+{"text": "Tôi cảm thấy thật bất lực với cách làm việc này!", "latency_ms": 258.8831670000218, "input_tokens": 25}
+{"text": "đã quyết định phải xóa tài khoản", "latency_ms": 239.46183401858434, "input_tokens": 16}
+{"text": "Hơi thất vọng, thôi hủy luôn cho đơn giản", "latency_ms": 223.95325000979938, "input_tokens": 22}
+{"text": "Hủy luôn tài khoản của mình nhé, mất niềm tin thật rồi", "latency_ms": 275.8519999915734, "input_tokens": 26}
+{"text": "Mình không hài lòng, đang cân nhắc hủy đăng ký mà thấy không biết làm sao hủy?", "latency_ms": 238.95120798260905, "input_tokens": 36}
+{"text": "Cảm giác ko muốn tiếp tục, làm ơn hủy tài khoản giúp mình", "latency_ms": 397.30591597617604, "input_tokens": 32}
+{"text": "Tôi muốn dừng gói Pro lại nhé.", "latency_ms": 295.68666699924506, "input_tokens": 18}
+{"text": "Mình cần hủy gói đăng ký vì không có thời gian sử dụng, bạn có thể giúp mình không?", "latency_ms": 247.62262500007637, "input_tokens": 40}
+{"text": "Mình muốn dừng lại gói dịch vụ này ngay lập tức. Mọi thứ không như mong muốn!", "latency_ms": 244.05708399717696, "input_tokens": 40}
+{"text": "Mình vừa nghĩ lại, hãy hủy gói mà mình đã đăng ký", "latency_ms": 294.0596670086961, "input_tokens": 30}
+{"text": "Please cancel my subscription ASAP.", "latency_ms": 207.41562501643784, "input_tokens": 6}
+{"text": "Mình chán không muốn dùng nữa, làm ơn hủy cho mình.", "latency_ms": 248.50820799474604, "input_tokens": 25}
+{"text": "Thực sự mình không muốn tiếp tục sử dụng dịch vụ này. Làm cách nào để tắt tự động gia hạn?", "latency_ms": 232.97720798291266, "input_tokens": 49}
+{"text": "Mình không còn sử dụng nữa, hủy tài khoản giúp mình nhé!", "latency_ms": 326.7446670215577, "input_tokens": 30}
+{"text": "Mình muốn tạm ngưng dịch vụ, cần tắt gia hạn, xin hướng dẫn giúp mình!", "latency_ms": 311.040333006531, "input_tokens": 41}
+{"text": "Can you cancel my Pro plan, thks!", "latency_ms": 277.1986250008922, "input_tokens": 10}
+{"text": "Mình cảm thấy không phù hợp với gói này nữa, có thể hủy gói này không?", "latency_ms": 255.4635409906041, "input_tokens": 35}
+{"text": "Đã hết thời gian dùng, close account đi nhé.", "latency_ms": 215.9484580042772, "input_tokens": 18}
+{"text": "Có ai biết cách lấy access token không?", "latency_ms": 210.56899998802692, "input_tokens": 13}
+{"text": "Hủy hợp đồng của tôi ngay lập tức, tôi rất nghiêm túc!", "latency_ms": 231.90083299414255, "input_tokens": 32}
+{"text": "Cho mình hỏi thủ tục để hủy gói đăng ký là gì? Mình không muốn gia hạn thêm tháng này.", "latency_ms": 241.2959169887472, "input_tokens": 42}
+{"text": "How to connect the project management tool with Google Calendar? Anyway to make this work?", "latency_ms": 288.4572499897331, "input_tokens": 17}
+{"text": "Làm sao để cài đặt quyền truy cập cho thành viên trong dự án mới tạo?", "latency_ms": 277.06604200648144, "input_tokens": 30}
+{"text": "Getting an API rate limit error, any ideas?", "latency_ms": 285.51416701520793, "input_tokens": 10}
+{"text": "Sao mà hôm nay không coi được báo cáo trên dashboard nhỉ, để em TK trước hen?", "latency_ms": 303.0514999991283, "input_tokens": 30}
+{"text": "có cách nào để xem lại buổi họp video không? tôi không nhớ rõ", "latency_ms": 208.72341698850505, "input_tokens": 27}
+{"text": "Stuck on loading page for too long now!", "latency_ms": 226.07779200188816, "input_tokens": 10}
+{"text": "còn cách nào sửa lỗi syncing giữa các device không?", "latency_ms": 230.24812497897074, "input_tokens": 20}
+{"text": "Mình thấy bị đóng băng tài khoản mà không có thông báo gì cả, có biết tại sao không?", "latency_ms": 233.74979200889356, "input_tokens": 36}
+{"text": "Thông báo báo lỗi không rõ nguyên nhân", "latency_ms": 203.70116698904894, "input_tokens": 15}
+{"text": "Mình không thể đăng nhập vào tài khoản, có ai giúp không?", "latency_ms": 274.15574999758974, "input_tokens": 21}
+{"text": "Có ai từng gặp cảnh không đăng nhập được trên điện thoại không vậy?", "latency_ms": 290.79612498753704, "input_tokens": 27}
+{"text": "mình đang cần xuất báo cáo dự án ra file excel mà không biết làm thế nào, có ai hướng dẫn mình với được không?", "latency_ms": 306.7889169906266, "input_tokens": 48}
+{"text": "Góc làm việc của mình đang bị lag liên tục, phần mềm có giúp khắc phục không?", "latency_ms": 303.0219169741031, "input_tokens": 38}
+{"text": "Mình không biết lỗi này nghĩa là gì: 'error 500'? Có ai hiểu giúp không?", "latency_ms": 200.61812497442588, "input_tokens": 33}
+{"text": "Hôm qua mình nhận đc thông báo hệ thống có lỗi, mà giờ mình không thấy data đâu hết. Có ai biết phải làm sao không?", "latency_ms": 226.88204201404005, "input_tokens": 49}
+{"text": "biên soạn tài liệu cho team mà không thấy hỗ trợ markdown?!", "latency_ms": 243.75558400060982, "input_tokens": 20}
+{"text": "Tôi không thể tìm thấy chỗ để xem lịch sử thay đổi trong dự án, có cách nào giúp tôi không?", "latency_ms": 208.80354201653972, "input_tokens": 45}
+{"text": "Mình bị lỗi khi muốn thay đổi thông tin thanh toán, ai biết có cách nào không?", "latency_ms": 309.64683400816284, "input_tokens": 32}
+{"text": "Mình muốn hỏi về cách sao lưu dữ liệu cá nhân, có cách nào không?", "latency_ms": 271.1723330139648, "input_tokens": 32}
+{"text": "Em muốn biết cách thiết lập thông báo qua Slack, ai chỉ cho em với.", "latency_ms": 283.13441600766964, "input_tokens": 25}
+{"text": "Mình thấy có một số vấn đề nhỏ trong phần báo cáo, không biết ai có thể kiểm tra giúp mình không?", "latency_ms": 213.15754199167714, "input_tokens": 40}
+{"text": "Trời ơi, sao ban ngày cũng lag nhỉ?", "latency_ms": 205.75570900109597, "input_tokens": 20}
+{"text": "Bạn có phiếu giảm giá không?", "latency_ms": 221.08520800247788, "input_tokens": 11}
+{"text": "Các bạn có tính năng quản lý thời gian không?", "latency_ms": 238.15616700449027, "input_tokens": 19}
+{"text": "By the way, what's your favorite feature of the software?", "latency_ms": 207.978041988099, "input_tokens": 13}
+{"text": "Hôm qua mình đọc một bài viết về cách tăng năng suất làm việc, thấy có nhắc tới phần mềm của các bạn. Có thể cho mình biết thêm thông tin không?", "latency_ms": 304.230625013588, "input_tokens": 61}
+{"text": "Tôi chỉ muốn nói rằng ứng dụng rất tốt!", "latency_ms": 278.79833299084567, "input_tokens": 26}
+{"text": "Thực sự cảm ơn các bạn đã cho mình trải nghiệm thử sản phẩm, mình đã thấy nó hữu ích cho nhóm mình. Hy vọng sẽ có nhiều cập nhật mới!", "latency_ms": 221.51645901612937, "input_tokens": 62}
+{"text": "Hy vọng lần tới sẽ có nhiều buổi hội thảo hơn để mọi người có thể học hỏi lẫn nhau.", "latency_ms": 305.1770409801975, "input_tokens": 47}
+{"text": "Chào các bạn, mình đang tìm hiểu về các ứng dụng hỗ trợ cho quản lý dự án. Có ai có kinh nghiệm dùng phần mềm này không nhỉ?", "latency_ms": 226.8929999845568, "input_tokens": 61}
+{"text": "Chờ code cũ khắc phục xong cho cái lớp đi!!!", "latency_ms": 217.6407079969067, "input_tokens": 21}
+{"text": "Hello team! I'm enjoying the features, but I think a blog with tips would be great.", "latency_ms": 215.94754201942123, "input_tokens": 20}
+{"text": "Chúc các bạn luôn phát triển, không biết trong tương lai sẽ có bản dùng thử cho gói Enterprise không?", "latency_ms": 228.16316701937467, "input_tokens": 37}
+{"text": "Cảm ơn vì đã tạo ra tool xịn như vậy, rất thuận tiện cho mình!", "latency_ms": 287.80200000619516, "input_tokens": 31}
+{"text": "Cảm ơn các bạn đã hỗ trợ. Sản phẩm này thực sự giúp ích cho nhóm của mình nhiều.", "latency_ms": 286.242875008611, "input_tokens": 37}
+{"text": "có ai đó nghe nhạc trong giờ làm không nhỉ?", "latency_ms": 297.5638749776408, "input_tokens": 19}
+{"text": "mình thấy cách làm việc của đội ngũ rất chuyên nghiệp, cảm ơn các bạn!", "latency_ms": 280.70375000243075, "input_tokens": 36}
+{"text": "Học kỳ này bận quá, không biết có thể nào dùng thử mà không tính phí không?", "latency_ms": 208.13137499499135, "input_tokens": 33}
+{"text": "Làm ơn cho mình biết số điện thoại chăm sóc khách hàng nhé. Cảm ơn nhiều!", "latency_ms": 216.8394580075983, "input_tokens": 35}
+{"text": "Cảm ơn vì đã làm việc vất vả để hỗ trợ tụi mình.", "latency_ms": 236.80149999563582, "input_tokens": 28}
+{"text": "Tìm hiểu về API nhưng chưa hiểu rõ lắm.", "latency_ms": 249.90745799732395, "input_tokens": 23}
+{"text": "Ai biết công ty này có tuyển dụng không nhỉ?", "latency_ms": 191.99870800366625, "input_tokens": 17}
+{"text": "Làm ơn hãy cho mình mình biết kế hoạch sắp tới đi!", "latency_ms": 208.957583992742, "input_tokens": 27}
+{"text": "Không biết liệu có thể dùng thử lâu hơn không?", "latency_ms": 268.19450000766665, "input_tokens": 19}
+{"text": "Tôi hay gặp lỗi khi sử dụng trên điện thoại.", "latency_ms": 278.3356249856297, "input_tokens": 22}

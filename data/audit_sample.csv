@@ -1,0 +1,101 @@
+text,llm_label,human_label
+Tôi đang nghiên cứu cách liên kết phần mềm này với một ứng dụng bên thứ ba. Bạn có thể hướng dẫn tôi những bước cần làm được không?,tech_support,tech_support
+gói Enterprise sẽ có giá khác với gói Business chứ? có bản báo giá nào không?,pricing,pricing
+"Chào bên mình, mình muốn biết gói Business có bao nhiêu seat tối đa và giá cả như thế nào?",pricing,pricing
+I would like to know how long you’ve been in the market.,other,other
+"Tôi không hài lòng với thời gian phản hồi của các bạn, quá lâu so với mong đợi.",complaint,complaint
+"Đã từ lâu không thấy ai hỗ trợ tôi, quá thất vọng!",complaint,complaint
+"Hóa đơn ghi sai địa chỉ công ty, tôi đã báo cáo nhưng vẫn chưa thấy sửa.",complaint,complaint
+"Công ty mình đang muốn mua gói cho 5 người nhưng không biết giá cụ thể thế nào, có bảng giá nào không?",pricing,pricing
+phí duy trì tháng này đúng không?,complaint,complaint
+"Công ty mình đang phân vân giữa gói Pro và Business, có thể cho mình bảng giá được không?",pricing,pricing
+Mình đang cần một số tài liệu hướng dẫn và có thể giúp các bạn có thêm phản hồi cho dự án sau này?,other,other
+"Mình nghe nói các bạn có một đội ngũ rất hỗ trợ, sao không thấy thật nhiều phản hồi trong các group nhỉ?",other,other
+Where can I find the user manual?,tech_support,tech_support
+"Mình cần thêm seat cho gói Free, giá thế nào?",pricing,pricing
+"Bị lag khi thêm item vào dự án, không biết khắc phục sao!",tech_support,tech_support
+"Tôi muốn tạm ngưng sử dụng dịch vụ trong thời gian tới, có được không?",cancellation,cancellation
+What happens if I exceed the limit of users in the Free plan? Do I get charged?,pricing,pricing
+cho hỏi gói dùng thử thì sẽ tự động chuyển thành gói nào sau khi hết hạn?,pricing,pricing
+mức giá cho gói free có được thay đổi định kỳ không?,pricing,pricing
+"Nhân viên văn phòng báo cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.",cancellation,complaint
+"Làm ơn hãy giải quyết vấn đề này, bực mình quá đi",complaint,complaint
+"api trả về lỗi 403 khi mình gọi, có cách nào để fix không?",tech_support,tech_support
+"anh ơi, reset mật khẩu như thế nào?",tech_support,tech_support
+Gói Pro có giảm giá khi thanh toán theo năm không?,pricing,pricing
+"Cảm giác mình đã bị mất dữ liệu rồi, làm sao để lấy lại đây?",tech_support,tech_support
+Sao lần nào sửa xong cũng có lỗi mới xuất hiện?,complaint,complaint
+Mình thấy sản phẩm khá tốt nhưng nếu có thêm báo cáo nâng cao thì sẽ hay hơn nữa.,other,other
+Could I inquire about possible internship opportunities at your company?,other,other
+Thông tin về webinar lần tới đâu rồi?,other,other
+"Tôi không cần dùng nữa, giúp tôi hủy tài khoản.",cancellation,cancellation
+"Hệ thống báo lỗi không kết nối được, chả nhẽ tôi trả tiền mà không sử dụng được sao?",complaint,complaint
+"giấy tờ yêu cầu trên hệ thống không thể tải về được, có ai biết tại sao không ạ?",tech_support,tech_support
+Mình không biết lỗi này nghĩa là gì: 'error 500'? Có ai hiểu giúp không?,tech_support,tech_support
+App thường xuyên bị lag khiến tiến độ công việc chậm lại.,complaint,complaint
+Bạn có thể cho mình hỏi liệu có một nhóm người dùng nào trên Facebook không?,other,other
+trong trường hợp mình muốn nâng cấp từ gói Free lên gói Pro thì giá là bao nhiêu?,pricing,pricing
+"Tôi khá bận, nhưng vẫn muốn khen đội ngũ hỗ trợ của các bạn, làm việc quá tốt!",other,other
+Mọi thứ đều ổn cả chứ?,other,other
+"Cho mình hỏi, giá cả của gói Enterprise có thể thương lượng đc ko?",pricing,pricing
+"Hà Nội mùa này đẹp quá, cảm ơn các bạn đã giới thiệu cho mình ứng dụng tuyệt vời này! Hy vọng sẽ được gặp nhau trong một sự kiện nào đó!",other,other
+"Ko cần nữa, xoá mọi thứ đi giúp mình.",cancellation,cancellation
+Sao không có thông báo rõ ràng khi cập nhật điều khoản mới vậy?,complaint,complaint
+Trả theo năm có giảm giá gì không?,pricing,pricing
+"Tháng này còn không sử dụng mà vẫn thấy bị trừ tiền, sao lại như thế này chứ!?",complaint,complaint
+Cảm giác như một số tính năng còn phức tạp hơn mình nghĩ. Có must-have nào không?,other,tech_support
+"Bị trừ phí thiệt hại do hủy gói mà không ai thông báo, quá vô lý!",complaint,complaint
+Giá của gói Business là bao nhiêu vậy?,pricing,pricing
+"Please cancel my subscription immediately, I'm not using it anymore.",cancellation,cancellation
+Are there any ongoing promotions for new customers?,pricing,pricing
+đã quyết định phải xóa tài khoản,cancellation,cancellation
+Thật sự quá thất vọng về dịch vụ này!,complaint,complaint
+"Sao mà mình không thấy nút để kết nối với Zapier nhỉ, có phải mình đang nhầm không?",tech_support,tech_support
+"Tháng này tôi bị trừ tiền gấp đôi mà không một thông báo nào từ đội ngũ của bạn, thật không thể tưởng tượng nổi!",complaint,complaint
+Thực sự thư viện tài liệu còn hạn chế!,other,other
+Nếu mình gia hạn mà ko sử dụng thì có được hoàn lại ko?,cancellation,pricing
+Các bạn có bí kíp nào dùng tốt hơn không?,other,tech_support
+"Mình thấy giao diện có khác biệt sau bản cập nhật mới, cần hướng dẫn sử dụng lại mấy tính năng cũ.",tech_support,tech_support
+"Cho tôi hỏi, làm thế nào để tạo bài quiz trong hệ thống nhỉ?",tech_support,tech_support
+Can I get a discount if I pay for a year upfront?,pricing,pricing
+"Mình không muốn dùng nữa, hủy giúp",cancellation,cancellation
+Thay đổi gói có hơi tốn phí không?,pricing,pricing
+"Ê, sao mình không thấy nút thêm người dùng trong phần quản lý chứ? Mình làm đúng không ta?",tech_support,tech_support
+Rất bực mình khi không nhận được hỗ trợ gì!,complaint,complaint
+Cảm ơn vì hỗ trợ nhanh chóng!!!,other,other
+"Need step-by-step for API setup, thanks!",tech_support,tech_support
+"Hồi trước tài khoản mình không giới hạn người dùng, giờ tự dưng chỉ có 5 người thôi, tại sao lại vậy nhỉ?",complaint,complaint
+"Hủy luôn tài khoản của mình nhé, mất niềm tin thật rồi",cancellation,cancellation
+Tải file mẫu xuống mà dữ liệu bị thiếu!,tech_support,tech_support
+"đã nhắn tin mà bạn không trả lời, thật không chuyên nghiệp",complaint,complaint
+Làm ơn cho mình biết là có diễn đàn hỗ trợ trực tuyến không? Mình thích tham gia với các anh chị em khác. Thank you!,tech_support,other
+Can someone send me the current pricing table for all plans?,pricing,pricing
+"Cho mình hỏi bảng giá cho gói Enterprise, có gì khác biệt không?",pricing,pricing
+"Mình có một câu hỏi nhỏ, không biết có thể gửi feedback cho team qua đâu để các bạn ý có thể cải thiện sản phẩm được không nhỉ?",other,other
+"mình đã liên hệ nhưng không thấy phản hồi, cuối cùng thì ai sẽ chịu trách nhiệm cho vấn đề này?",complaint,complaint
+"Hello team, I just wanted to drop a note to express my appreciation for your assistance!",other,other
+Tháng trước tôi có báo lỗi nhưng vẫn chưa thấy ai xử lý cả.,complaint,complaint
+Hạn mức seat của gói Business là gì nhỉ?,pricing,pricing
+Cần câu trả lời về giá seat nhé!,pricing,pricing
+"giao diện bị lỗi font chữ, không hiển thị đúng, ai biết không?",tech_support,tech_support
+Tại sao không thể đồng bộ dự án từ Trello về phần mềm này?,tech_support,tech_support
+"Xin vui lòng giúp mình hủy đăng ký, cảm ơn rất nhiều!",cancellation,cancellation
+"Thời gian dùng gói tháng này là bao lâu, trả tiền 1 lần hay cố định cả năm?",pricing,pricing
+"Hổng muốn tiếp tục thanh toán, cảm ơn các bạn!",cancellation,cancellation
+Mình cảm thấy bị lừa khi sử dụng dịch vụ này!,complaint,complaint
+Sao lúc nào nhờ hỗ trợ cũng không thấy ai trả lời!,complaint,complaint
+"Sẽ thật tuyệt nếu có thêm option dark mode, mình thích dùng đêm.",other,other
+"cần một lời giải thích cho việc hoàn tiền chậm, có gì không ổn từ phía các bạn?",complaint,complaint
+Sao hôm nay không thấy ai online vậy?,other,other
+Nhà mình có thể dùng API nào cho nó nhanh nhỉ?,tech_support,tech_support
+"Mình thích cái logo của công ty, thấy ấn tượng phết!",other,other
+Hạn mức dữ liệu cho gói Business là j?,pricing,pricing
+Làm ơn cho mình hỏi làm sao để đính kèm file vào cho những người trong nhóm coi trong task ạ?,tech_support,tech_support
+Có cách nào để chia sẻ báo cáo với các thành viên không? Mình tìm mãi mà không thấy!,tech_support,tech_support
+M muốn hỏi gói Business có giá bao nhiêu?,pricing,pricing
+"trong đội của mình có thành viên không thể thấy nhiệm vụ trên dashboard, không hiểu có vấn đề gì với quyền truy cập không?",tech_support,tech_support
+"Chào các bạn, mình đang tìm hiểu về các ứng dụng hỗ trợ cho quản lý dự án. Có ai có kinh nghiệm dùng phần mềm này không nhỉ?",other,other
+"Mình thấy gói Free chỉ cho 3 project, nếu nâng lên gói Business thì có thêm bao nhiêu project nữa nhỉ?",pricing,pricing
+"mình cần hướng dẫn kết nối phần mềm với Google Calendar, có ai có link hướng dẫn không?",tech_support,tech_support
+I'm sorry but I need to cancel due to budget cuts at work.,cancellation,cancellation
+"Đã chi tiền nhưng không nhận được dịch vụ mong đợi, tôi muốn được giải thích rõ ràng.",complaint,complaint

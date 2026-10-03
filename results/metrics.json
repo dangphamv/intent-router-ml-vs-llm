@@ -1,0 +1,639 @@
+{
+  "llm_model": "gpt-4o-mini",
+  "embed_model": "text-embedding-3-small",
+  "n_test": 300,
+  "n_test_human": 37,
+  "methods": {
+    "A": {
+      "cv_macro_f1": [
+        0.8709809889013759,
+        0.8814692308447338,
+        0.8940976334234041,
+        0.9009767662399242,
+        0.8811151209241881
+      ],
+      "cost_per_100k": 0.0,
+      "local_ms_p95": 0.8605414725025184,
+      "name": "A. TF-IDF + logistic regression",
+      "test_macro_f1": 0.9062136018210966,
+      "test_macro_f1_ci95": [
+        0.8703178599724233,
+        0.9359848510226271
+      ],
+      "test_macro_f1_human_subset": 0.9046753246753246,
+      "p50_ms": 0.6211248304074009,
+      "p95_ms": 0.8605414725025184,
+      "per_class": {
+        "pricing": {
+          "precision": 0.9402985074626866,
+          "recall": 0.9692307692307692,
+          "f1-score": 0.9545454545454546,
+          "support": 65.0
+        },
+        "complaint": {
+          "precision": 0.9193548387096774,
+          "recall": 0.9193548387096774,
+          "f1-score": 0.9193548387096774,
+          "support": 62.0
+        },
+        "cancellation": {
+          "precision": 0.9655172413793104,
+          "recall": 0.9032258064516129,
+          "f1-score": 0.9333333333333333,
+          "support": 31.0
+        },
+        "tech_support": {
+          "precision": 0.8809523809523809,
+          "recall": 0.891566265060241,
+          "f1-score": 0.8862275449101796,
+          "support": 83.0
+        },
+        "other": {
+          "precision": 0.8448275862068966,
+          "recall": 0.8305084745762712,
+          "f1-score": 0.8376068376068376,
+          "support": 59.0
+        },
+        "accuracy": 0.9033333333333333,
+        "macro avg": {
+          "precision": 0.9101901109421904,
+          "recall": 0.9027772308057143,
+          "f1-score": 0.9062136018210966,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.9033810422436259,
+          "recall": 0.9033333333333333,
+          "f1-score": 0.9031815917504541,
+          "support": 300.0
+        }
+      },
+      "confused_pairs": [
+        [
+          "other",
+          "tech_support",
+          7
+        ],
+        [
+          "tech_support",
+          "other",
+          5
+        ],
+        [
+          "tech_support",
+          "complaint",
+          3
+        ],
+        [
+          "pricing",
+          "other",
+          2
+        ],
+        [
+          "complaint",
+          "tech_support",
+          2
+        ]
+      ]
+    },
+    "B": {
+      "cv_macro_f1": [
+        0.8730399902556101,
+        0.9232219437482595,
+        0.9057883680246693,
+        0.9002987870676135,
+        0.9075721380267139
+      ],
+      "cost_per_100k": 0.05736,
+      "local_ms_p95": 0.05146319405563797,
+      "name": "B. Embedding + logistic regression",
+      "test_macro_f1": 0.8815375264693278,
+      "test_macro_f1_ci95": [
+        0.8401858062284703,
+        0.9187279737080633
+      ],
+      "test_macro_f1_human_subset": 0.8514285714285714,
+      "p50_ms": 235.60011816152837,
+      "p95_ms": 317.847237023913,
+      "per_class": {
+        "pricing": {
+          "precision": 0.9344262295081968,
+          "recall": 0.8769230769230769,
+          "f1-score": 0.9047619047619048,
+          "support": 65.0
+        },
+        "complaint": {
+          "precision": 0.8615384615384616,
+          "recall": 0.9032258064516129,
+          "f1-score": 0.8818897637795275,
+          "support": 62.0
+        },
+        "cancellation": {
+          "precision": 0.9285714285714286,
+          "recall": 0.8387096774193549,
+          "f1-score": 0.8813559322033898,
+          "support": 31.0
+        },
+        "tech_support": {
+          "precision": 0.9036144578313253,
+          "recall": 0.9036144578313253,
+          "f1-score": 0.9036144578313253,
+          "support": 83.0
+        },
+        "other": {
+          "precision": 0.8095238095238095,
+          "recall": 0.864406779661017,
+          "f1-score": 0.8360655737704918,
+          "support": 59.0
+        },
+        "accuracy": 0.8833333333333333,
+        "macro avg": {
+          "precision": 0.8875348773946443,
+          "recall": 0.8773759596572775,
+          "f1-score": 0.8815375264693278,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.8856690286034549,
+          "recall": 0.8833333333333333,
+          "f1-score": 0.8837886397153955,
+          "support": 300.0
+        }
+      },
+      "confused_pairs": [
+        [
+          "other",
+          "tech_support",
+          6
+        ],
+        [
+          "pricing",
+          "other",
+          5
+        ],
+        [
+          "tech_support",
+          "other",
+          5
+        ],
+        [
+          "cancellation",
+          "complaint",
+          3
+        ],
+        [
+          "tech_support",
+          "complaint",
+          3
+        ]
+      ]
+    },
+    "C": {
+      "cv_macro_f1": [
+        0.8531792533305479,
+        0.8967580900502778,
+        0.8828082293944919,
+        0.8586336940880056,
+        0.9036028819937754
+      ],
+      "cost_per_100k": 0.05736,
+      "local_ms_p95": 0.3318716354745751,
+      "name": "C. Embedding + XGBoost",
+      "test_macro_f1": 0.8958653515724334,
+      "test_macro_f1_ci95": [
+        0.8600285463527962,
+        0.9282878987536879
+      ],
+      "test_macro_f1_human_subset": 0.8513043478260869,
+      "p50_ms": 235.81070149763644,
+      "p95_ms": 318.10389775637304,
+      "per_class": {
+        "pricing": {
+          "precision": 0.921875,
+          "recall": 0.9076923076923077,
+          "f1-score": 0.9147286821705426,
+          "support": 65.0
+        },
+        "complaint": {
+          "precision": 0.9016393442622951,
+          "recall": 0.8870967741935484,
+          "f1-score": 0.8943089430894309,
+          "support": 62.0
+        },
+        "cancellation": {
+          "precision": 0.9310344827586207,
+          "recall": 0.8709677419354839,
+          "f1-score": 0.9,
+          "support": 31.0
+        },
+        "tech_support": {
+          "precision": 0.8850574712643678,
+          "recall": 0.927710843373494,
+          "f1-score": 0.9058823529411765,
+          "support": 83.0
+        },
+        "other": {
+          "precision": 0.864406779661017,
+          "recall": 0.864406779661017,
+          "f1-score": 0.864406779661017,
+          "support": 59.0
+        },
+        "accuracy": 0.8966666666666666,
+        "macro avg": {
+          "precision": 0.9008026155892601,
+          "recall": 0.8915748893711702,
+          "f1-score": 0.8958653515724334,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.897151178082407,
+          "recall": 0.8966666666666666,
+          "f1-score": 0.8966425136891587,
+          "support": 300.0
+        }
+      },
+      "confused_pairs": [
+        [
+          "other",
+          "tech_support",
+          5
+        ],
+        [
+          "pricing",
+          "other",
+          3
+        ],
+        [
+          "complaint",
+          "tech_support",
+          3
+        ],
+        [
+          "tech_support",
+          "complaint",
+          3
+        ],
+        [
+          "tech_support",
+          "other",
+          3
+        ]
+      ]
+    },
+    "D": {
+      "cv_macro_f1": null,
+      "cost_per_100k": 3.2345,
+      "name": "D. LLM zero-shot",
+      "test_macro_f1": 0.9428061146516509,
+      "test_macro_f1_ci95": [
+        0.9158748707762386,
+        0.9678851279945044
+      ],
+      "test_macro_f1_human_subset": 0.9728506787330318,
+      "p50_ms": 736.897582988604,
+      "p95_ms": 911.1163170062357,
+      "per_class": {
+        "pricing": {
+          "precision": 0.9130434782608695,
+          "recall": 0.9692307692307692,
+          "f1-score": 0.9402985074626866,
+          "support": 65.0
+        },
+        "complaint": {
+          "precision": 0.9508196721311475,
+          "recall": 0.9354838709677419,
+          "f1-score": 0.943089430894309,
+          "support": 62.0
+        },
+        "cancellation": {
+          "precision": 0.9666666666666667,
+          "recall": 0.9354838709677419,
+          "f1-score": 0.9508196721311475,
+          "support": 31.0
+        },
+        "tech_support": {
+          "precision": 0.9523809523809523,
+          "recall": 0.963855421686747,
+          "f1-score": 0.9580838323353293,
+          "support": 83.0
+        },
+        "other": {
+          "precision": 0.9464285714285714,
+          "recall": 0.8983050847457628,
+          "f1-score": 0.9217391304347826,
+          "support": 59.0
+        },
+        "accuracy": 0.9433333333333334,
+        "macro avg": {
+          "precision": 0.9458678681736414,
+          "recall": 0.9404718035197526,
+          "f1-score": 0.9428061146516509,
+          "support": 300.0
+        },
+        "weighted avg": {
+          "precision": 0.9438407239588635,
+          "recall": 0.9433333333333334,
+          "f1-score": 0.9432330810535728,
+          "support": 300.0
+        }
+      },
+      "confused_pairs": [
+        [
+          "other",
+          "tech_support",
+          4
+        ],
+        [
+          "complaint",
+          "pricing",
+          3
+        ],
+        [
+          "pricing",
+          "other",
+          2
+        ],
+        [
+          "tech_support",
+          "complaint",
+          2
+        ],
+        [
+          "other",
+          "pricing",
+          2
+        ]
+      ]
+    }
+  },
+  "hybrid": {
+    "A": {
+      "chosen_threshold": 0.72,
+      "llm_only_cv_macro_f1": 0.9468152692749594,
+      "at_chosen": {
+        "threshold": 0.72,
+        "routed_pct": 24.666666666666668,
+        "macro_f1": 0.9310762586830567,
+        "cost_per_100k": 0.7978433333333333,
+        "p95_ms": 791.5962588425222,
+        "p50_ms": 0.663736165734008
+      },
+      "at_0.8": {
+        "threshold": 0.8,
+        "routed_pct": 32.666666666666664,
+        "macro_f1": 0.9396421387822885,
+        "cost_per_100k": 1.0566033333333333,
+        "p95_ms": 807.9242475064045,
+        "p50_ms": 0.687944329304931
+      },
+      "cv_at_chosen": {
+        "threshold": 0.72,
+        "routed_pct": 24.88235294117647,
+        "macro_f1": 0.9477334811011827,
+        "cost_per_100k": 0.804819705882353,
+        "p95_ms": 804.0741998779897,
+        "p50_ms": 0.6663889992826929
+      }
+    },
+    "B": {
+      "chosen_threshold": 0.81,
+      "llm_only_cv_macro_f1": 0.9468152692749594,
+      "at_chosen": {
+        "threshold": 0.81,
+        "routed_pct": 26.333333333333332,
+        "macro_f1": 0.944774325956238,
+        "cost_per_100k": 0.9091116666666665,
+        "p95_ms": 1062.2000458228285,
+        "p50_ms": 273.66191014880314
+      },
+      "at_0.8": {
+        "threshold": 0.8,
+        "routed_pct": 26.0,
+        "macro_f1": 0.944774325956238,
+        "cost_per_100k": 0.8983300000000001,
+        "p95_ms": 1062.2000458228285,
+        "p50_ms": 272.8659379936289
+      },
+      "cv_at_chosen": {
+        "threshold": 0.81,
+        "routed_pct": 24.88235294117647,
+        "macro_f1": 0.9469459949258212,
+        "cost_per_100k": 0.8621797058823529,
+        "p95_ms": 1071.9343611820173,
+        "p50_ms": 268.14554100080085
+      }
+    }
+  },
+  "errors": {
+    "A": [
+      {
+        "true": "other",
+        "pred": "tech_support",
+        "n": 7,
+        "examples": [
+          "Có bản tiếng Anh của tài liệu điều khoản sử dụng không?",
+          "Có tính năng nào có thể đổi mã dự án không?",
+          "Mình thấy giao diện của phần mềm rất bắt mắt, không biết có thể tùy chỉnh nó được không?",
+          "Hey, có người nhận chat không?"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "other",
+        "n": 5,
+        "examples": [
+          "App bên mình vừa update giờ nó k còn load dc!",
+          "Stuck on loading page for too long now!",
+          "giao diện mới thấy khó dùng ghê, có ai giúp mk không?",
+          "Trời ơi, sao ban ngày cũng lag nhỉ?"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "complaint",
+        "n": 3,
+        "examples": [
+          "Hệ thống vừa bị lỗi khi tôi cố gắng xuất báo cáo, điều này thật sự gây khó khăn cho công việc của chúng tôi.",
+          "Lỗi thời gian phản hồi API quá lâu, gis cách fix?",
+          "biên soạn tài liệu cho team mà không thấy hỗ trợ markdown?!"
+        ]
+      },
+      {
+        "true": "pricing",
+        "pred": "other",
+        "n": 2,
+        "examples": [
+          "Chúc các bạn luôn phát triển, không biết trong tương lai sẽ có bản dùng thử cho gói Enterprise không?",
+          "Chào các bạn, mình thích sản phẩm của các bạn lắm, không biết có chương trình nào cho khởi nghiệp không nhỉ?"
+        ]
+      },
+      {
+        "true": "complaint",
+        "pred": "tech_support",
+        "n": 2,
+        "examples": [
+          "Tại sao đổi chính sách mà không hỏi ý kiến khách hàng",
+          "My billing information was supposed to be processed automatically, but I was charged extra!"
+        ]
+      }
+    ],
+    "B": [
+      {
+        "true": "other",
+        "pred": "tech_support",
+        "n": 6,
+        "examples": [
+          "Có bản tiếng Anh của tài liệu điều khoản sử dụng không?",
+          "gop tag support dc ko?",
+          "Có tính năng nào có thể đổi mã dự án không?",
+          "Mình thấy giao diện của phần mềm rất bắt mắt, không biết có thể tùy chỉnh nó được không?"
+        ]
+      },
+      {
+        "true": "pricing",
+        "pred": "other",
+        "n": 5,
+        "examples": [
+          "mình có thể dùng thử tất cả tính năng của gói cao nhất trước khi quyết định không?",
+          "Cho mình hỏi gói Business có bảo mật dữ liệu không?",
+          "Chúc các bạn luôn phát triển, không biết trong tương lai sẽ có bản dùng thử cho gói Enterprise không?",
+          "Mong chương trình khuyến mãi sớm quay lại!"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "other",
+        "n": 5,
+        "examples": [
+          "App bên mình vừa update giờ nó k còn load dc!",
+          "Làm thế nào để thêm nhiều người vào nhóm hiện tại trong dự án?",
+          "Trời ơi, sao ban ngày cũng lag nhỉ?",
+          "Các bạn có tính năng quản lý thời gian không?"
+        ]
+      },
+      {
+        "true": "cancellation",
+        "pred": "complaint",
+        "n": 3,
+        "examples": [
+          "Mong ad xem lại vụ bị lỗi hủy gói mà ko cho! Thang này bị thu 2 lần mệt ghê!",
+          "Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền, rất bất tiện.",
+          "Hơi thất vọng, thôi hủy luôn cho đơn giản"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "complaint",
+        "n": 3,
+        "examples": [
+          "Hệ thống vừa bị lỗi khi tôi cố gắng xuất báo cáo, điều này thật sự gây khó khăn cho công việc của chúng tôi.",
+          "Mỗi lần dùng là có lỗi, không thể nào yên tâm làm việc hơn được!",
+          "Tôi hay gặp lỗi khi sử dụng trên điện thoại."
+        ]
+      }
+    ],
+    "C": [
+      {
+        "true": "other",
+        "pred": "tech_support",
+        "n": 5,
+        "examples": [
+          "tks vì phần mềm tuyệt vời, cho mình hỏi cách thay đổi tên dự án với, cảm ơn!",
+          "Có tính năng nào có thể đổi mã dự án không?",
+          "Mình thấy giao diện của phần mềm rất bắt mắt, không biết có thể tùy chỉnh nó được không?",
+          "Bên bạn có giải pháp nào cho học sinh không?"
+        ]
+      },
+      {
+        "true": "pricing",
+        "pred": "other",
+        "n": 3,
+        "examples": [
+          "mình có thể dùng thử tất cả tính năng của gói cao nhất trước khi quyết định không?",
+          "Chào các bạn, mình thích sản phẩm của các bạn lắm, không biết có chương trình nào cho khởi nghiệp không nhỉ?",
+          "Không biết liệu có thể dùng thử lâu hơn không?"
+        ]
+      },
+      {
+        "true": "complaint",
+        "pred": "tech_support",
+        "n": 3,
+        "examples": [
+          "Tự nhiên khóa tài khoản của tôi không một lời báo trước, quá vô lý",
+          "Trước đây tôi đã thanh toán gói nhưng giờ lại thấy thiếu tính năng quan trọng. Ai có thể giúp tôi giải quyết việc này?",
+          "Mình thấy bị đóng băng tài khoản mà không có thông báo gì cả, có biết tại sao không?"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "complaint",
+        "n": 3,
+        "examples": [
+          "Hệ thống vừa bị lỗi khi tôi cố gắng xuất báo cáo, điều này thật sự gây khó khăn cho công việc của chúng tôi.",
+          "Mỗi lần dùng là có lỗi, không thể nào yên tâm làm việc hơn được!",
+          "Tôi hay gặp lỗi khi sử dụng trên điện thoại."
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "other",
+        "n": 3,
+        "examples": [
+          "có cách nào để xem lại buổi họp video không? tôi không nhớ rõ",
+          "Các bạn có tính năng quản lý thời gian không?",
+          "Mọi người có ai biết cách dùng tính năng mới không?"
+        ]
+      }
+    ],
+    "D": [
+      {
+        "true": "other",
+        "pred": "tech_support",
+        "n": 4,
+        "examples": [
+          "Có ai đó ở bên không? Tôi cần hỗ trợ ngay!",
+          "tks vì phần mềm tuyệt vời, cho mình hỏi cách thay đổi tên dự án với, cảm ơn!",
+          "gop tag support dc ko?",
+          "Có tính năng nào có thể đổi mã dự án không?"
+        ]
+      },
+      {
+        "true": "complaint",
+        "pred": "pricing",
+        "n": 3,
+        "examples": [
+          "Tại sao phí dịch vụ lại tăng mà không có thông báo gửi trước cho tôi vậy?",
+          "Tại sao tháng này bị trừ tiền nhiều hơn tháng trước thế?",
+          "Mình đang xài gói free, ko hiểu sao có tính năng mà lẽ ra phải trả tiền, ai biết điều này ko?"
+        ]
+      },
+      {
+        "true": "pricing",
+        "pred": "other",
+        "n": 2,
+        "examples": [
+          "Chúc các bạn luôn phát triển, không biết trong tương lai sẽ có bản dùng thử cho gói Enterprise không?",
+          "Không biết liệu có thể dùng thử lâu hơn không?"
+        ]
+      },
+      {
+        "true": "tech_support",
+        "pred": "complaint",
+        "n": 2,
+        "examples": [
+          "Báo cáo bị lệch số so với dữ liệu thực tế, kiểm tra giúp mình",
+          "Mỗi lần dùng là có lỗi, không thể nào yên tâm làm việc hơn được!"
+        ]
+      },
+      {
+        "true": "other",
+        "pred": "pricing",
+        "n": 2,
+        "examples": [
+          "Thời gian sử dụng của từng gói không rõ ràng lắm, phối hợp kịp không?",
+          "Uh, cho tôi hỏi, bài viết trên blog có tính phí không?"
+        ]
+      }
+    ]
+  }
+}
