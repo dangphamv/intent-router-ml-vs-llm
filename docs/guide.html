@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hướng dẫn Intent Router</title>
+<meta name="description" content="Cách chạy, input/output, và cách giải quyết từng yêu cầu của bài tập lớn: Bộ phân loại ý định — ML cổ điển đấu với LLM.">
+<style>
+:root {
+  --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f4f2; --text: #1d2321; --muted: #5d6763;
+  --border: #e2e5e3; --accent: #2f7d5b; --accent-soft: #e7f3ed; --warn: #9a5b00; --warn-soft: #fbf1e1;
+  --code-bg: #f3f4f2; --a: #2a6fdb; --b: #e07b00;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121514; --surface: #191d1b; --surface-2: #202523; --text: #e6ebe8; --muted: #9aa5a0;
+    --border: #2c3330; --accent: #5cc193; --accent-soft: #1c2d25; --warn: #f0b45c; --warn-soft: #2e2416;
+    --code-bg: #202523;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121514; --surface: #191d1b; --surface-2: #202523; --text: #e6ebe8; --muted: #9aa5a0;
+  --border: #2c3330; --accent: #5cc193; --accent-soft: #1c2d25; --warn: #f0b45c; --warn-soft: #2e2416;
+  --code-bg: #202523;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 80px; }
+header { padding: 48px 0 24px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.2; margin: 8px 0 12px; }
+.lede { color: var(--muted); font-size: 17px; margin: 0; max-width: 720px; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; }
+nav.toc a {
+  font-size: 14px; color: var(--text); text-decoration: none; padding: 6px 12px;
+  border: 1px solid var(--border); border-radius: 999px; background: var(--surface);
+}
+nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+h2 { font-size: 24px; margin: 56px 0 12px; padding-top: 8px; }
+h3 { font-size: 18px; margin: 32px 0 8px; }
+h4 { font-size: 15px; margin: 20px 0 6px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+p { margin: 8px 0 12px; }
+a { color: var(--accent); }
+code { font: 13.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; }
+pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; }
+pre code { background: none; padding: 0; font-size: 13.5px; }
+.cm { color: var(--muted); }
+.table-wrap { overflow-x: auto; margin: 10px 0 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--surface-2); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.hl td { background: var(--accent-soft); font-weight: 600; }
+.req {
+  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: 8px; padding: 14px 18px; margin: 16px 0;
+}
+.req .tag { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-right: 8px; background: var(--accent-soft); color: var(--accent); }
+.req .tag.ex { background: var(--warn-soft); color: var(--warn); }
+.req .title { font-weight: 600; }
+.req ul { margin: 8px 0 0; padding-left: 20px; }
+.req li { margin: 4px 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+.card .k { font-size: 13px; color: var(--muted); }
+.card .v { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.card .s { font-size: 13px; color: var(--muted); }
+.note { background: var(--warn-soft); border-radius: 8px; padding: 12px 16px; margin: 16px 0; font-size: 15px; }
+figure { margin: 16px 0; }
+figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 18px; }
+.flow span.step { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 14px; }
+.flow span.arr { color: var(--muted); }
+.theme-btn {
+  position: fixed; top: 12px; right: 12px; z-index: 5; font-size: 13px; padding: 6px 10px; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);
+}
+footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Bài tập lớn · Hướng dẫn</div>
+  <h1>Bộ phân loại ý định: ML cổ điển đấu với LLM</h1>
+  <p class="lede">Cách chạy, input / output, và cách giải quyết từng yêu cầu — kèm công cụ và thông số cụ thể. Phân loại tin nhắn khách hàng vào 5 ý định: <code>pricing</code>, <code>complaint</code>, <code>cancellation</code>, <code>tech_support</code>, <code>other</code>.</p>
+  <nav class="toc" aria-label="Mục lục">
+    <a href="#ket-qua">Kết quả</a>
+    <a href="#chay">1. Cách chạy</a>
+    <a href="#io">2. Input / Output</a>
+    <a href="#du-lieu">3.1 Dữ liệu</a>
+    <a href="#thuc-nghiem">3.2 Thực nghiệm</a>
+    <a href="#ket-hop">3.3 Kết hợp</a>
+    <a href="#trinh-bay">3.4 Trình bày</a>
+    <a href="#gioi-han">Giới hạn</a>
+  </nav>
+</header>
+
+<section id="ket-qua">
+  <h2>Kết quả tóm tắt</h2>
+  <div class="cards">
+    <div class="card"><div class="k">LLM zero-shot (D)</div><div class="v">0,943</div><div class="s">macro-F1 · $3,23 / 100k · p95 911 ms</div></div>
+    <div class="card"><div class="k">TF-IDF + LR (A)</div><div class="v">0,906</div><div class="s">macro-F1 · ~$0 · p95 0,7 ms</div></div>
+    <div class="card"><div class="k">Hybrid A → D (ngưỡng 0,72)</div><div class="v">0,931</div><div class="s">24,7% chuyển LLM · $0,80 / 100k (−75%)</div></div>
+    <div class="card"><div class="k">Hybrid B → D (ngưỡng 0,81)</div><div class="v">0,945</div><div class="s">ngang LLM-only · $0,91 / 100k (−72%)</div></div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Cách</th><th class="num">Macro-F1 test (95% CI)</th><th class="num">CV 5-fold</th><th class="num">p95 (ms)</th><th class="num">$/100k tin</th></tr></thead>
+    <tbody>
+      <tr><td>A. TF-IDF + logistic regression</td><td class="num">0,906 (0,87–0,94)</td><td class="num">0,886 ± 0,011</td><td class="num">0,7</td><td class="num">~0</td></tr>
+      <tr><td>B. Embedding + logistic regression</td><td class="num">0,882 (0,84–0,92)</td><td class="num">0,902 ± 0,016</td><td class="num">318</td><td class="num">0,06</td></tr>
+      <tr><td>C. Embedding + XGBoost</td><td class="num">0,896 (0,86–0,93)</td><td class="num">0,879 ± 0,020</td><td class="num">318</td><td class="num">0,06</td></tr>
+      <tr><td>D. LLM zero-shot (<code>gpt-4o-mini</code>)</td><td class="num">0,943 (0,92–0,97)</td><td class="num">—</td><td class="num">911</td><td class="num">3,23</td></tr>
+      <tr class="hl"><td>Hybrid A → D (ngưỡng 0,72)</td><td class="num">0,931</td><td class="num">—</td><td class="num">p50 0,6</td><td class="num">0,80</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="chay">
+  <h2>1. Cách chạy</h2>
+  <h3>Cài đặt (một lần)</h3>
+<pre><code>git clone https://github.com/dangphamv/intent-router-ml-vs-llm
+cd intent-router-ml-vs-llm
+brew install libomp        <span class="cm"># macOS: XGBoost cần thư viện này</span>
+uv sync                    <span class="cm"># cài thư viện Python 3.12 vào .venv</span></code></pre>
+
+  <h3>Cách 1 — Xem kết quả, không cần API key</h3>
+<pre><code>uv run jupyter lab notebooks/intent_router.ipynb   <span class="cm"># Run All</span></code></pre>
+  <p>Notebook đọc kết quả gọi API đã lưu trong <code>data/cache/</code> và train lại model A, B, C ngay trên máy (khoảng 1–2 phút).</p>
+
+  <h3>Cách 2 — Chạy lại toàn bộ pipeline (cần key)</h3>
+<pre><code>cp .env.example .env                    <span class="cm"># điền OPENAI_API_KEY=sk-...</span>
+uv run scripts/build_dataset.py         <span class="cm"># bước 1: tạo dữ liệu          (~5 phút lần đầu)</span>
+uv run scripts/run_experiments.py       <span class="cm"># bước 2: so sánh A–D + hybrid (~4–5 phút)</span>
+uv run scripts/rare_class_ablation.py   <span class="cm"># bước 3: thí nghiệm lớp hiếm  (vài phút, không gọi API)</span>
+uv run scripts/route.py "Gói Pro bao nhiêu tiền?" "app lỗi 500"   <span class="cm"># thử router</span></code></pre>
+  <p>Mọi lần gọi API đều được lưu cache, nên chạy lại lần sau gần như miễn phí và cho cùng kết quả.</p>
+
+  <h3>Dùng router trong code (dự án #3)</h3>
+<pre><code>from intent_router.router import IntentRouter
+
+router = IntentRouter.load()     <span class="cm"># TF-IDF + LR (fit trên train+val), ngưỡng 0,72 → gpt-4o-mini</span>
+route = await router.route("app bị lỗi 500 khi lưu task")
+route.label, route.confidence, route.handled_by   <span class="cm"># ("tech_support", 0.97, "local")</span></code></pre>
+</section>
+
+<section id="io">
+  <h2>2. Input / Output</h2>
+  <div class="flow">
+    <span class="step">seed_raw.tsv (300)</span><span class="arr">→</span>
+    <span class="step">build_dataset.py</span><span class="arr">→</span>
+    <span class="step">intents.jsonl (2.000)</span><span class="arr">→</span>
+    <span class="step">run_experiments.py</span><span class="arr">→</span>
+    <span class="step">results/ + models/</span><span class="arr">→</span>
+    <span class="step">IntentRouter</span>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Bước</th><th>Input</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td><code>build_dataset.py</code></td><td><code>data/seed_raw.tsv</code> (300 tin, dạng <code>label&lt;TAB&gt;text</code>)<br><code>data/LABELING_GUIDE.md</code></td><td><code>data/intents.jsonl</code><br><code>data/dataset_report.json</code><br><code>data/audit_sample.csv</code><br><code>data/cache/generated_raw.jsonl</code>, <code>annotator_gpt-4o.jsonl</code></td></tr>
+      <tr><td><code>run_experiments.py</code></td><td><code>data/intents.jsonl</code></td><td><code>results/comparison.md</code>, <code>metrics.json</code>, <code>confusion_matrices.png</code>, <code>tradeoff.png</code>, <code>hybrid_*.csv</code>, <code>test_predictions.csv</code><br><code>models/tfidf_lr.joblib</code></td></tr>
+      <tr><td><code>rare_class_ablation.py</code></td><td><code>data/intents.jsonl</code> + embedding đã cache</td><td><code>results/rare_class_ablation.{md,json}</code>, <code>rare_class_ablation_folds.csv</code></td></tr>
+      <tr><td><code>route.py</code> / <code>IntentRouter</code></td><td>một tin nhắn</td><td><code>Route(label, confidence, handled_by)</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Mỗi dòng trong <code>data/intents.jsonl</code>:</p>
+<pre><code>{"text": "Sao tháng này bị trừ tiền 2 lần vậy?", "label": "complaint", "split": "train", "source": "human"}</code></pre>
+  <p><code>split</code> là <code>train</code> / <code>val</code> / <code>test</code>; <code>source</code> là <code>human</code> (tin seed) hoặc <code>llm</code> (tin sinh).</p>
+</section>
+
+<section id="du-lieu">
+  <h2>3.1 Dữ liệu <span class="cm">· 25%</span></h2>
+
+  <div class="req">
+    <span class="tag">Đạt</span><span class="title">Khoảng 2.000 tin có nhãn: tự gán ~300, phần còn lại LLM gán rồi kiểm tra mẫu</span>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Bước</th><th>Cách làm</th><th>Công cụ &amp; thông số</th></tr></thead>
+    <tbody>
+      <tr><td>Định nghĩa nhãn</td><td>Guideline cho 5 nhãn + 4 quy tắc phân xử. Ví dụ: có ý muốn hủy → luôn <code>cancellation</code>; bị tính tiền sai → <code>complaint</code>, không phải <code>pricing</code></td><td><code>data/LABELING_GUIDE.md</code></td></tr>
+      <tr><td>300 tin seed</td><td>Viết tay đủ kiểu: có dấu, không dấu, teencode, Vietglish, ca khó</td><td>pricing 70 · complaint 65 · cancellation 35 · tech_support 75 · other 55</td></tr>
+      <tr><td>Sinh 1.700 tin</td><td>LLM viết tin theo từng nhãn; mỗi lần gọi có 4 văn phong, 1 persona, 6 ví dụ seed; ~20% là ca khó</td><td><code>gpt-4o-mini</code>, temperature 1.0, 20 tin/lần, sinh dư ×1.2 rồi lọc trùng; 10 văn phong, 11 persona. Mục tiêu 380 / 355 / 145 / 445 / 375</td></tr>
+      <tr><td>Lọc trùng</td><td>So sánh sau khi bỏ dấu, chuyển chữ thường, bỏ ký tự đặc biệt</td><td>hàm <code>normalize()</code></td></tr>
+      <tr><td>Gán nhãn bằng LLM</td><td>Model <b>khác và mạnh hơn</b> gán nhãn độc lập theo guideline</td><td><code>gpt-4o</code>, temperature 0, structured output (Pydantic), 25 tin/lần gọi (giới hạn 30k token/phút)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="req">
+    <span class="tag ex">Xuất sắc</span><span class="title">Kiểm tra chất lượng nhãn LLM bằng người (đồng thuận ≥ 90%)</span>
+    <ul>
+      <li>Trên 300 tin seed: annotator khớp người <b>99,0%</b>, Cohen's κ = <b>0,987</b> (κ là độ đồng thuận đã trừ phần trùng do ngẫu nhiên).</li>
+      <li>Kiểm tra mẫu 100 tin LLM gán, lấy ngẫu nhiên (seed 42): khớp <b>95%</b>. 5 nhãn bị sửa được ghi đè vào dataset.</li>
+      <li>Công cụ: <code>sklearn.metrics.accuracy_score</code>, <code>cohen_kappa_score</code>.</li>
+    </ul>
+  </div>
+
+  <div class="req">
+    <span class="tag">Đạt</span><span class="title">Chia train / val / test 70 / 15 / 15, giữ nguyên tỷ lệ lớp</span>
+    <ul>
+      <li>Chia 2 lần bằng <code>train_test_split(stratify=label, random_state=42)</code>: tách 70/30, rồi chia đôi phần 30.</li>
+      <li>Kết quả 1.400 / 300 / 300; tỷ lệ từng lớp giữa 3 tập lệch nhau dưới 0,5 điểm %.</li>
+      <li>Đã kiểm tra rò rỉ: không tin test nào giống tin train quá 0,9 (cosine embedding).</li>
+    </ul>
+  </div>
+
+  <div class="req">
+    <span class="tag ex">Xuất sắc</span><span class="title">Xử lý lớp hiếm (<code>cancellation</code> ~10%)</span>
+    <ul>
+      <li>Chia stratified để tập nào cũng đủ tin <code>cancellation</code>.</li>
+      <li>A, B: <code>class_weight="balanced"</code>; C: <code>compute_sample_weight("balanced")</code>. Báo cáo F1 riêng từng lớp.</li>
+      <li>Thí nghiệm kiểm chứng: CV 5-fold, có / không weight, ở tỷ lệ tự nhiên và khi ép lớp hiếm còn ~2,9% (chỉ giữ 25% tin hủy trong phần train của fold).</li>
+    </ul>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Cách</th><th class="num">Tỷ lệ cancellation</th><th class="num">Recall: không → có weight</th><th class="num">F1 lớp hiếm: không → có weight</th></tr></thead>
+    <tbody>
+      <tr><td>A. TF-IDF + LR</td><td class="num">10,5%</td><td class="num">0,84 → 0,88</td><td class="num">0,90 → 0,91</td></tr>
+      <tr><td>A. TF-IDF + LR</td><td class="num">2,9%</td><td class="num">0,57 → <b>0,72</b></td><td class="num">0,73 → <b>0,83</b></td></tr>
+      <tr><td>B. Embedding + LR</td><td class="num">10,5%</td><td class="num">0,89 → 0,90</td><td class="num">0,93 → 0,91</td></tr>
+      <tr><td>B. Embedding + LR</td><td class="num">2,9%</td><td class="num">0,64 → <b>0,84</b></td><td class="num">0,77 → <b>0,90</b></td></tr>
+      <tr><td>C. Embedding + XGBoost</td><td class="num">2,9%</td><td class="num">0,47 → 0,54</td><td class="num">0,63 → 0,70</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ở ~10%, weight gần như không đổi gì. Khi lớp hiếm còn ~3%, không có weight thì model bỏ sót gần nửa số khách muốn hủy; có weight thì recall tăng mạnh mà precision vẫn ≥ 0,97.</p>
+</section>
+
+<section id="thuc-nghiem">
+  <h2>3.2 Thực nghiệm <span class="cm">· 35%</span></h2>
+
+  <div class="req">
+    <span class="tag">Đạt</span><span class="title">So sánh ≥ 3 cách, có macro-F1 — làm 4 cách</span>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Cách</th><th>Đặc trưng</th><th>Model &amp; thông số</th></tr></thead>
+    <tbody>
+      <tr><td>A. TF-IDF + LR</td><td><code>FeatureUnion</code>: n-gram từ 1–2 + n-gram ký tự 2–5 (<code>char_wb</code>, <code>min_df=2</code>), <code>sublinear_tf=True</code>. N-gram ký tự giúp đọc tin không dấu / gõ sai</td><td><code>LogisticRegression(C=10, class_weight="balanced", max_iter=5000)</code></td></tr>
+      <tr><td>B. Embedding + LR</td><td><code>text-embedding-3-small</code>, vector 1.536 chiều (cache float16)</td><td><code>LogisticRegression(C=10, class_weight="balanced")</code></td></tr>
+      <tr><td>C. Embedding + XGBoost</td><td>Cùng embedding với B</td><td><code>XGBClassifier(n_estimators=400, max_depth=4, learning_rate=0.08, subsample=0.8, colsample_bytree=0.4, tree_method="hist")</code> + sample weight cân bằng</td></tr>
+      <tr><td>D. LLM zero-shot</td><td>Prompt chỉ có mô tả ngắn 5 nhãn, không có ví dụ</td><td><code>gpt-4o-mini</code>, temperature 0, structured output <code>Literal</code> 5 nhãn</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Cách đo</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Chỉ số</th><th>Cách tính</th></tr></thead>
+    <tbody>
+      <tr><td>Macro-F1</td><td>Trung bình F1 của 5 lớp, không theo trọng số — lớp hiếm có tiếng nói ngang lớp lớn. <code>f1_score(average="macro")</code></td></tr>
+      <tr><td>Khoảng tin cậy 95%</td><td>Bootstrap 1.000 lần trên tập test</td></tr>
+      <tr><td>p95 latency</td><td>Đo <b>từng tin một</b> như router thật. A: local, trung bình 3 lần. B, C: gọi embedding API thật + thời gian classifier. D: gọi LLM thật, tối đa 4 lời gọi song song</td></tr>
+      <tr><td>$/100k tin</td><td>Token trung bình thực tế × 100.000 × giá niêm yết (<code>config.PRICES</code>): <code>gpt-4o-mini</code> $0,15 / 1M input, $0,60 / 1M output; <code>text-embedding-3-small</code> $0,02 / 1M</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="req">
+    <span class="tag ex">Xuất sắc</span><span class="title">Confusion matrix, cross-validation, phân tích lỗi từng cặp lớp hay nhầm</span>
+    <ul>
+      <li><b>Confusion matrix</b>: 4 ma trận cho 4 cách, <code>ConfusionMatrixDisplay</code>.</li>
+      <li><b>Cross-validation</b>: <code>StratifiedKFold(n_splits=5, shuffle=True, random_state=42)</code> trên train+val (1.700 tin) cho A, B, C. D không cần train nên dùng khoảng tin cậy bootstrap.</li>
+      <li><b>Phân tích lỗi</b>: các cặp hay nhầm kèm ví dụ thật cho từng cách, và những tin mà mọi cách cùng sai.</li>
+    </ul>
+  </div>
+  <figure>
+    <img src="../results/confusion_matrices.png" alt="Confusion matrix của 4 cách A, B, C, D trên tập test" loading="lazy">
+    <figcaption>Confusion matrix trên 300 tin test (<code>results/confusion_matrices.png</code>).</figcaption>
+  </figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Cặp nhầm (thật → đoán)</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th><th>Nguyên nhân</th></tr></thead>
+    <tbody>
+      <tr><td>other → tech_support</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num">4</td><td rowspan="2">Định nghĩa nhãn mập mờ ("có tính năng X không?"), không phải lỗi model</td></tr>
+      <tr><td>tech_support → other</td><td class="num">5</td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
+      <tr><td>tech_support → complaint</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">2</td><td>Báo lỗi kèm cảm xúc bực bội</td></tr>
+      <tr><td>cancellation → complaint</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">1</td><td>Vừa phàn nàn vừa đòi hủy — lỗi đắt nhất khi route</td></tr>
+      <tr><td>complaint → pricing</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">3</td><td>LLM zero-shot thấy chủ đề tiền, bỏ qua quy tắc "tính sai → complaint"</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="ket-hop">
+  <h2>3.3 Chiến lược kết hợp <span class="cm">· 25%</span></h2>
+
+  <div class="req">
+    <span class="tag">Đạt</span><span class="title">Model rẻ xử lý khi tự tin (xác suất &gt; 0,8), còn lại chuyển LLM; báo cáo tỷ lệ chuyển và chất lượng tổng</span>
+  </div>
+<pre><code>nếu max(predict_proba) &gt; ngưỡng → dùng nhãn của model rẻ   <span class="cm"># local, ~0,6 ms, $0</span>
+ngược lại                       → gọi gpt-4o-mini          <span class="cm"># ~750 ms, $3,23 / 100k</span></code></pre>
+  <p>Code ở <code>experiments.hybrid_curve()</code>. Ở ngưỡng 0,8: A → D chuyển 32,7% sang LLM, macro-F1 0,940; B → D chuyển 26%, macro-F1 0,945.</p>
+
+  <div class="req">
+    <span class="tag ex">Xuất sắc</span><span class="title">Vẽ đường đánh đổi chi phí – chất lượng theo ngưỡng, chọn ngưỡng có lý do</span>
+    <ul>
+      <li>Quét ngưỡng 0 → 1, bước 0,01; mỗi ngưỡng tính macro-F1, % chuyển LLM, $/100k, p50, p95.</li>
+      <li><b>Không dùng test để chọn ngưỡng</b>: dùng xác suất out-of-fold của CV trên train+val (1.700 tin). Không dùng val 300 tin vì quá nhiễu — lần đầu chọn trên val cho 0,94, nhưng test chỉ còn 0,91.</li>
+      <li><b>Quy tắc</b>: ngưỡng rẻ nhất mà macro-F1 không thấp hơn LLM-only trên cùng dữ liệu — giữ chất lượng LLM với chi phí thấp nhất (<code>pick_threshold()</code>).</li>
+    </ul>
+  </div>
+  <figure>
+    <img src="../results/tradeoff.png" alt="Đường đánh đổi chi phí – chất lượng và đường chọn ngưỡng" loading="lazy">
+    <figcaption>Trái: đánh đổi chi phí – chất lượng trên test. Phải: chọn ngưỡng trên out-of-fold train+val (<code>results/tradeoff.png</code>).</figcaption>
+  </figure>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Hybrid</th><th class="num">Ngưỡng</th><th class="num">% chuyển LLM</th><th class="num">Macro-F1 test</th><th class="num">p50 (ms)</th><th class="num">$/100k</th><th>So với LLM-only</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>A → D</td><td class="num">0,72</td><td class="num">24,7%</td><td class="num">0,931</td><td class="num">0,6</td><td class="num">0,80</td><td>−75% chi phí, −1,2 điểm F1</td></tr>
+      <tr><td>A → D</td><td class="num">0,80</td><td class="num">32,7%</td><td class="num">0,940</td><td class="num">0,6</td><td class="num">1,06</td><td>−67% chi phí, −0,3 điểm</td></tr>
+      <tr><td>B → D</td><td class="num">0,81</td><td class="num">26,3%</td><td class="num">0,945</td><td class="num">274</td><td class="num">0,91</td><td>−72% chi phí, ngang F1</td></tr>
+      <tr><td>D (LLM-only)</td><td class="num">—</td><td class="num">100%</td><td class="num">0,943</td><td class="num">737</td><td class="num">3,23</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="trinh-bay">
+  <h2>3.4 Trình bày <span class="cm">· 15%</span></h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Yêu cầu</th><th>Đáp ứng</th></tr></thead>
+    <tbody>
+      <tr><td>Đạt: Notebook chạy lại được</td><td><code>notebooks/intent_router.ipynb</code> — đã thử clone sạch từ GitHub và chạy khi không có key: 0 lỗi</td></tr>
+      <tr><td>Xuất sắc: Blog "Khi nào không cần LLM" có số liệu</td><td><a href="blog-khi-nao-khong-can-llm.md"><code>docs/blog-khi-nao-khong-can-llm.md</code></a>, kèm phần giới hạn</td></tr>
+      <tr><td>Dùng lại cho dự án #3</td><td><code>IntentRouter</code> trong <code>src/intent_router/router.py</code>, đọc model và ngưỡng từ <code>models/tfidf_lr.joblib</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Cấu hình</h3>
+  <p>Đổi model qua biến trong <code>.env</code>: <code>LLM_MODEL</code> (mặc định <code>gpt-4o-mini</code>), <code>LABEL_MODEL</code> (<code>gpt-4o</code>), <code>EMBED_MODEL</code> (<code>text-embedding-3-small</code>). Dùng model mới thì thêm giá vào <code>PRICES</code> trong <code>src/intent_router/config.py</code>.</p>
+</section>
+
+<section id="gioi-han">
+  <h2>Giới hạn</h2>
+  <div class="note">
+    <b>300 tin seed và 100 tin audit được soạn / review cùng Claude Code.</b> Nếu cần nhãn do chính bạn gán: sửa <code>data/seed_raw.tsv</code> và cột <code>human_label</code> trong <code>data/audit_sample.csv</code>, rồi chạy lại <code>build_dataset.py</code> → <code>run_experiments.py</code>.
+  </div>
+  <ul>
+    <li>85% nhãn đến từ <code>gpt-4o</code>, cùng họ với model D → có thể thiên vị D. Trên 37 tin test có nhãn người: D 0,973, A 0,905.</li>
+    <li>Tin nhắn sinh tổng hợp "sạch" hơn log thật; cần đánh giá lại trên dữ liệu production.</li>
+    <li>Latency đo từ một máy, ở một thời điểm; con số tuyệt đối thay đổi theo mạng và tải, chênh lệch tương đối đáng tin hơn.</li>
+  </ul>
+</section>
+
+<footer>
+  Repo: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">github.com/dangphamv/intent-router-ml-vs-llm</a> · Số liệu đầy đủ: <code>results/metrics.json</code>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, key = "guide-theme";
+  try { var saved = localStorage.getItem(key); if (saved) root.setAttribute("data-theme", saved); } catch (e) {}
+  document.getElementById("themeBtn").addEventListener("click", function () {
+    var dark = root.getAttribute("data-theme") === "dark" ||
+      (!root.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem(key, next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

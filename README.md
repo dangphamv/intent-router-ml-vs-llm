@@ -4,7 +4,7 @@ Phân loại ý định tin nhắn khách hàng (tiếng Việt) — **ML cổ �
 
 5 ý định: `pricing` (hỏi giá) · `complaint` (khiếu nại) · `cancellation` (hủy gói) · `tech_support` (hỗ trợ kỹ thuật) · `other` (khác).
 
-📓 [Notebook](notebooks/intent_router.ipynb) · ✍️ [Blog: Khi nào không cần LLM?](docs/blog-khi-nao-khong-can-llm.md) · 🏷️ [Hướng dẫn gán nhãn](data/LABELING_GUIDE.md)
+📖 [Hướng dẫn chi tiết (HTML)](docs/guide.html) · 📓 [Notebook](notebooks/intent_router.ipynb) · ✍️ [Blog: Khi nào không cần LLM?](docs/blog-khi-nao-khong-can-llm.md) · 🏷️ [Hướng dẫn gán nhãn](data/LABELING_GUIDE.md)
 
 ## Kết quả
 
