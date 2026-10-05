@@ -430,6 +430,27 @@ print(b["model"].classes_[p.argmax()], p.max())</code></pre>
   </div>
 </details>
 <details class="qa">
+  <summary>Sau khi embedding thì dữ liệu lưu ở đâu?</summary>
+  <div class="body">
+    <p>Trong <b>một file trên ổ đĩa</b>: <code>data/cache/embeddings_text-embedding-3-small.npz</code> (5,8 MB). Không dùng database hay vector database.</p>
+    <p><code>.npz</code> là định dạng nén của thư viện <code>numpy</code>, giống một file zip chứa 2 mảng xếp song song:</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Mảng</th><th>Kích thước</th><th>Nội dung</th></tr></thead>
+      <tbody>
+        <tr><td><code>texts</code></td><td>2.000</td><td>câu gốc, vd. <i>"Gói Pro có bao nhiêu seat?"</i></td></tr>
+        <tr><td><code>vectors</code></td><td>2.000 × 1.536</td><td>vector của từng câu, vd. <code>[-0.024, -0.023, 0.037, …]</code> (1.536 số)</td></tr>
+      </tbody>
+    </table></div>
+    <p>Dòng thứ <i>i</i> của <code>texts</code> ứng với dòng thứ <i>i</i> của <code>vectors</code>. Số được lưu dạng <code>float16</code> (độ chính xác vừa đủ) để file nhẹ bằng một nửa.</p>
+    <p><b>Khi chạy:</b> <code>embed_texts()</code> đọc file → tin nào đã có thì lấy luôn, chưa có thì gọi API rồi ghi thêm vào file → trả về bảng số cho logistic regression / XGBoost dùng trong bộ nhớ.</p>
+<pre><code>import numpy as np
+z = np.load("data/cache/embeddings_text-embedding-3-small.npz")
+print(z["texts"][0], z["vectors"][0][:6])</code></pre>
+    <p>Các file khác trong <code>data/cache/</code>: <code>embed_latency_*.jsonl</code> (thời gian + số token của từng lần gọi embedding), <code>zeroshot_gpt-4o-mini.jsonl</code> (câu trả lời của D), <code>annotator_gpt-4o.jsonl</code> (nhãn LLM gán), <code>generated_raw.jsonl</code> (2.135 tin LLM viết).</p>
+  </div>
+</details>
+
+<details class="qa">
   <summary>Embedding ở B, C có giống bước ingest của RAG không?</summary>
   <div class="body">
     <p><b>Bước tạo embedding giống hệt</b> (cùng model, cùng API: câu → 1.536 số). <b>Cách dùng thì khác:</b></p>
