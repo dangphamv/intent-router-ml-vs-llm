@@ -441,6 +441,26 @@ print(b["model"].classes_[p.argmax()], p.max())</code></pre>
   </div>
 </details>
 
+<details class="qa">
+  <summary>Cách D có phải lấy 300 tin test gửi thẳng cho ChatGPT, không dùng train/val?</summary>
+  <div class="body">
+    <p><b>Đúng về ý</b>, chỉ khác 2 chi tiết:</p>
+    <ul>
+      <li><b>Không phải ChatGPT</b> (ứng dụng chat) mà là <b>API</b> của OpenAI, model <code>gpt-4o-mini</code>, gọi bằng code (<code>classify()</code> trong <code>src/intent_router/llm.py</code>). Mỗi tin là <b>một lần gọi riêng</b>, <code>temperature=0</code>, LLM bắt buộc trả về 1 trong 5 nhãn.</li>
+      <li>Mỗi lần gọi gửi kèm <b>mô tả ngắn 5 nhãn</b> (prompt bên dưới) — <b>không có ví dụ nào</b> từ train/val. Đó là nghĩa của "zero-shot": LLM không học gì từ dữ liệu của mình, chỉ dựa vào hiểu biết sẵn có.</li>
+    </ul>
+<pre><code>Classify the customer message sent to a SaaS project-management product's support channel.
+Return exactly one label: pricing, complaint, cancellation, tech_support, other.
+- pricing: questions about prices, plans, quotas, discounts, payment methods
+- complaint: dissatisfaction, billing errors, slow support, demands for refunds
+- cancellation: cancel, downgrade, pause, stop renewal, delete/close account
+- tech_support: how-to questions, bugs, login, integrations, API
+- other: greetings, thanks, feature ideas, jobs, partnerships, off-topic</code></pre>
+    <p><b>Điểm 94,3 của D</b> tính từ 300 tin test. Nhưng thực tế D cũng được chạy trên 1.700 tin train + val — <b>không phải để học</b>, mà để mô phỏng chiến lược kết hợp khi chọn ngưỡng (cần biết "nếu chuyển tin này cho LLM thì LLM trả lời gì"). Tổng cộng 2.000 lần gọi, kết quả lưu ở <code>data/cache/zeroshot_gpt-4o-mini.jsonl</code>.</p>
+    <p>So với A, B, C: ba cách đó phải <b>học</b> từ 1.400 tin train có nhãn; D thì không học, chỉ "đọc đề và trả lời".</p>
+  </div>
+</details>
+
 <div class="faq-group">Đánh giá &amp; chi phí</div>
 <details class="qa">
   <summary>Điểm 90,6 / 88,2 / 89,6 / 94,3 / 93,1 được tính từ đâu?</summary>
