@@ -99,6 +99,12 @@ figure { margin: 14px 0; }
 figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
 figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .note { background: var(--warn-soft); border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 15.5px; }
+.stage { background: var(--accent-soft); border-left: 5px solid var(--accent); border-radius: 10px; padding: 18px 22px; margin: 20px 0; }
+.stage .label { font-size: 15px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
+.stage ul { list-style: none; padding: 0; margin: 10px 0 0; }
+.stage li { margin: 8px 0; padding-left: 30px; position: relative; }
+.stage li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+.bad { color: #c0392b; font-weight: 700; }
 .theme-btn {
   position: fixed; top: 12px; right: 12px; z-index: 5; font-size: 13px; padding: 6px 10px; cursor: pointer;
   border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);
@@ -126,7 +132,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </ul>
 </div>
 
-<h2>Bảng xếp hạng</h2>
+<h2 id="bang-xep-hang">Bảng xếp hạng</h2>
 <p>Điểm chính xác tính trên thang 100, đo trên 300 tin nhắn mà model chưa từng thấy.</p>
 <div class="table-wrap"><table>
   <thead><tr><th>Cách</th><th class="num">Điểm chính xác</th><th>Tốc độ trả lời</th><th class="num">Chi phí / 1 triệu tin</th></tr></thead>
@@ -462,6 +468,105 @@ tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không
     </ul>
   </div>
 </details>
+
+<h2>Tiêu chí hoàn thành giai đoạn</h2>
+<div class="stage">
+  <div class="label">Tiêu chí hoàn thành giai đoạn</div>
+  <ul>
+    <li>Giải thích precision / recall / F1 bằng ví dụ đời thường và chọn được metric cho một bài toán cụ thể → <a href="#metric">mục 1</a></li>
+    <li>Phát hiện được data leakage trong một pipeline cho sẵn → <a href="#leakage">mục 2</a></li>
+    <li>Bài tập lớn hoàn thành, có bảng so sánh ML cổ điển và LLM → <a href="#hoan-thanh">mục 3</a></li>
+  </ul>
+</div>
+
+<h3 id="metric">1. Precision, recall, F1 — và chọn metric</h3>
+
+<div class="analogy">
+  <p style="margin-top:0"><b>Ví dụ đời thường: thả lưới bắt cá trong hồ.</b> Hồ có 100 con cá, lẫn với rác. Kéo lưới lên được 50 thứ: 45 con cá và 5 cái rác.</p>
+  <ul>
+    <li><b>Precision (độ chính xác của lưới)</b> — trong những thứ kéo lên, bao nhiêu là cá? 45 / 50 = <b>90%</b>. Precision thấp = kéo lên nhiều rác (báo nhầm).</li>
+    <li><b>Recall (độ phủ của lưới)</b> — trong toàn bộ cá trong hồ, bắt được bao nhiêu? 45 / 100 = <b>45%</b>. Recall thấp = sót nhiều cá.</li>
+    <li><b>F1</b> — một điểm gộp cả hai, chỉ cao khi <i>cả hai</i> cùng cao: 2 × 0,90 × 0,45 / (0,90 + 0,45) = <b>60%</b>. Khác với trung bình cộng (67,5%), F1 kéo điểm xuống khi một bên quá thấp — không "ăn gian" được bằng cách chỉ giỏi một mặt.</li>
+  </ul>
+  <p style="margin-bottom:0">Hai cách ăn gian: lưới siêu nhỏ chỉ bắt 1 con chắc chắn là cá → precision 100% nhưng recall 1%. Vét cả hồ → recall 100% nhưng toàn rác. F1 phạt cả hai.</p>
+</div>
+
+<h4>Áp dụng vào dự án: nhãn "hủy gói", model A, trên 300 tin test</h4>
+<div class="table-wrap"><table>
+  <thead><tr><th></th><th class="num">Số tin</th><th>Ý nghĩa</th></tr></thead>
+  <tbody>
+    <tr><td>Tin muốn hủy thật</td><td class="num">31</td><td>"cá trong hồ"</td></tr>
+    <tr><td>A gắn nhãn "hủy gói"</td><td class="num">29</td><td>"thứ kéo lên"</td></tr>
+    <tr><td>— trong đó đúng</td><td class="num">28</td><td>cá thật</td></tr>
+    <tr><td>— báo nhầm</td><td class="num">1</td><td><i>"Đợi chút nhé, để mình hỏi sếp đã"</i> (thật ra là <code>other</code>)</td></tr>
+    <tr><td>Bỏ sót</td><td class="num">3</td><td>vd. <i>"Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền…"</i> → A đoán <code>complaint</code></td></tr>
+  </tbody>
+</table></div>
+<p><b>Precision</b> = 28 / 29 = <b>96,6%</b> · <b>Recall</b> = 28 / 31 = <b>90,3%</b> · <b>F1</b> = <b>93,3</b>.</p>
+
+<h4>Chọn metric: hỏi "sai kiểu nào đắt hơn?"</h4>
+<div class="table-wrap"><table>
+  <thead><tr><th>Bài toán</th><th>Sai kiểu nào đắt hơn</th><th>Ưu tiên</th></tr></thead>
+  <tbody>
+    <tr><td>Lọc thư rác</td><td>Chặn nhầm thư thật của sếp (báo nhầm)</td><td><b>Precision</b></td></tr>
+    <tr><td>Sàng lọc ung thư</td><td>Bỏ sót người bệnh</td><td><b>Recall</b></td></tr>
+    <tr><td>Hàng đợi "hủy gói" (dự án này)</td><td>Bỏ sót khách muốn hủy → khách bực, có thể bị khiếu nại vì không cho hủy</td><td><b>Recall</b> của <code>cancellation</code></td></tr>
+    <tr class="hl"><td>Router 5 nhãn (dự án này)</td><td>Nhãn nào cũng cần đúng; số tin mỗi nhãn không đều (10%–28%)</td><td><b>Macro-F1</b></td></tr>
+  </tbody>
+</table></div>
+<p><b>Vì sao không dùng accuracy (tỷ lệ đoán đúng)?</b> Vì lớp hiếm bị "chìm". Giả sử một model đoán đúng hoàn hảo 4 nhãn kia nhưng <b>không bao giờ</b> đoán "hủy gói" (31 tin đều bị đoán thành khiếu nại): accuracy vẫn là 269 / 300 = <b>89,7%</b> — trông ổn — nhưng macro-F1 chỉ <b>76</b>, vì F1 của "hủy gói" bằng 0 và kéo trung bình xuống.</p>
+<p><b>Quyết định của dự án:</b> dùng <b>macro-F1</b> làm thước đo chính, và theo dõi riêng <b>recall của <code>cancellation</code></b> — đó là lý do bật cân bằng trọng số lớp và chạy thí nghiệm lớp hiếm.</p>
+
+<h3 id="leakage">2. Data leakage — rò rỉ dữ liệu</h3>
+<p><b>Data leakage</b> là khi thông tin của tập test "lọt" vào quá trình huấn luyện hoặc lựa chọn model. Hậu quả: điểm báo cáo <b>đẹp giả</b>, mang ra dùng thật thì tụt. Giống học sinh được xem trước đề thi: điểm cao nhưng không phản ánh năng lực thật.</p>
+
+<h4>Bài tập: tìm lỗi trong pipeline cho sẵn</h4>
+<p>Pipeline dưới đây chạy được và cho điểm cao. Nó có <b>4 chỗ rò rỉ</b> — thử tìm trước khi mở đáp án.</p>
+<pre><code>df = pd.read_json("intents.jsonl", lines=True)
+df = pd.concat([df, df[df.label == "cancellation"]])            <span class="cm"># tăng lớp hiếm</span>
+
+vec = TfidfVectorizer().fit(df.text)
+X = vec.transform(df.text)
+X_train, X_test, y_train, y_test = train_test_split(X, df.label)
+
+model = LogisticRegression().fit(X_train, y_train)
+best_t = max(thresholds, key=lambda t: hybrid_f1(model, X_test, y_test, t))
+print("Macro-F1:", hybrid_f1(model, X_test, y_test, best_t))</code></pre>
+
+<details>
+  <summary>Xem đáp án: 4 chỗ rò rỉ</summary>
+  <div class="body">
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Dòng lỗi</th><th>Vì sao rò rỉ</th><th>Cách sửa</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>pd.concat([df, df[...cancellation]])</code></td><td>Nhân bản tin <b>trước khi chia</b> → cùng một tin nằm ở cả train và test. Model "nhớ" đáp án.</td><td>Chia trước, chỉ cân bằng trên train; hoặc dùng <code>class_weight="balanced"</code> thay vì nhân bản.</td></tr>
+        <tr><td>2</td><td><code>TfidfVectorizer().fit(df.text)</code></td><td>Học từ vựng và trọng số IDF từ <b>cả</b> tin test → model biết trước những từ sẽ xuất hiện trong đề thi.</td><td>Đặt vectorizer trong <code>Pipeline</code>, chỉ <code>fit</code> trên train (và trên từng fold khi cross-validation).</td></tr>
+        <tr><td>3</td><td><code>train_test_split(X, df.label)</code></td><td>Không lọc tin trùng / gần trùng (tin sinh bằng LLM hay lặp ý) → test có "bản sao" trong train. Cũng không <code>stratify</code>.</td><td>Lọc trùng trước khi chia; <code>stratify=df.label</code>; kiểm tra độ giống train–test.</td></tr>
+        <tr><td>4</td><td><code>best_t = max(..., X_test, y_test ...)</code></td><td>Chọn ngưỡng <b>trên chính tập test</b> rồi báo cáo điểm trên tập test đó.</td><td>Chọn ngưỡng trên val hoặc out-of-fold của train; test chỉ dùng một lần ở cuối.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<h4>Dự án này đã chặn rò rỉ như thế nào — và kiểm tra bằng số</h4>
+<div class="table-wrap"><table>
+  <thead><tr><th>Nguy cơ</th><th>Cách chặn</th><th>Kiểm tra</th></tr></thead>
+  <tbody>
+    <tr><td>Tin trùng giữa các tập</td><td>Bỏ dấu, chữ thường, bỏ ký tự đặc biệt rồi loại trùng (<code>normalize()</code>) trước khi chia</td><td>2.135 tin sinh → loại 2 tin trùng nhau + 1 tin chép y nguyên tin seed. 0 cặp test–train giống nhau quá 0,9 (cosine)</td></tr>
+    <tr><td>Tin sinh "bắt chước" tin seed</td><td>Khi sinh, LLM được xem 6 tin seed làm mẫu nhưng được yêu cầu không lặp ý</td><td>Cặp test–train giống nhất chỉ 0,899 — hai câu khác chữ, cùng ý ("thất vọng về dịch vụ")</td></tr>
+    <tr><td>Fit TF-IDF trên cả test</td><td><code>make_pipeline(TfidfVectorizer, LogisticRegression)</code> — mọi bước fit lại trong từng fold / chỉ trên train</td><td>Xem <code>experiments.tfidf_lr()</code></td></tr>
+    <tr><td>Cân bằng lớp bằng nhân bản</td><td>Dùng <code>class_weight</code>, không nhân bản tin; thí nghiệm lớp hiếm chỉ bớt tin ở <b>train fold</b></td><td>Xem <code>experiments.rare_class_ablation()</code></td></tr>
+    <tr><td>Chọn ngưỡng trên test</td><td>Chọn trên out-of-fold của train+val, test chỉ dùng để báo cáo</td><td><b>Nếu chọn trên test</b>, A + D sẽ báo cáo <span class="bad">95,1</span> (ngưỡng 0,93) thay vì <b>93,1</b> — đẹp giả 2 điểm</td></tr>
+    <tr><td>Nhãn test do cùng họ model với D gán</td><td>Không hẳn là rò rỉ nhưng gây thiên vị → so thêm trên tin có nhãn người</td><td>Trên 37 tin test nhãn người: D 97,3, A 90,5 — thứ hạng không đổi</td></tr>
+  </tbody>
+</table></div>
+
+<h3 id="hoan-thanh">3. Bài tập lớn hoàn thành</h3>
+<ul>
+  <li>Bảng so sánh ML cổ điển (A, B, C) và LLM (D) theo macro-F1, p95 latency và $/100k tin: <a href="#bang-xep-hang">Bảng xếp hạng</a> và <code>results/comparison.md</code>.</li>
+  <li>Confusion matrix, cross-validation, phân tích lỗi, chiến lược kết hợp với đường chi phí – chất lượng: mục "Chi tiết theo tiêu chí chấm điểm" ở trên.</li>
+  <li>Notebook chạy lại được: <code>notebooks/intent_router.ipynb</code> · Blog: <a href="blog-khi-nao-khong-can-llm.md">Khi nào không cần LLM?</a> · Code: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">GitHub</a>.</li>
+</ul>
 
 <h2>Giới hạn</h2>
 <div class="note">
