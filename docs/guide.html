@@ -105,6 +105,41 @@ figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .stage li { margin: 8px 0; padding-left: 30px; position: relative; }
 .stage li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
 .bad { color: #c0392b; font-weight: 700; }
+.diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 14px 0 18px; }
+.diagram .cap { font-size: 13px; color: var(--muted); margin-top: 10px; }
+.pipe { display: flex; align-items: stretch; gap: 6px; }
+.node { flex: 1; min-width: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
+.node b { display: block; font-size: 14.5px; }
+.node small { color: var(--muted); font-size: 12.5px; }
+.node.hl { background: var(--accent-soft); border-color: var(--accent); }
+.node.llm { border-style: dashed; }
+.arrow { align-self: center; color: var(--muted); font-size: 20px; flex: 0 0 auto; }
+.arrow::before { content: "→"; }
+@media (max-width: 640px) {
+  .pipe { flex-direction: column; }
+  .arrow { align-self: center; }
+  .arrow::before { content: "↓"; }
+}
+.model-rows { display: grid; gap: 10px; }
+.model-row { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; }
+.model-row .tag { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--accent); color: var(--bg); }
+.split { display: flex; min-height: 54px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); font-size: 13.5px; }
+.split > div { display: flex; flex-direction: column; justify-content: center; padding: 6px 10px; line-height: 1.35; border-right: 2px solid var(--surface); min-width: 0; }
+.split > div:last-child { border-right: none; }
+.split .tr { flex: 70; background: var(--accent-soft); }
+.split .va { flex: 15; background: var(--surface-2); }
+.split .te { flex: 15; background: var(--warn-soft); }
+.split small { color: var(--muted); }
+.router { display: grid; gap: 8px; justify-items: center; }
+.router .node { width: min(100%, 420px); text-align: center; flex: none; }
+.router .q { background: var(--warn-soft); border-color: var(--warn); }
+.router .down { color: var(--muted); font-size: 20px; line-height: 1; }
+.branches { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.branch { display: grid; gap: 8px; justify-items: center; }
+.branch .node { width: 100%; }
+.branch .lbl { font-weight: 700; font-size: 14px; }
+@media (max-width: 520px) { .branches { grid-template-columns: 1fr; } .split { font-size: 12px; } .split > div { padding: 6px; } }
+
 .theme-btn {
   position: fixed; top: 12px; right: 12px; z-index: 5; font-size: 13px; padding: 6px 10px; cursor: pointer;
   border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text);
@@ -160,6 +195,31 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <div class="card win"><div class="k">⚖️ Cân bằng nhất</div><div class="v">🏆 Kết hợp A + D</div><div class="s">93,1 điểm, rẻ hơn LLM 4 lần, phần lớn tin trả lời tức thì</div></div>
 </div>
 
+<h2>Sơ đồ dự án</h2>
+<p>Toàn bộ dự án đi qua 4 chặng: <b>tạo dữ liệu → chia dữ liệu → thi đấu 4 cách → ghép thành router</b>.</p>
+<div class="diagram">
+  <div class="pipe">
+    <div class="node"><b>① Dữ liệu</b>300 tin gán tay<br>+ 1.700 tin LLM viết, <code>gpt-4o</code> gán nhãn<br><small>kiểm tra mẫu 100 tin: đúng 95%</small></div>
+    <div class="arrow"></div>
+    <div class="node"><b>② Chia 70/15/15</b>train 1.400 · val 300 · test 300<br><small>giữ tỷ lệ từng nhãn</small></div>
+    <div class="arrow"></div>
+    <div class="node"><b>③ Thi đấu</b>A · B · C học trên train<br>D hỏi thẳng LLM<br><small>chấm trên 300 tin test</small></div>
+    <div class="arrow"></div>
+    <div class="node hl"><b>④ Router</b>A trả lời khi tự tin &gt; 72%<br>còn lại → LLM<br><small>dùng lại cho dự án #3</small></div>
+  </div>
+  <div class="cap">Script tương ứng: ① ② <code>build_dataset.py</code> · ③ ④ <code>run_experiments.py</code> · thử router: <code>route.py</code>.</div>
+</div>
+
+<h3>Dữ liệu được chia thế nào</h3>
+<div class="diagram">
+  <div class="split" role="img" aria-label="2.000 tin: train 1.400, val 300, test 300">
+    <div class="tr"><b>Train · 1.400</b><small>214 tay + 1.186 LLM — để model học</small></div>
+    <div class="va"><b>Val · 300</b><small>thi thử</small></div>
+    <div class="te"><b>Test · 300</b><small>thi thật</small></div>
+  </div>
+  <div class="cap">Tin gán tay và tin LLM được trộn rồi chia ngẫu nhiên. Tập test có 37 tin gán tay + 263 tin LLM. Ngưỡng của router chọn trên train+val (cross-validation 5-fold), test chỉ dùng để chấm điểm cuối.</div>
+</div>
+
 <h2>4 cách hoạt động thế nào?</h2>
 <p>A, B, C đều làm 2 bước: <b>(1) biến câu thành dãy số</b> (gọi là đặc trưng) → <b>(2) model phân loại</b> học từ 1.400 tin có nhãn để đoán nhãn. D bỏ qua cả hai bước, hỏi thẳng LLM.</p>
 <div class="table-wrap"><table>
@@ -171,6 +231,15 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
     <tr><td><b>D</b></td><td>—</td><td>LLM đọc câu và trả lời</td><td>Không — đây là LLM</td></tr>
   </tbody>
 </table></div>
+<div class="diagram">
+  <div class="model-rows">
+    <div class="model-row"><span class="tag">A</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node"><b>TF-IDF</b><small>đếm từ + cụm chữ cái → ~20.000 số</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>chạy trên máy</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
+    <div class="model-row"><span class="tag">B</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>mạng neural → 1.536 số</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>chạy trên máy</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
+    <div class="model-row"><span class="tag">C</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>giống B</small></div><div class="arrow"></div><div class="node"><b>XGBoost</b><small>400 cây quyết định</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
+    <div class="model-row"><span class="tag">D</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm" style="flex:2.1"><b>LLM <code>gpt-4o-mini</code></b><small>đọc câu + mô tả 5 nhãn, trả lời thẳng</small></div><div class="arrow"></div><div class="node hl">Nhãn</div></div></div>
+  </div>
+  <div class="cap">Ô viền nét đứt = gọi API qua mạng (tốn thời gian và tiền). Ô viền liền = chạy trên máy.</div>
+</div>
 <p>Đề bài cũng xếp B, C vào nhóm "model cổ điển trên embedding". Điểm chung của A, B, C: phải <b>học từ dữ liệu có nhãn</b>, chạy nhanh, rẻ, và trả về <b>xác suất</b> cho từng nhãn — nhờ có xác suất mới làm được chiến lược "tự tin thì tự trả lời".</p>
 
 <details open>
@@ -217,6 +286,20 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
 </details>
 
 <h2>Vì sao cách kết hợp thắng?</h2>
+<div class="diagram">
+  <div class="router">
+    <div class="node"><b>Tin nhắn khách hàng</b></div>
+    <div class="down">↓</div>
+    <div class="node"><b>Model A</b> (TF-IDF + LR) đoán nhãn và độ tự tin<small><br>&lt; 1 ms · $0</small></div>
+    <div class="down">↓</div>
+    <div class="node q"><b>Độ tự tin &gt; 72%?</b></div>
+    <div class="branches">
+      <div class="branch"><div class="lbl ok">Có · 75% số tin</div><div class="node hl"><b>Trả lời ngay</b>dùng nhãn của A<small><br>vd. "Gói Pro bao nhiêu tiền?"</small></div></div>
+      <div class="branch"><div class="lbl">Không · 25% số tin</div><div class="node llm"><b>Hỏi LLM</b> <code>gpt-4o-mini</code><small><br>~0,8 giây · vd. "Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!"</small></div></div>
+    </div>
+  </div>
+  <div class="cap">Kết quả trên 300 tin test: 93,1 điểm (LLM-only 94,3), chi phí $8 / 1 triệu tin (LLM-only $32).</div>
+</div>
 <div class="analogy">
   <p style="margin-top:0">Hãy hình dung một quầy lễ tân và một chuyên gia:</p>
   <ul class="steps">
@@ -227,6 +310,12 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <p style="margin-bottom:0">Cách này hiệu quả vì hai bên <b>sai ở những chỗ khác nhau</b>: trong 29 tin A đoán sai, LLM đúng 24 tin.</p>
 </div>
 
+<h3>Đường chi phí – chất lượng</h3>
+<figure>
+  <img src="../results/tradeoff.png" alt="Trái: macro-F1 theo chi phí khi quét ngưỡng; phải: macro-F1 và tỷ lệ chuyển LLM theo ngưỡng" loading="lazy">
+  <figcaption><b>Cách đọc hình trái:</b> trục ngang = chi phí, trục dọc = điểm chính xác. Mỗi chấm đen là một cách (A, B, C, D). Đường cong là cách kết hợp khi đổi ngưỡng: ngưỡng thấp → gần A (rẻ, kém hơn), ngưỡng cao → gần D (đắt). Ngôi sao = ngưỡng được chọn — đã gần bằng điểm của D mà chi phí chỉ khoảng 1/4. <b>Hình phải:</b> điểm (nét liền) và % tin chuyển LLM (nét đứt) theo từng ngưỡng; đường xám ngang = điểm của LLM-only.</figcaption>
+</figure>
+
 <h2>4 điều rút ra</h2>
 <ol>
   <li><b>A, B, C ngang nhau.</b> Chênh lệch giữa ba cách (88–91 điểm) nhỏ hơn sai số đo, nên không cách nào thắng rõ. Cách đơn giản nhất (A) là đủ dùng.</li>
@@ -234,6 +323,22 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <li><b>Lỗi phổ biến nhất không phải do model.</b> Mọi cách, kể cả LLM, đều hay nhầm giữa "khác" và "hỗ trợ kỹ thuật". Ví dụ <i>"Có tính năng đổi mã dự án không?"</i> thuộc loại nào chính người cũng khó nói. Muốn cải thiện, cần làm rõ định nghĩa nhãn trước.</li>
   <li><b>Lỗi đáng sợ nhất là bỏ sót khách muốn hủy.</b> Tin vừa phàn nàn vừa đòi hủy dễ bị xếp nhầm thành "khiếu nại". Cân bằng trọng số giữa các lớp giúp giảm lỗi này rõ rệt.</li>
 </ol>
+
+<h3>Confusion matrix — model hay nhầm ở đâu</h3>
+<figure>
+  <img src="../results/confusion_matrices.png" alt="Confusion matrix của 4 cách A, B, C, D trên 300 tin test" loading="lazy">
+  <figcaption><b>Cách đọc:</b> hàng = nhãn thật, cột = nhãn model đoán. Đường chéo (xanh đậm) = đoán đúng; mọi số ngoài đường chéo = tin bị nhầm. Ví dụ ở A, hàng <code>other</code> cột <code>tech_support</code> là 7: có 7 tin "khác" bị đoán thành "hỗ trợ kỹ thuật".</figcaption>
+</figure>
+<div class="table-wrap"><table>
+  <thead><tr><th>Cặp nhầm nhiều nhất (thật → đoán)</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th></tr></thead>
+  <tbody>
+    <tr><td>khác → hỗ trợ kỹ thuật</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num">4</td></tr>
+    <tr><td>hỗ trợ kỹ thuật → khác</td><td class="num">5</td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
+    <tr><td>hỗ trợ kỹ thuật → khiếu nại</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">2</td></tr>
+    <tr><td>hủy gói → khiếu nại</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">1</td></tr>
+    <tr><td>khiếu nại → hỏi giá</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">3</td></tr>
+  </tbody>
+</table></div>
 
 <h2>Giải thích thuật ngữ</h2>
 <dl class="terms">
@@ -433,12 +538,8 @@ tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không
       <li><b>4 cách</b> (yêu cầu ≥ 3), đo điểm chính xác, tốc độ thật cho từng tin, và chi phí từ số token thật.</li>
       <li><b>Thông số</b>: A — đếm từ 1–2 chữ + cụm 2–5 ký tự, <code>LogisticRegression(C=10)</code>. B — <code>text-embedding-3-small</code> + <code>LogisticRegression(C=10)</code>. C — <code>XGBClassifier(400 cây, độ sâu 4, learning_rate 0.08)</code>. D — <code>gpt-4o-mini</code>, temperature 0.</li>
       <li><b>Cross-validation 5-fold</b> trên 1.700 tin: A 88,6 · B 90,2 · C 87,9 điểm — xác nhận ba cách ngang nhau.</li>
-      <li><b>Confusion matrix</b> cho cả 4 cách và <b>phân tích lỗi từng cặp</b> (xem hình và mục "4 điều rút ra").</li>
+      <li><b>Confusion matrix</b> cho cả 4 cách và <b>phân tích lỗi từng cặp</b> (xem mục "Confusion matrix" và "4 điều rút ra" ở trên).</li>
     </ul>
-    <figure>
-      <img src="../results/confusion_matrices.png" alt="Confusion matrix của 4 cách" loading="lazy">
-      <figcaption>Hàng = loại thật, cột = loại model đoán. Số ngoài đường chéo là số tin bị nhầm.</figcaption>
-    </figure>
   </div>
 </details>
 
@@ -449,12 +550,9 @@ tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không
       <li><b>Ngưỡng 0,8 theo đề bài</b>: chuyển 33% tin sang LLM, đạt 94,0 điểm, tốn $10,6 / 1 triệu tin.</li>
       <li><b>Ngưỡng chọn: 0,72</b> — chuyển 25% tin, đạt 93,1 điểm, tốn $8 / 1 triệu tin.</li>
       <li><b>Lý do chọn</b>: thử mọi ngưỡng từ 0 đến 1 trên dữ liệu train (không đụng tập test), chọn <b>ngưỡng rẻ nhất mà vẫn chính xác ngang LLM</b>.</li>
+      <li>Hình đường chi phí – chất lượng: xem mục "Vì sao cách kết hợp thắng?" ở trên.</li>
       <li>Biến thể B + D (ngưỡng 0,81) đạt 94,5 điểm — ngang LLM — với $9 / 1 triệu tin, nhưng chậm hơn A + D vì tin nào cũng phải gọi embedding.</li>
     </ul>
-    <figure>
-      <img src="../results/tradeoff.png" alt="Đường đánh đổi chi phí và chất lượng" loading="lazy">
-      <figcaption>Trái: càng sang phải càng tốn tiền, càng lên cao càng chính xác — ngôi sao là ngưỡng được chọn. Phải: điểm chính xác theo từng ngưỡng.</figcaption>
-    </figure>
   </div>
 </details>
 
