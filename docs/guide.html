@@ -105,6 +105,13 @@ figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .stage li { margin: 8px 0; padding-left: 30px; position: relative; }
 .stage li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
 .bad { color: #c0392b; font-weight: 700; }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+nav.toc a { font-size: 14px; color: var(--text); text-decoration: none; padding: 5px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
+nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+nav.toc a.faq { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.faq-group { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 22px 0 6px; }
+details.qa summary::before { content: "Hỏi: "; color: var(--accent); }
+details.qa .body p:first-child { margin-top: 8px; }
 .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 14px 0 18px; }
 .diagram .cap { font-size: 13px; color: var(--muted); margin-top: 10px; }
 .pipe { display: flex; align-items: stretch; gap: 6px; }
@@ -155,6 +162,13 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <div class="eyebrow">Bài tập lớn · Báo cáo</div>
   <h1>Ai thắng: ML cổ điển hay LLM?</h1>
   <p class="lede">Bài toán: đọc tin nhắn của khách hàng và đoán họ muốn gì — <b>hỏi giá</b>, <b>khiếu nại</b>, <b>hủy gói</b>, <b>hỗ trợ kỹ thuật</b> hay <b>khác</b> — để chuyển đúng bộ phận. Chúng tôi thử 4 cách trên 2.000 tin nhắn tiếng Việt.</p>
+  <nav class="toc" aria-label="Mục lục">
+    <a href="#bang-xep-hang">Kết quả</a><a href="#so-do">Sơ đồ</a><a href="#bon-cach">4 cách</a>
+    <a href="#ket-hop">Kết hợp</a><a href="#rut-ra">Rút ra</a><a href="#thuat-ngu">Thuật ngữ</a>
+    <a class="faq" href="#hoi-dap">Hỏi đáp cho người mới</a><a href="#thu-vien">Thư viện</a>
+    <a href="#cach-chay">Cách chạy</a><a href="#input">Input</a><a href="#output">Kiểm tra output</a>
+    <a href="#tieu-chi">Tiêu chí chấm</a><a href="#giai-doan">Hoàn thành giai đoạn</a><a href="#gioi-han">Giới hạn</a>
+  </nav>
 </header>
 
 <div class="verdict">
@@ -195,7 +209,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <div class="card win"><div class="k">⚖️ Cân bằng nhất</div><div class="v">🏆 Kết hợp A + D</div><div class="s">93,1 điểm, rẻ hơn LLM 4 lần, phần lớn tin trả lời tức thì</div></div>
 </div>
 
-<h2>Sơ đồ dự án</h2>
+<h2 id="so-do">Sơ đồ dự án</h2>
 <p>Toàn bộ dự án đi qua 4 chặng: <b>tạo dữ liệu → chia dữ liệu → thi đấu 4 cách → ghép thành router</b>.</p>
 <div class="diagram">
   <div class="pipe">
@@ -220,7 +234,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <div class="cap">Tin gán tay và tin LLM được trộn rồi chia ngẫu nhiên. Tập test có 37 tin gán tay + 263 tin LLM. Ngưỡng của router chọn trên train+val (cross-validation 5-fold), test chỉ dùng để chấm điểm cuối.</div>
 </div>
 
-<h2>4 cách hoạt động thế nào?</h2>
+<h2 id="bon-cach">4 cách hoạt động thế nào?</h2>
 <p>A, B, C đều làm 2 bước: <b>(1) biến câu thành dãy số</b> (gọi là đặc trưng) → <b>(2) model phân loại</b> học từ 1.400 tin có nhãn để đoán nhãn. D bỏ qua cả hai bước, hỏi thẳng LLM.</p>
 <div class="table-wrap"><table>
   <thead><tr><th>Cách</th><th>Bước 1: câu → số</th><th>Bước 2: đoán nhãn</th><th>Có phải classical ML?</th></tr></thead>
@@ -285,7 +299,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </div>
 </details>
 
-<h2>Vì sao cách kết hợp thắng?</h2>
+<h2 id="ket-hop">Vì sao cách kết hợp thắng?</h2>
 <div class="diagram">
   <div class="router">
     <div class="node"><b>Tin nhắn khách hàng</b></div>
@@ -316,7 +330,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <figcaption><b>Cách đọc hình trái:</b> trục ngang = chi phí, trục dọc = điểm chính xác. Mỗi chấm đen là một cách (A, B, C, D). Đường cong là cách kết hợp khi đổi ngưỡng: ngưỡng thấp → gần A (rẻ, kém hơn), ngưỡng cao → gần D (đắt). Ngôi sao = ngưỡng được chọn — đã gần bằng điểm của D mà chi phí chỉ khoảng 1/4. <b>Hình phải:</b> điểm (nét liền) và % tin chuyển LLM (nét đứt) theo từng ngưỡng; đường xám ngang = điểm của LLM-only.</figcaption>
 </figure>
 
-<h2>4 điều rút ra</h2>
+<h2 id="rut-ra">4 điều rút ra</h2>
 <ol>
   <li><b>A, B, C ngang nhau.</b> Chênh lệch giữa ba cách (88–91 điểm) nhỏ hơn sai số đo, nên không cách nào thắng rõ. Cách đơn giản nhất (A) là đủ dùng.</li>
   <li><b>LLM giỏi hơn khoảng 4 điểm</b>, nhưng <b>chậm hơn khoảng 1.000 lần</b> và <b>đắt hơn khoảng 50 lần</b> so với B.</li>
@@ -340,7 +354,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </tbody>
 </table></div>
 
-<h2>Giải thích thuật ngữ</h2>
+<h2 id="thuat-ngu">Giải thích thuật ngữ</h2>
 <dl class="terms">
   <dt>Điểm chính xác</dt><dd>Chỉ số <b>macro-F1</b> nhân 100. Tính điểm cho từng loại ý định rồi lấy trung bình, nên loại ít tin (như "hủy gói") cũng quan trọng ngang loại nhiều tin.</dd>
   <dt>TF-IDF</dt><dd>Biến tin nhắn thành bảng đếm từ và cụm chữ cái. Nhờ đếm cụm chữ cái, model vẫn hiểu được tin <i>không dấu</i> như "huy goi".</dd>
@@ -351,7 +365,107 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <dt>p95</dt><dd>95% số tin được trả lời nhanh hơn con số này.</dd>
 </dl>
 
-<h2>Thư viện sử dụng</h2>
+<h2 id="hoi-dap">Hỏi đáp cho người mới</h2>
+<p>Những câu hỏi thường gặp khi mới học dự án này, trả lời ngắn và có số liệu thật. Bấm vào từng câu để xem.</p>
+
+<div class="faq-group">Dữ liệu</div>
+<details class="qa">
+  <summary>"Tự gán ~300, phần còn lại dùng LLM gán nhãn rồi kiểm tra mẫu" nghĩa là gì?</summary>
+  <div class="body">
+    <p><b>Nhãn</b> là đáp án đúng của mỗi tin (tin này thuộc loại nào). Gán tay cả 2.000 tin thì quá lâu, nên: người gán kỹ 300 tin làm "đáp án chuẩn" → LLM gán 1.700 tin còn lại → rút ngẫu nhiên 100 tin LLM đã gán cho người xem lại. Đúng ≥ 90% thì tin được phần còn lại. Giống giáo viên chấm vài bài mẫu, giao phần còn lại cho trợ giảng rồi kiểm tra ngẫu nhiên. Xem <a href="#input">Input</a>.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary>Đã gán đủ 1.700 tin chưa?</summary>
+  <div class="body">
+    <p>Đủ. LLM viết 2.135 tin, lọc trùng còn đúng 1.700; <code>gpt-4o</code> gán nhãn cả 1.700. Trong đó 100 tin được người kiểm tra, 5 tin bị sửa nhãn. Tổng dataset: 300 gán tay + 1.700 LLM = 2.000 tin.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary><code>audit_sample.csv</code> là gì?</summary>
+  <div class="body">
+    <p>"Audit" = kiểm tra. Đây là 100 tin chọn ngẫu nhiên trong 1.700 tin LLM gán, có 3 cột: <code>text</code> (tin nhắn), <code>llm_label</code> (LLM gán), <code>human_label</code> (người gán lại). Script so hai cột: khớp 95/100 = 95%, và sửa nhãn trong dataset cho những tin người không đồng ý. Ví dụ LLM thấy chữ "cắt dịch vụ" nên gán <code>cancellation</code>, nhưng khách đang phàn nàn bị cắt không báo trước → người sửa thành <code>complaint</code>.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary>Train, val, test khác nhau thế nào?</summary>
+  <div class="body">
+    <p>Cả 3 tập đều có nhãn, chất lượng như nhau — chỉ khác <b>mục đích</b>. Ví như ôn thi: <b>train</b> (1.400) = sách bài tập có lời giải, model học từ đây; <b>val</b> (300) = đề thi thử, dùng để chọn cách làm (ví dụ chọn ngưỡng); <b>test</b> (300) = đề thi thật, chỉ dùng một lần để chấm điểm cuối. Nếu dùng test để chọn cách làm thì điểm sẽ "đẹp giả" (xem <a href="#leakage">data leakage</a>).</p>
+    <p>Trong dự án, val 300 tin quá ít nên ngưỡng được chọn bằng cross-validation trên train + val (1.700 tin) — giống làm 5 đề thi thử thay vì 1.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary>300 tin test có phải lấy từ 1.700 tin LLM tạo không?</summary>
+  <div class="body">
+    <p>Không. Cả 2.000 tin được trộn rồi chia ngẫu nhiên 70/15/15, nên test có <b>263 tin LLM + 37 tin gán tay</b>. Xem thanh chia dữ liệu ở <a href="#so-do">Sơ đồ dự án</a>.</p>
+  </div>
+</details>
+
+<div class="faq-group">Model</div>
+<details class="qa">
+  <summary>A, B, C có phải đều là classical ML không?</summary>
+  <div class="body">
+    <p>Có, nhưng khác mức độ. Phần <b>đoán nhãn</b> của cả ba là classical (logistic regression, XGBoost). Riêng phần <b>biến câu thành số</b>: A dùng TF-IDF (classical), còn B, C dùng embedding từ mạng neural. Nên A là classical hoàn toàn; B, C là "model cổ điển trên embedding" — đúng như đề bài gọi. Chỉ D là LLM. Xem <a href="#bon-cach">4 cách hoạt động</a>.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary>Model classical được lưu ở đâu?</summary>
+  <div class="body">
+    <p>Chỉ model A được lưu: <code>models/tfidf_lr.joblib</code> (1,25 MB), gồm model (TF-IDF + logistic regression, đã train lại trên train + val), ngưỡng <code>0.72</code> và danh sách nhãn. Router đọc file này. B, C không lưu — mỗi lần chạy script/notebook train lại trong vài giây từ embedding đã cache.</p>
+<pre><code>import joblib
+b = joblib.load("models/tfidf_lr.joblib")
+p = b["model"].predict_proba(["Hủy gói giúp mình"])[0]
+print(b["model"].classes_[p.argmax()], p.max())</code></pre>
+  </div>
+</details>
+<details class="qa">
+  <summary>Model <code>text-embedding-3-small</code> được gọi ở đâu?</summary>
+  <div class="body">
+    <p>Model chạy trên server OpenAI, dự án gọi qua API — không tải về máy.</p>
+    <ul>
+      <li>Tên model khai báo ở <code>src/intent_router/config.py</code> (<code>EMBED_MODEL</code>, đổi được trong <code>.env</code>).</li>
+      <li>Gọi API ở <code>src/intent_router/embed.py</code>: <code>embed_texts()</code> embed 2.000 tin theo lô 256 và lưu cache; <code>measure_latency()</code> gửi từng tin một để đo tốc độ.</li>
+      <li>Được dùng trong <code>scripts/run_experiments.py</code>, <code>scripts/rare_class_ablation.py</code> và notebook — tin nào đã có trong <code>data/cache/embeddings_*.npz</code> thì không gọi lại.</li>
+    </ul>
+  </div>
+</details>
+<details class="qa">
+  <summary>Embedding ở B, C có giống bước ingest của RAG không?</summary>
+  <div class="body">
+    <p><b>Bước tạo embedding giống hệt</b> (cùng model, cùng API: câu → 1.536 số). <b>Cách dùng thì khác:</b></p>
+    <ul>
+      <li><b>RAG</b>: cắt tài liệu thành đoạn → embed → lưu vào vector database. Khi có câu hỏi, embed câu hỏi rồi <b>tìm</b> đoạn gần nhất đưa cho LLM. Embedding = mục lục để tra cứu, không cần nhãn.</li>
+      <li><b>B, C</b>: embed tin nhắn → dùng 1.536 số làm <b>đầu vào cho model học</b> cùng nhãn → đoán ý định. Không có vector database, không tìm kiếm.</li>
+    </ul>
+    <p>Bước kiểm tra rò rỉ (tìm tin train giống tin test nhất) chính là thao tác "retrieval" của RAG. Phần ingest đầy đủ sẽ gặp ở dự án #2.</p>
+  </div>
+</details>
+
+<div class="faq-group">Đánh giá &amp; chi phí</div>
+<details class="qa">
+  <summary>Điểm 90,6 / 88,2 / 89,6 / 94,3 / 93,1 được tính từ đâu?</summary>
+  <div class="body">
+    <p>Từ <b>300 tin test</b> — model chưa từng học từ các tin này. Mỗi cách đoán nhãn 300 tin, so với nhãn đúng, rồi tính <b>macro-F1</b> (tính F1 cho từng nhãn rồi lấy trung bình 5 nhãn) × 100. Đếm đơn giản: A đúng 271/300, B 265, C 269, D 283. Dự đoán từng tin lưu ở <code>results/test_predictions.csv</code>, tự tính lại được:</p>
+<pre><code>uv run python -c "
+import pandas as pd; from sklearn.metrics import f1_score
+t = pd.read_csv('results/test_predictions.csv')
+for k in 'ABCD': print(k, round(f1_score(t.label, t['pred_'+k], average='macro')*100, 1))"</code></pre>
+  </div>
+</details>
+<details class="qa">
+  <summary>Dùng embedding có tốn phí không?</summary>
+  <div class="body">
+    <p>Có nhưng rất ít: $0,02 / 1 triệu token, mỗi tin ~29 token. Cả dự án embed ~71.000 token ≈ <b>$0,0014</b> (khoảng 35 đồng). Dùng thật ~$0,58 / 1 triệu tin — rẻ hơn LLM (~$32) khoảng 55 lần. Cái giá thật của B, C là <b>thời gian chờ</b> (+0,2–0,3 giây/tin) và cần mạng + API key. Chạy lại notebook không tốn thêm vì đã có cache.</p>
+  </div>
+</details>
+<details class="qa">
+  <summary>Rốt cuộc cách nào thắng?</summary>
+  <div class="body">
+    <p><b>Kết hợp A + D</b>: model A trả lời khi tự tin &gt; 72% (75% số tin), còn lại hỏi LLM. Đạt 93,1 điểm (LLM-only 94,3) với chi phí $8 thay vì $32 / 1 triệu tin. Nếu chỉ cần chính xác nhất thì là D; rẻ và nhanh nhất là A. Xem <a href="#bang-xep-hang">Bảng xếp hạng</a>.</p>
+  </div>
+</details>
+
+<h2 id="thu-vien">Thư viện sử dụng</h2>
 <p>Khai báo trong <code>pyproject.toml</code>, cài bằng <code>uv sync</code>.</p>
 
 <h3>Machine learning</h3>
@@ -419,7 +533,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </tbody>
 </table></div>
 
-<h2>Cách chạy</h2>
+<h2 id="cach-chay">Cách chạy</h2>
 <pre><code>git clone https://github.com/dangphamv/intent-router-ml-vs-llm
 cd intent-router-ml-vs-llm
 brew install libomp && uv sync                    <span class="cm"># cài đặt (macOS)</span>
@@ -427,7 +541,7 @@ uv run jupyter lab notebooks/intent_router.ipynb  <span class="cm"># xem toàn b
 uv run scripts/route.py "Hủy gói giúp mình"       <span class="cm"># thử router (cần OPENAI_API_KEY trong .env)</span></code></pre>
 <p>Chạy lại từ đầu (cần key): <code>scripts/build_dataset.py</code> → <code>scripts/run_experiments.py</code> → <code>scripts/rare_class_ablation.py</code>. Kết quả ghi vào <code>data/</code>, <code>results/</code>, <code>models/</code>.</p>
 
-<h2>Input: dữ liệu đầu vào</h2>
+<h2 id="input">Input: dữ liệu đầu vào</h2>
 <p>Đề bài yêu cầu: <i>"Khoảng 2.000 tin nhắn có nhãn ý định: tự gán khoảng 300, phần còn lại dùng LLM gán nhãn rồi kiểm tra mẫu."</i> <b>Nhãn</b> là đáp án đúng của mỗi tin — tin đó thuộc loại nào. Model cần đáp án để học và để được chấm điểm.</p>
 
 <div class="analogy">
@@ -460,7 +574,7 @@ uv run scripts/route.py "Hủy gói giúp mình"       <span class="cm"># thử 
   <li>Chạy <code>uv run scripts/build_dataset.py</code> rồi <code>uv run scripts/run_experiments.py</code> (cần API key).</li>
 </ul>
 
-<h2>Kiểm tra output</h2>
+<h2 id="output">Kiểm tra output</h2>
 <p>Chạy từng lệnh trong thư mục repo và so với cột "Kết quả đúng". Các lệnh này <b>không cần API key</b>.</p>
 
 <h3>1. Dataset có đúng 2.000 tin, 300 tay + 1.700 LLM?</h3>
@@ -516,7 +630,7 @@ cancellation  conf=0.98  via=local       ko muốn xài nữa, ngưng giúp mìn
 tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!</code></pre>
 <p><code>via=local</code> = model rẻ tự trả lời; <code>via=gpt-4o-mini</code> = không chắc nên chuyển LLM.</p>
 
-<h2>Chi tiết theo tiêu chí chấm điểm</h2>
+<h2 id="tieu-chi">Chi tiết theo tiêu chí chấm điểm</h2>
 <p>Bấm vào từng mục để xem cách làm, công cụ và thông số.</p>
 
 <details>
@@ -567,7 +681,7 @@ tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không
   </div>
 </details>
 
-<h2>Tiêu chí hoàn thành giai đoạn</h2>
+<h2 id="giai-doan">Tiêu chí hoàn thành giai đoạn</h2>
 <div class="stage">
   <div class="label">Tiêu chí hoàn thành giai đoạn</div>
   <ul>
@@ -666,7 +780,7 @@ print("Macro-F1:", hybrid_f1(model, X_test, y_test, best_t))</code></pre>
   <li>Notebook chạy lại được: <code>notebooks/intent_router.ipynb</code> · Blog: <a href="blog-khi-nao-khong-can-llm.md">Khi nào không cần LLM?</a> · Code: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">GitHub</a>.</li>
 </ul>
 
-<h2>Giới hạn</h2>
+<h2 id="gioi-han">Giới hạn</h2>
 <div class="note">
   <ul style="margin:0;padding-left:20px">
     <li>300 tin gán tay và 100 tin review được soạn cùng Claude Code. Nếu cần nhãn do chính bạn gán, sửa <code>data/seed_raw.tsv</code> và <code>data/audit_sample.csv</code> rồi chạy lại.</li>
