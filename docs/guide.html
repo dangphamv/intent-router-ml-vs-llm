@@ -890,6 +890,20 @@ tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không
 </table></div>
 <p><b>Precision</b> = 28 / 29 = <b>96,6%</b> · <b>Recall</b> = 28 / 31 = <b>90,3%</b> · <b>F1</b> = <b>93,3</b>.</p>
 
+<h4>Precision / recall / F1 của cả 5 nhãn (A và D, trên 300 tin test)</h4>
+<div class="table-wrap"><table>
+  <thead><tr><th>Nhãn</th><th class="num">Số tin</th><th class="num">A · P</th><th class="num">A · R</th><th class="num">A · F1</th><th class="num">D · P</th><th class="num">D · R</th><th class="num">D · F1</th></tr></thead>
+  <tbody>
+    <tr><td>pricing</td><td class="num">65</td><td class="num">94,0</td><td class="num">96,9</td><td class="num"><b>95,5</b></td><td class="num">91,3</td><td class="num">96,9</td><td class="num">94,0</td></tr>
+    <tr><td>complaint</td><td class="num">62</td><td class="num">91,9</td><td class="num">91,9</td><td class="num">91,9</td><td class="num">95,1</td><td class="num">93,5</td><td class="num"><b>94,3</b></td></tr>
+    <tr><td>cancellation</td><td class="num">31</td><td class="num">96,6</td><td class="num">90,3</td><td class="num">93,3</td><td class="num">96,7</td><td class="num">93,5</td><td class="num"><b>95,1</b></td></tr>
+    <tr><td>tech_support</td><td class="num">83</td><td class="num">88,1</td><td class="num">89,2</td><td class="num">88,6</td><td class="num">95,2</td><td class="num">96,4</td><td class="num"><b>95,8</b></td></tr>
+    <tr><td>other</td><td class="num">59</td><td class="num">84,5</td><td class="num">83,1</td><td class="num">83,8</td><td class="num">94,6</td><td class="num">89,8</td><td class="num"><b>92,2</b></td></tr>
+    <tr class="hl"><td>Trung bình (macro)</td><td class="num">300</td><td class="num"></td><td class="num"></td><td class="num">90,6</td><td class="num"></td><td class="num"></td><td class="num">94,3</td></tr>
+  </tbody>
+</table></div>
+<p>P = precision, R = recall. Đọc bảng: <code>other</code> là nhãn A yếu nhất (nhầm với <code>tech_support</code>); A <b>thắng</b> D ở <code>pricing</code> vì D hay gắn nhầm tin khiếu nại về tiền thành "hỏi giá" (precision D chỉ 91,3%); với <code>cancellation</code> cả hai đều ~97% precision, nhưng A bỏ sót 3/31 tin hủy, D bỏ sót 2/31. Macro-F1 = trung bình cột F1 của 5 nhãn.</p>
+
 <h4>Chọn metric: hỏi "sai kiểu nào đắt hơn?"</h4>
 <div class="table-wrap"><table>
   <thead><tr><th>Bài toán</th><th>Sai kiểu nào đắt hơn</th><th>Ưu tiên</th></tr></thead>
