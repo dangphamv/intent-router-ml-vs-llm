@@ -583,6 +583,24 @@ Return exactly one label: pricing, complaint, cancellation, tech_support, other.
   </div>
 </details>
 
+<details class="qa">
+  <summary>Ngưỡng tự tin có phải là threshold trong RAG không?</summary>
+  <div class="body">
+    <p><b>Không hẳn.</b> Cả hai đều là threshold — mức cắt "đủ tin cậy chưa" — nhưng đo hai thứ khác nhau:</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>Ngưỡng tự tin (dự án này)</th><th>Ngưỡng similarity (RAG)</th></tr></thead>
+      <tbody>
+        <tr><td>Đo cái gì</td><td>Model <b>chắc chắn bao nhiêu</b> về nhãn nó đoán</td><td>Đoạn tài liệu <b>giống câu hỏi bao nhiêu</b></td></tr>
+        <tr><td>Con số từ đâu</td><td>Xác suất cao nhất trong 5 nhãn (<code>predict_proba</code>)</td><td>Cosine similarity giữa vector câu hỏi và vector đoạn tài liệu</td></tr>
+        <tr><td>Ví dụ</td><td>"Hủy gói giúp mình" → <code>cancellation</code> 0,98</td><td>"Chính sách hoàn tiền?" ↔ "Hoàn tiền trong 7 ngày…" (ví dụ minh họa)</td></tr>
+        <tr><td>Dưới ngưỡng thì</td><td>Chuyển tin cho LLM</td><td>Bỏ đoạn đó; không đoạn nào qua ngưỡng → trả lời "không tìm thấy thông tin"</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Giống nhau ở cách chọn</b>: thử nhiều ngưỡng trên val, vẽ đường đánh đổi, chọn có lý do. Router: ngưỡng cao → gọi LLM nhiều hơn, chính xác hơn nhưng đắt. RAG: ngưỡng cao → ít đoạn lạc đề nhưng dễ bỏ sót đoạn đúng (precision ↔ recall).</p>
+    <p>Dự án này có dùng một ngưỡng kiểu RAG: khi kiểm tra rò rỉ dữ liệu, cặp test–train có cosine similarity &gt; <b>0,9</b> bị coi là gần trùng (kết quả: 0 cặp, cao nhất 0,899). Ngưỡng similarity phụ thuộc embedding model, nên đổi model thì phải đo và chọn lại.</p>
+  </div>
+</details>
+
 <div class="faq-group">Đánh giá &amp; chi phí</div>
 <details class="qa">
   <summary>Điểm 90,6 / 88,2 / 89,6 / 94,3 / 93,1 được tính từ đâu?</summary>
