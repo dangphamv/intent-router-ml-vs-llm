@@ -154,6 +154,62 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <div class="card win"><div class="k">⚖️ Cân bằng nhất</div><div class="v">🏆 Kết hợp A + D</div><div class="s">93,1 điểm, rẻ hơn LLM 4 lần, phần lớn tin trả lời tức thì</div></div>
 </div>
 
+<h2>4 cách hoạt động thế nào?</h2>
+<p>A, B, C đều làm 2 bước: <b>(1) biến câu thành dãy số</b> (gọi là đặc trưng) → <b>(2) model phân loại</b> học từ 1.400 tin có nhãn để đoán nhãn. D bỏ qua cả hai bước, hỏi thẳng LLM.</p>
+<div class="table-wrap"><table>
+  <thead><tr><th>Cách</th><th>Bước 1: câu → số</th><th>Bước 2: đoán nhãn</th><th>Có phải classical ML?</th></tr></thead>
+  <tbody>
+    <tr><td><b>A</b></td><td>TF-IDF — đếm từ và cụm chữ cái <span class="ok">(classical)</span></td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Hoàn toàn classical</b> — không có mạng neural nào</td></tr>
+    <tr><td><b>B</b></td><td>Embedding — mạng neural có sẵn qua API</td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Classical trên embedding</b></td></tr>
+    <tr><td><b>C</b></td><td>Embedding — giống B</td><td>XGBoost <span class="ok">(classical)</span></td><td><b>Classical trên embedding</b></td></tr>
+    <tr><td><b>D</b></td><td>—</td><td>LLM đọc câu và trả lời</td><td>Không — đây là LLM</td></tr>
+  </tbody>
+</table></div>
+<p>Đề bài cũng xếp B, C vào nhóm "model cổ điển trên embedding". Điểm chung của A, B, C: phải <b>học từ dữ liệu có nhãn</b>, chạy nhanh, rẻ, và trả về <b>xác suất</b> cho từng nhãn — nhờ có xác suất mới làm được chiến lược "tự tin thì tự trả lời".</p>
+
+<details open>
+  <summary>A. TF-IDF + logistic regression — đếm chữ</summary>
+  <div class="body">
+    <p><b>Bước 1 — TF-IDF.</b> Tách câu thành các mảnh rồi đếm:</p>
+    <ul>
+      <li><b>Từ và cặp từ</b>: <code>huy</code>, <code>goi</code>, <code>huy goi</code>…</li>
+      <li><b>Cụm 2–5 chữ cái</b>: <code>hu</code>, <code>huy</code>, <code>uy g</code>… → nhờ vậy <i>"huy goi"</i> (không dấu), <i>"hủy gói"</i> và <i>"huỷ gói"</i> vẫn có nhiều mảnh chung.</li>
+      <li>Mảnh nào xuất hiện ở <b>mọi</b> tin (như "mình", "ạ") bị giảm trọng số; mảnh hiếm mà đặc trưng (như "hủy", "giá") được tăng trọng số. Đó là ý nghĩa của "TF-IDF".</li>
+    </ul>
+    <p>Kết quả: mỗi tin thành một dãy hàng chục nghìn con số, hầu hết bằng 0.</p>
+    <p><b>Bước 2 — Logistic regression.</b> Học một <b>trọng số</b> cho mỗi mảnh với mỗi nhãn. Ví dụ "hủy" có trọng số cao cho <code>cancellation</code>, "lỗi" cao cho <code>tech_support</code>. Cộng trọng số của các mảnh trong câu → ra xác suất cho 5 nhãn.</p>
+    <p><b>Thông số:</b> từ 1–2 chữ + cụm 2–5 ký tự (<code>char_wb</code>), <code>C=10</code> (mức độ cho phép model khớp sát dữ liệu), <code>class_weight="balanced"</code> (tăng trọng số cho lớp hiếm).</p>
+    <p><b>Mạnh:</b> tức thì, miễn phí, chạy offline, xử lý tốt tin không dấu. <b>Yếu:</b> chỉ thấy chữ, không hiểu nghĩa — <i>"ngưng dịch vụ"</i> và <i>"hủy gói"</i> khác chữ nên phải có cả hai trong dữ liệu học.</p>
+  </div>
+</details>
+
+<details>
+  <summary>B. Embedding + logistic regression — đo ý nghĩa</summary>
+  <div class="body">
+    <p><b>Bước 1 — Embedding.</b> Gửi câu tới API <code>text-embedding-3-small</code> của OpenAI (một mạng neural đã được train sẵn trên lượng văn bản rất lớn). API trả về <b>1.536 con số</b> thể hiện <i>ý nghĩa</i> của câu. Hai câu cùng nghĩa cho ra hai dãy số gần nhau, kể cả khi không chung chữ nào: <i>"hủy gói"</i> ≈ <i>"không dùng nữa, ngưng giúp mình"</i>.</p>
+    <p><b>Bước 2 — Logistic regression</b>, giống A, nhưng học trên 1.536 con số này thay vì đếm chữ.</p>
+    <p><b>Mạnh:</b> hiểu từ đồng nghĩa, cách diễn đạt mới. <b>Yếu:</b> mỗi tin tốn 1 lần gọi mạng (~0,2–0,3 giây) và một ít tiền; cảm xúc mạnh trong câu dễ "kéo" ý nghĩa về <code>complaint</code>.</p>
+  </div>
+</details>
+
+<details>
+  <summary>C. Embedding + XGBoost — nhiều cây quyết định</summary>
+  <div class="body">
+    <p><b>Bước 1</b>: dùng lại đúng embedding của B.</p>
+    <p><b>Bước 2 — XGBoost</b>: xây <b>400 cây quyết định</b> nối tiếp nhau; mỗi cây là chuỗi câu hỏi "số thứ 37 có lớn hơn 0,02 không?…", và cây sau tập trung sửa lỗi của các cây trước. Kết quả cuối là tổng phiếu của cả 400 cây.</p>
+    <p><b>Thông số:</b> 400 cây, độ sâu tối đa 4, <code>learning_rate=0.08</code>, mỗi cây chỉ xem 80% số tin và 40% số cột.</p>
+    <p><b>Kết quả:</b> không tốt hơn B. XGBoost mạnh với dữ liệu dạng bảng (tuổi, thu nhập…), còn với 1.536 con số dày đặc và chỉ 1.400 mẫu học, một model tuyến tính như logistic regression là đủ — và XGBoost xử lý lớp hiếm kém nhất.</p>
+  </div>
+</details>
+
+<details>
+  <summary>D. LLM zero-shot — hỏi thẳng</summary>
+  <div class="body">
+    <p>Gửi tin nhắn cho <code>gpt-4o-mini</code> kèm mô tả ngắn 5 nhãn, yêu cầu trả về đúng một nhãn. "Zero-shot" nghĩa là <b>không đưa ví dụ và không train</b>. <code>temperature=0</code> để mỗi lần hỏi cho cùng câu trả lời.</p>
+    <p><b>Mạnh:</b> hiểu ngữ cảnh, giọng điệu, câu nhiều ý. <b>Yếu:</b> chậm (~0,7–0,9 giây/tin), tốn tiền mỗi tin, và không biết các quy tắc riêng của mình (ví dụ "bị tính tiền sai → khiếu nại, không phải hỏi giá") trừ khi viết vào prompt.</p>
+  </div>
+</details>
+
 <h2>Vì sao cách kết hợp thắng?</h2>
 <div class="analogy">
   <p style="margin-top:0">Hãy hình dung một quầy lễ tân và một chuyên gia:</p>
@@ -183,6 +239,74 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <dt>Ngưỡng tự tin</dt><dd>Model rẻ chỉ tự trả lời khi độ tự tin vượt ngưỡng (72%); dưới ngưỡng thì chuyển LLM.</dd>
   <dt>p95</dt><dd>95% số tin được trả lời nhanh hơn con số này.</dd>
 </dl>
+
+<h2>Thư viện sử dụng</h2>
+<p>Khai báo trong <code>pyproject.toml</code>, cài bằng <code>uv sync</code>.</p>
+
+<h3>Machine learning</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th><th>Ở file nào</th></tr></thead>
+  <tbody>
+    <tr><td><code>scikit-learn</code></td><td>Thư viện ML cổ điển phổ biến nhất của Python</td><td>
+      <code>TfidfVectorizer</code>, <code>FeatureUnion</code>, <code>make_pipeline</code>: bước đếm chữ của A ·
+      <code>LogisticRegression</code>: model của A, B ·
+      <code>train_test_split</code>: chia 70/15/15 · <code>StratifiedKFold</code>: cross-validation 5-fold ·
+      <code>f1_score</code>, <code>confusion_matrix</code>, <code>classification_report</code>: chấm điểm ·
+      <code>accuracy_score</code>, <code>cohen_kappa_score</code>: đo độ khớp giữa nhãn LLM và nhãn người ·
+      <code>compute_sample_weight</code>: cân bằng lớp hiếm cho XGBoost</td>
+      <td><code>experiments.py</code>, <code>build_dataset.py</code>, <code>run_experiments.py</code></td></tr>
+    <tr><td><code>xgboost</code></td><td>Thư viện gradient boosting (nhiều cây quyết định)</td><td><code>XGBClassifier</code>: model của C. Trên macOS cần <code>brew install libomp</code></td><td><code>experiments.py</code></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Gọi LLM và embedding</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th><th>Ở file nào</th></tr></thead>
+  <tbody>
+    <tr><td><code>openai</code></td><td>SDK chính thức để gọi API OpenAI</td><td>
+      <code>chat.completions.parse</code>: sinh 1.700 tin, gán nhãn bằng <code>gpt-4o</code>, chạy D bằng <code>gpt-4o-mini</code> ·
+      <code>embeddings.create</code>: lấy embedding cho B, C · <code>AsyncOpenAI</code>: gọi nhiều request song song</td>
+      <td><code>llm.py</code>, <code>embed.py</code>, <code>build_dataset.py</code>, <code>router.py</code></td></tr>
+    <tr><td><code>pydantic</code></td><td>Khai báo kiểu dữ liệu và kiểm tra dữ liệu</td><td>Định nghĩa khuôn câu trả lời của LLM, ví dụ <code>label: Literal["pricing", "complaint", …]</code> → LLM <b>bắt buộc</b> trả về 1 trong 5 nhãn hợp lệ (structured output), không cần tự cắt chuỗi</td><td><code>llm.py</code>, <code>build_dataset.py</code></td></tr>
+    <tr><td><code>python-dotenv</code></td><td>Đọc file <code>.env</code></td><td>Nạp <code>OPENAI_API_KEY</code> và tên model từ <code>.env</code> mà không phải ghi key vào code</td><td><code>config.py</code></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Xử lý dữ liệu, vẽ hình, lưu model</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th></tr></thead>
+  <tbody>
+    <tr><td><code>pandas</code></td><td>Bảng dữ liệu</td><td>Đọc <code>intents.jsonl</code>, lọc theo train/val/test, đếm nhãn (<code>crosstab</code>), ghi các file <code>.csv</code> kết quả</td></tr>
+    <tr><td><code>numpy</code></td><td>Tính toán trên mảng số</td><td>Lưu embedding (mảng 2.000 × 1.536), tính p50/p95 latency, lấy mẫu ngẫu nhiên cho bootstrap</td></tr>
+    <tr><td><code>matplotlib</code></td><td>Vẽ biểu đồ</td><td>Vẽ <code>confusion_matrices.png</code> và <code>tradeoff.png</code></td></tr>
+    <tr><td><code>joblib</code></td><td>Lưu / nạp object Python</td><td>Lưu model A + ngưỡng vào <code>models/tfidf_lr.joblib</code> để router nạp lại</td></tr>
+    <tr><td><code>tqdm</code></td><td>Thanh tiến trình</td><td>Hiện % hoàn thành khi gọi hàng nghìn request API</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Notebook (chỉ dùng khi phát triển)</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Thư viện</th><th>Dùng để làm gì</th></tr></thead>
+  <tbody>
+    <tr><td><code>jupyter</code></td><td>Mở và chạy <code>notebooks/intent_router.ipynb</code> (<code>uv run jupyter lab</code>)</td></tr>
+    <tr><td><code>ipykernel</code></td><td>"Bộ máy" chạy code Python bên trong notebook, dùng đúng môi trường <code>.venv</code> của dự án</td></tr>
+    <tr><td><code>nbconvert</code></td><td>Chạy toàn bộ notebook từ dòng lệnh để kiểm tra không có ô nào lỗi</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Thư viện có sẵn của Python và công cụ</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Tên</th><th>Dùng để làm gì</th></tr></thead>
+  <tbody>
+    <tr><td><code>asyncio</code></td><td>Gửi nhiều request API cùng lúc, giới hạn số request song song (<code>Semaphore</code>)</td></tr>
+    <tr><td><code>unicodedata</code>, <code>re</code></td><td>Bỏ dấu tiếng Việt và ký tự đặc biệt để phát hiện tin trùng</td></tr>
+    <tr><td><code>time</code></td><td>Đo thời gian trả lời của từng tin (latency)</td></tr>
+    <tr><td><code>json</code>, <code>csv</code>, <code>pathlib</code></td><td>Đọc / ghi file dữ liệu và cache</td></tr>
+    <tr><td><code>random</code></td><td>Chọn ngẫu nhiên văn phong, persona, 100 tin kiểm tra mẫu (cố định seed 42)</td></tr>
+    <tr><td><code>uv</code></td><td>Công cụ quản lý Python và thư viện: tạo <code>.venv</code>, cài đúng phiên bản theo <code>uv.lock</code>, chạy script (<code>uv run</code>)</td></tr>
+    <tr><td><code>libomp</code></td><td>Thư viện hệ thống (cài bằng Homebrew) để XGBoost chạy đa luồng trên macOS</td></tr>
+  </tbody>
+</table></div>
 
 <h2>Cách chạy</h2>
 <pre><code>git clone https://github.com/dangphamv/intent-router-ml-vs-llm
