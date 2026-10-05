@@ -601,6 +601,20 @@ Return exactly one label: pricing, complaint, cancellation, tech_support, other.
   </div>
 </details>
 
+<details class="qa">
+  <summary>Notebook dùng để làm gì? Mở thế nào cho đúng?</summary>
+  <div class="body">
+    <p><b>Notebook</b> (file <code>.ipynb</code>) là tài liệu trộn <b>code + kết quả + chữ giải thích</b>. Code chia thành từng ô, chạy từng ô, kết quả (bảng, hình) hiện ngay bên dưới — như vở thí nghiệm vừa ghi cách làm vừa thấy kết quả.</p>
+    <p><code>notebooks/intent_router.ipynb</code> là <b>bản báo cáo chạy lại được</b> (yêu cầu "Notebook chạy lại được" của đề): đọc dữ liệu → train A, B, C + cross-validation → bảng so sánh → confusion matrix, phân tích lỗi → chiến lược kết hợp → thí nghiệm lớp hiếm. Không cần API key.</p>
+    <ul class="steps">
+      <li>Chạy <code>uv run jupyter lab</code> trong thư mục repo.</li>
+      <li>Cột trái: vào thư mục <code>notebooks</code> → double-click <code>intent_router.ipynb</code>. (Đừng bấm ô "Notebook" ở Launcher — ô đó tạo notebook <b>mới, trống</b> tên <code>Untitled.ipynb</code>.)</li>
+      <li>Menu <b>Run → Run All Cells</b>, chờ 1–2 phút, kéo xuống xem kết quả.</li>
+    </ul>
+    <p>"Python 3 (ipykernel)" nghĩa là notebook chạy bằng Python trong <code>.venv</code> của dự án, nên đã có sẵn các thư viện.</p>
+  </div>
+</details>
+
 <div class="faq-group">Đánh giá &amp; chi phí</div>
 <details class="qa">
   <summary>Điểm 90,6 / 88,2 / 89,6 / 94,3 / 93,1 được tính từ đâu?</summary>
