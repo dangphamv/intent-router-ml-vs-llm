@@ -395,6 +395,29 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </div>
 </details>
 <details class="qa">
+  <summary>Val dùng để thi thử thì có sửa lại tập train không? Kết quả lưu ở đâu?</summary>
+  <div class="body">
+    <p><b>Không sửa dữ liệu train.</b> Thi thử không sửa sách bài tập — nó giúp chọn <b>cách học</b> (gọi là <i>thiết lập</i>: ngưỡng, thông số model…). Dữ liệu trong <code>data/intents.jsonl</code> giữ nguyên.</p>
+    <ul class="steps">
+      <li>Thử nhiều thiết lập: với mỗi thiết lập, học trên train → làm bài trên val → ghi điểm.</li>
+      <li>Chọn thiết lập có điểm tốt nhất.</li>
+      <li>Thường học lại một lần nữa trên <b>train + val</b> với thiết lập đã chọn (nhiều dữ liệu hơn).</li>
+      <li>Chấm trên test <b>đúng một lần</b>.</li>
+    </ul>
+    <p><b>Trong dự án này:</b></p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Thứ được chọn</th><th>Chọn bằng gì</th><th>Lưu ở đâu</th></tr></thead>
+      <tbody>
+        <tr><td>Ngưỡng chuyển LLM (<b>0,72</b>)</td><td>Cross-validation trên train + val (5 lần thi thử thay vì 1 — val 300 tin quá ít, kết quả nhiễu)</td><td><code>models/tfidf_lr.joblib</code> (trường <code>threshold</code>), <code>results/metrics.json</code>; điểm của mọi ngưỡng ở <code>results/hybrid_A_cv.csv</code></td></tr>
+        <tr><td>Model A cho router</td><td>Học lại trên train + val (1.700 tin) với thiết lập đã chọn</td><td><code>models/tfidf_lr.joblib</code></td></tr>
+        <tr><td>Thông số model (<code>C=10</code>, 400 cây…)</td><td><b>Chưa chọn bằng val</b> — đặt cố định theo giá trị thường dùng</td><td>Ghi thẳng trong code: <code>src/intent_router/experiments.py</code></td></tr>
+      </tbody>
+    </table></div>
+    <p>Chỉ có 2 thứ từng làm thay đổi dữ liệu: bước kiểm tra mẫu (sửa 5 nhãn sai) và lọc trùng — cả hai đều xảy ra <b>trước khi chia</b> train/val/test, trong <code>build_dataset.py</code>.</p>
+  </div>
+</details>
+
+<details class="qa">
   <summary>300 tin test có phải lấy từ 1.700 tin LLM tạo không?</summary>
   <div class="body">
     <p>Không. Cả 2.000 tin được trộn rồi chia ngẫu nhiên 70/15/15, nên test có <b>263 tin LLM + 37 tin gán tay</b>. Xem thanh chia dữ liệu ở <a href="#so-do">Sơ đồ dự án</a>.</p>
