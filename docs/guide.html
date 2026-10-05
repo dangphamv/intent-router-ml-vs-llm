@@ -395,6 +395,30 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </div>
 </details>
 <details class="qa">
+  <summary>Ý nghĩa của val là gì? Sao không chấm luôn trên train hoặc test?</summary>
+  <div class="body">
+    <p><b>Val cho mình một điểm số trung thực trong lúc vẫn còn được phép thay đổi cách làm.</b></p>
+    <ul>
+      <li><b>Chấm trên train thì vô nghĩa</b> — model đã thấy đáp án. Model A đạt <b>100 điểm</b> trên train (thuộc lòng), nhưng chỉ <b>88,5</b> trên val và <b>90,6</b> trên test. Như học sinh làm lại đúng bài trong sách có lời giải: luôn đúng, nhưng không nói lên gì.</li>
+      <li><b>Chấm trên test để chọn thì test hết trung thực</b> — chọn ngưỡng theo test, điểm báo cáo thành <span class="bad">95,1</span> thay vì <b>93,1</b> thật.</li>
+      <li><b>Val ở giữa</b>: model chưa học từ nó (nên điểm trung thực), và mình được phép nhìn điểm để quyết định. Test thì để dành cho lần chấm cuối.</li>
+    </ul>
+    <p><b>Ví dụ chọn thông số bằng val</b> — thông số <code>C</code> của logistic regression (C càng lớn, model càng bám sát dữ liệu train):</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th class="num">C</th><th class="num">Điểm trên train</th><th class="num">Điểm trên val</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0,1</td><td class="num">92,9</td><td class="num">87,4</td></tr>
+        <tr><td class="num">1</td><td class="num">99,1</td><td class="num">86,9</td></tr>
+        <tr class="hl"><td class="num">10</td><td class="num">100</td><td class="num">88,5</td></tr>
+        <tr><td class="num">100</td><td class="num">100</td><td class="num">87,2</td></tr>
+      </tbody>
+    </table></div>
+    <p>Nhìn train thì C = 10 và C = 100 đều 100 điểm — không phân biệt được, và dễ chọn nhầm C lớn nhất. Val cho thấy C = 10 tốt nhất; C = 100 "học thuộc" quá mức nên kém hơn với tin mới (gọi là <b>overfitting</b>). Giá trị C = 10 mà dự án dùng cũng chính là giá trị tốt nhất trên val.</p>
+    <p><b>Giới hạn của val</b>: 300 tin là ít nên điểm dao động — chênh 1 điểm có thể chỉ là may rủi. Vì vậy với ngưỡng router, dự án dùng cross-validation (5 lần thi thử trên 1.700 tin) cho chắc hơn.</p>
+  </div>
+</details>
+
+<details class="qa">
   <summary>Val dùng để thi thử thì có sửa lại tập train không? Kết quả lưu ở đâu?</summary>
   <div class="body">
     <p><b>Không sửa dữ liệu train.</b> Thi thử không sửa sách bài tập — nó giúp chọn <b>cách học</b> (gọi là <i>thiết lập</i>: ngưỡng, thông số model…). Dữ liệu trong <code>data/intents.jsonl</code> giữ nguyên.</p>
