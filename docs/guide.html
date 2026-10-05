@@ -192,6 +192,95 @@ uv run jupyter lab notebooks/intent_router.ipynb  <span class="cm"># xem toàn b
 uv run scripts/route.py "Hủy gói giúp mình"       <span class="cm"># thử router (cần OPENAI_API_KEY trong .env)</span></code></pre>
 <p>Chạy lại từ đầu (cần key): <code>scripts/build_dataset.py</code> → <code>scripts/run_experiments.py</code> → <code>scripts/rare_class_ablation.py</code>. Kết quả ghi vào <code>data/</code>, <code>results/</code>, <code>models/</code>.</p>
 
+<h2>Input: dữ liệu đầu vào</h2>
+<p>Đề bài yêu cầu: <i>"Khoảng 2.000 tin nhắn có nhãn ý định: tự gán khoảng 300, phần còn lại dùng LLM gán nhãn rồi kiểm tra mẫu."</i> <b>Nhãn</b> là đáp án đúng của mỗi tin — tin đó thuộc loại nào. Model cần đáp án để học và để được chấm điểm.</p>
+
+<div class="analogy">
+  <p style="margin-top:0">Giống giáo viên chấm bài: tự chấm kỹ vài bài mẫu, giao phần còn lại cho trợ giảng, rồi rút ngẫu nhiên vài bài để xem trợ giảng chấm có đúng không.</p>
+  <ul class="steps">
+    <li><b>Tự gán 300 tin</b> — người đọc từng tin và ghi nhãn. Đây là "đáp án chuẩn". File: <code>data/seed_raw.tsv</code>.</li>
+    <li><b>LLM lo 1.700 tin còn lại</b> — <code>gpt-4o-mini</code> viết 2.135 tin, lọc trùng còn 1.700; <code>gpt-4o</code> gán nhãn theo <a href="../data/LABELING_GUIDE.md">hướng dẫn gán nhãn</a>.</li>
+    <li><b>Kiểm tra mẫu</b> — rút ngẫu nhiên 100 tin LLM đã gán, người xem lại. Đúng ≥ 90% thì tin được phần còn lại. Kết quả: <b>95%</b>; 5 tin sai được sửa. File: <code>data/audit_sample.csv</code>.</li>
+  </ul>
+  <p style="margin-bottom:0">Kiểm tra thêm: cho LLM gán lại cả 300 tin chuẩn rồi so với nhãn người — khớp <b>99%</b>.</p>
+</div>
+
+<h3>Các file input</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>File</th><th>Nội dung</th><th>Ví dụ một dòng</th></tr></thead>
+  <tbody>
+    <tr><td><code>data/seed_raw.tsv</code></td><td>300 tin gán tay. Mỗi dòng: <code>nhãn</code> ⇥ <code>tin nhắn</code></td><td><code>pricing&nbsp;&nbsp;Gói Pro có bao nhiêu seat?</code></td></tr>
+    <tr><td><code>data/LABELING_GUIDE.md</code></td><td>Định nghĩa 5 nhãn + quy tắc cho ca khó</td><td>"Có ý định hủy → luôn là <code>cancellation</code>"</td></tr>
+    <tr><td><code>data/audit_sample.csv</code></td><td>100 tin kiểm tra mẫu. Cột <code>text</code>, <code>llm_label</code> (LLM gán), <code>human_label</code> (người gán)</td><td><code>"...cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.", cancellation, complaint</code></td></tr>
+    <tr><td><code>data/intents.jsonl</code></td><td><b>Dataset cuối</b>: 2.000 tin, dùng cho mọi thực nghiệm</td><td><code>{"text": "Gói Pro có bao nhiêu seat?", "label": "pricing", "split": "val", "source": "human"}</code></td></tr>
+    <tr><td><code>.env</code></td><td>API key (chỉ cần khi chạy lại từ đầu)</td><td><code>OPENAI_API_KEY=sk-...</code></td></tr>
+  </tbody>
+</table></div>
+<p>Trong <code>intents.jsonl</code>: <code>split</code> cho biết tin thuộc tập <code>train</code> (học), <code>val</code> (tinh chỉnh) hay <code>test</code> (chấm điểm cuối); <code>source</code> là <code>human</code> (300 tin gán tay) hoặc <code>llm</code> (1.700 tin LLM gán).</p>
+
+<h3>Muốn tự gán nhãn / tự kiểm tra mẫu</h3>
+<ul class="steps">
+  <li>Mở <code>data/seed_raw.tsv</code>, sửa nhãn ở đầu dòng nếu không đồng ý.</li>
+  <li>Mở <code>data/audit_sample.csv</code>, sửa cột <code>human_label</code> theo ý mình.</li>
+  <li>Chạy <code>uv run scripts/build_dataset.py</code> rồi <code>uv run scripts/run_experiments.py</code> (cần API key).</li>
+</ul>
+
+<h2>Kiểm tra output</h2>
+<p>Chạy từng lệnh trong thư mục repo và so với cột "Kết quả đúng". Các lệnh này <b>không cần API key</b>.</p>
+
+<h3>1. Dataset có đúng 2.000 tin, 300 tay + 1.700 LLM?</h3>
+<pre><code>uv run python -c "
+import pandas as pd; df = pd.read_json('data/intents.jsonl', lines=True)
+print(df.source.value_counts().to_dict()); print(pd.crosstab(df.label, df.split, margins=True))"</code></pre>
+<p>Kết quả đúng:</p>
+<pre><code>{'llm': 1700, 'human': 300}
+split         test  train  val   All
+cancellation    31    146   32   209
+complaint       62    288   61   411
+other           59    277   60   396
+pricing         65    303   65   433
+tech_support    83    386   82   551
+All            300   1400  300  2000</code></pre>
+<p>Cần thấy: tổng 2.000; train/val/test = 1.400 / 300 / 300 (70/15/15); mỗi nhãn chiếm tỷ lệ giống nhau ở cả 3 tập.</p>
+
+<h3>2. Nhãn LLM có đáng tin không?</h3>
+<pre><code>uv run python -c "
+import json; r = json.load(open('data/dataset_report.json'))
+print('seed:', round(r['seed_agreement']['accuracy'], 3), 'audit:', r['audit']['agreement'])"</code></pre>
+<p>Kết quả đúng: <code>seed: 0.99 audit: 0.95</code> — cả hai phải <b>≥ 0.90</b>. Nếu <code>audit: None</code> nghĩa là cột <code>human_label</code> trong <code>audit_sample.csv</code> còn ô trống.</p>
+
+<h3>3. Bảng so sánh 4 cách + kết hợp</h3>
+<pre><code>cat results/comparison.md</code></pre>
+<p>Kết quả đúng (macro-F1 = điểm chính xác / 100):</p>
+<div class="table-wrap"><table>
+  <thead><tr><th>Cần thấy</th><th class="num">Giá trị</th></tr></thead>
+  <tbody>
+    <tr><td>A. TF-IDF + LR</td><td class="num">0.906</td></tr>
+    <tr><td>B. Embedding + LR</td><td class="num">0.882</td></tr>
+    <tr><td>C. Embedding + XGBoost</td><td class="num">0.896</td></tr>
+    <tr><td>D. LLM zero-shot</td><td class="num">0.943</td></tr>
+    <tr class="hl"><td>A → D, ngưỡng 0.72: % chuyển LLM / macro-F1 / $ per 100k</td><td class="num">24.7% / 0.931 / 0.80</td></tr>
+  </tbody>
+</table></div>
+<p>Cột latency (ms) dao động nhẹ mỗi lần đo; các cột còn lại phải giống hệt.</p>
+
+<h3>4. Hình confusion matrix và đường chi phí – chất lượng</h3>
+<pre><code>open results/confusion_matrices.png results/tradeoff.png</code></pre>
+<p>Cần thấy: 4 ma trận (A, B, C, D) với số lớn nằm trên đường chéo; biểu đồ có ngôi sao đánh dấu ngưỡng 0,72 (A) và 0,81 (B).</p>
+
+<h3>5. Notebook chạy lại không lỗi</h3>
+<pre><code>uv run jupyter nbconvert --to notebook --execute --output /tmp/check.ipynb notebooks/intent_router.ipynb
+grep -c '"output_type": "error"' /tmp/check.ipynb</code></pre>
+<p>Kết quả đúng: dòng cuối in ra <code>0</code> (không có ô nào lỗi).</p>
+
+<h3>6. Router hoạt động (cần API key cho tin khó)</h3>
+<pre><code>uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "ko muốn xài nữa, ngưng giúp mình" "Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!"</code></pre>
+<p>Kết quả đúng (độ tự tin có thể lệch chút):</p>
+<pre><code>pricing       conf=1.00  via=local       Gói Pro có bao nhiêu seat?
+cancellation  conf=0.98  via=local       ko muốn xài nữa, ngưng giúp mình
+tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!</code></pre>
+<p><code>via=local</code> = model rẻ tự trả lời; <code>via=gpt-4o-mini</code> = không chắc nên chuyển LLM.</p>
+
 <h2>Chi tiết theo tiêu chí chấm điểm</h2>
 <p>Bấm vào từng mục để xem cách làm, công cụ và thông số.</p>
 
