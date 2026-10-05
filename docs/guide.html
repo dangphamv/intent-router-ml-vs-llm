@@ -365,6 +365,41 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <dt>p95</dt><dd>95% số tin được trả lời nhanh hơn con số này.</dd>
 </dl>
 
+<h3>Các chữ viết tắt</h3>
+<div class="table-wrap"><table>
+  <thead><tr><th>Viết tắt</th><th>Viết đầy đủ</th><th>Nghĩa dễ hiểu</th></tr></thead>
+  <tbody>
+    <tr><td><b>TF-IDF</b></td><td><b>T</b>erm <b>F</b>requency – <b>I</b>nverse <b>D</b>ocument <b>F</b>requency</td><td>Tần suất từ × độ hiếm của từ (xem ví dụ bên dưới)</td></tr>
+    <tr><td><b>XGBoost</b></td><td>e<b>X</b>treme <b>G</b>radient <b>Boost</b>ing</td><td>"Gradient boosting phiên bản cực mạnh": ghép nhiều cây quyết định nhỏ, cây sau sửa lỗi cây trước</td></tr>
+    <tr><td>LR</td><td>Logistic Regression</td><td>Hồi quy logistic: cộng trọng số của các đặc trưng → ra xác suất từng nhãn</td></tr>
+    <tr><td>LLM</td><td>Large Language Model</td><td>Mô hình ngôn ngữ lớn, vd. <code>gpt-4o-mini</code></td></tr>
+    <tr><td>F1</td><td>F1-score</td><td>Điểm gộp precision và recall (xem <a href="#metric">mục precision/recall</a>)</td></tr>
+    <tr><td>CV</td><td>Cross-Validation</td><td>Chia dữ liệu thành 5 phần, thi thử 5 lần xoay vòng</td></tr>
+    <tr><td>OOF</td><td>Out-Of-Fold</td><td>Dự đoán cho mỗi tin khi tin đó nằm ở phần "thi thử" của cross-validation</td></tr>
+    <tr><td>p95</td><td>95th percentile</td><td>95% số tin được trả lời nhanh hơn con số này</td></tr>
+    <tr><td>API</td><td>Application Programming Interface</td><td>Cổng để code gọi dịch vụ của bên khác (ở đây: OpenAI)</td></tr>
+    <tr><td>RAG</td><td>Retrieval-Augmented Generation</td><td>Tìm tài liệu liên quan rồi đưa cho LLM để trả lời</td></tr>
+  </tbody>
+</table></div>
+
+<h3>TF-IDF với số liệu thật</h3>
+<ul>
+  <li><b>TF (tần suất từ)</b>: từ xuất hiện bao nhiêu lần <i>trong tin này</i>. "hủy gói, hủy luôn" → "hủy" có TF = 2.</li>
+  <li><b>IDF (độ hiếm)</b>: từ xuất hiện trong bao nhiêu tin <i>của cả bộ dữ liệu</i> — càng ít tin chứa thì càng "đáng chú ý".</li>
+</ul>
+<div class="table-wrap"><table>
+  <thead><tr><th>Từ</th><th class="num">Số tin chứa từ (trên 1.700)</th><th class="num">IDF</th><th>Ý nghĩa</th></tr></thead>
+  <tbody>
+    <tr><td>có</td><td class="num">653</td><td class="num">1,96</td><td>quá phổ biến → ít giá trị</td></tr>
+    <tr><td>mình</td><td class="num">491</td><td class="num">2,24</td><td>phổ biến</td></tr>
+    <tr><td>giá</td><td class="num">180</td><td class="num">3,24</td><td>khá hiếm, gợi ý <code>pricing</code></td></tr>
+    <tr><td>lỗi</td><td class="num">121</td><td class="num">3,63</td><td>hiếm, gợi ý <code>tech_support</code></td></tr>
+    <tr><td>hủy</td><td class="num">98</td><td class="num">3,84</td><td>hiếm, gợi ý <code>cancellation</code></td></tr>
+    <tr><td>seat</td><td class="num">53</td><td class="num">4,45</td><td>rất hiếm, rất đặc trưng</td></tr>
+  </tbody>
+</table></div>
+<p>Điểm của một từ trong một tin = TF × IDF. Nhờ vậy "hủy" nặng ký gần gấp đôi "có", dù cả hai đều chỉ xuất hiện một lần trong câu. Số IDF lấy từ model đã lưu (<code>models/tfidf_lr.joblib</code>).</p>
+
 <h2 id="hoi-dap">Hỏi đáp cho người mới</h2>
 <p>Những câu hỏi thường gặp khi mới học dự án này, trả lời ngắn và có số liệu thật. Bấm vào từng câu để xem.</p>
 
@@ -415,6 +450,25 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
     </table></div>
     <p>Nhìn train thì C = 10 và C = 100 đều 100 điểm — không phân biệt được, và dễ chọn nhầm C lớn nhất. Val cho thấy C = 10 tốt nhất; C = 100 "học thuộc" quá mức nên kém hơn với tin mới (gọi là <b>overfitting</b>). Giá trị C = 10 mà dự án dùng cũng chính là giá trị tốt nhất trên val.</p>
     <p><b>Giới hạn của val</b>: 300 tin là ít nên điểm dao động — chênh 1 điểm có thể chỉ là may rủi. Vì vậy với ngưỡng router, dự án dùng cross-validation (5 lần thi thử trên 1.700 tin) cho chắc hơn.</p>
+  </div>
+</details>
+
+<details class="qa">
+  <summary>Val dùng để ra "quyết định" — cụ thể là quyết định gì?</summary>
+  <div class="body">
+    <p>Là các lựa chọn về <b>cách làm</b> phải chốt trước khi chấm điểm cuối trên test (gọi chung là chọn <b>model</b> và <b>hyperparameter</b>):</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Quyết định</th><th>Câu hỏi cụ thể</th><th>Trong dự án</th></tr></thead>
+      <tbody>
+        <tr><td>Thông số model</td><td><code>C</code> = 0,1 / 1 / 10 / 100? XGBoost bao nhiêu cây?</td><td><code>C</code>: val cho thấy 10 tốt nhất. Số cây: đặt cố định, chưa thử</td></tr>
+        <tr><td>Ngưỡng router</td><td>Tự tin bao nhiêu thì tự trả lời?</td><td><b>0,72</b>, chọn bằng cross-validation trên train + val</td></tr>
+        <tr><td>Xử lý lớp hiếm</td><td>Có bật <code>class_weight</code> không?</td><td>Có — cross-validation cho thấy bắt được nhiều tin hủy hơn</td></tr>
+        <tr><td>Đặc trưng</td><td>Chỉ đếm từ, hay đếm thêm cụm chữ cái?</td><td>Đếm cả hai; chưa so sánh bằng val</td></tr>
+        <tr><td>Model dùng cho router</td><td>A hay B?</td><td>A — cùng mức điểm với B trong cross-validation nhưng nhanh hơn và miễn phí</td></tr>
+        <tr><td>Prompt LLM</td><td>Zero-shot hay thêm ví dụ?</td><td>Chưa thử, chỉ dùng một prompt</td></tr>
+      </tbody>
+    </table></div>
+    <p>Mẫu chung: thử phương án → học trên train → chấm trên val → chọn phương án tốt nhất → (học lại trên train + val) → chấm test <b>một lần</b>.</p>
   </div>
 </details>
 
