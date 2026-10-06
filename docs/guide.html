@@ -682,7 +682,26 @@ Return exactly one label: pricing, complaint, cancellation, tech_support, other.
       </tbody>
     </table></div>
     <p>Low temperature makes the distribution "sharper" (high gets higher, low goes to ~0); high temperature makes it "flatter" (more variety, but also more off-topic or made-up output). Mathematically the model divides each token's score (logit) by the temperature before turning scores into probabilities. OpenAI accepts 0 to 2.</p>
-    <p><b>Observed example:</b> asking <code>gpt-4o-mini</code> 4 times for a slogan for a book café — at temperature 0 all 4 answers were identical (<i>"Thưởng thức cà phê, đắm chìm trong sách!"</i> — "Enjoy coffee, get lost in books!"); at 1.2 all 4 were different.</p>
+    <p><b>The formula.</b> The model gives each token a raw score (<b>logit</b>, <i>z</i>). Temperature <i>T</i> enters when scores become probabilities (<b>softmax</b>):</p>
+<pre><code>p_i = exp(z_i / T) / Σ_j exp(z_j / T)</code></pre>
+<p>If you already have the probabilities at T = 1 (like 60 / 25 / 10 / 5), it simplifies to: <b>raise each probability to the power 1/T, then divide by the total</b>.</p>
+<pre><code>p_i(T) = p_i^(1/T) / Σ_j p_j^(1/T)</code></pre>
+<div class="table-wrap"><table>
+  <thead><tr><th>Step</th><th class="num">nice</th><th class="num">sunny</th><th class="num">rainy</th><th class="num">gloomy</th><th class="num">Total</th></tr></thead>
+  <tbody>
+    <tr><td>Probabilities at T = 1</td><td class="num">0.60</td><td class="num">0.25</td><td class="num">0.10</td><td class="num">0.05</td><td class="num">1</td></tr>
+    <tr><td>T = 0.5 → power 2 (square)</td><td class="num">0.36</td><td class="num">0.0625</td><td class="num">0.01</td><td class="num">0.0025</td><td class="num">0.435</td></tr>
+    <tr class="hl"><td>÷ 0.435</td><td class="num">82.8%</td><td class="num">14.4%</td><td class="num">2.3%</td><td class="num">0.6%</td><td class="num">100%</td></tr>
+    <tr><td>T = 2 → power 0.5 (square root)</td><td class="num">0.775</td><td class="num">0.500</td><td class="num">0.316</td><td class="num">0.224</td><td class="num">1.815</td></tr>
+    <tr class="hl"><td>÷ 1.815</td><td class="num">42.7%</td><td class="num">27.6%</td><td class="num">17.4%</td><td class="num">12.3%</td><td class="num">100%</td></tr>
+  </tbody>
+</table></div>
+<p>Squaring shrinks small numbers much more than big ones (0.05 → 0.0025, 20× smaller), so the leader dominates; square roots pull numbers closer together, so rare options gain. T = 0 can't be computed (division by zero): as T → 0 the top token's share → 100%, so providers simply pick the most likely token (<i>greedy decoding</i>). Check it yourself:</p>
+<pre><code>p = [0.60, 0.25, 0.10, 0.05]
+for T in (0.5, 1, 2):
+    w = [x ** (1 / T) for x in p]
+    print(T, [round(x / sum(w) * 100, 1) for x in w])</code></pre>
+<p><b>Observed example:</b> asking <code>gpt-4o-mini</code> 4 times for a slogan for a book café — at temperature 0 all 4 answers were identical (<i>"Thưởng thức cà phê, đắm chìm trong sách!"</i> — "Enjoy coffee, get lost in books!"); at 1.2 all 4 were different.</p>
     <p><b>How to choose:</b> ask "is there one right answer, or do I want many ideas?"</p>
     <div class="table-wrap"><table>
       <thead><tr><th>Task</th><th>Temperature</th><th>Why</th></tr></thead>
