@@ -168,7 +168,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <h1>Ai thắng: ML cổ điển hay LLM?</h1>
   <p class="lede">Bài toán: đọc tin nhắn của khách hàng và đoán họ muốn gì — <b>hỏi giá</b>, <b>khiếu nại</b>, <b>hủy gói</b>, <b>hỗ trợ kỹ thuật</b> hay <b>khác</b> — để chuyển đúng bộ phận. Chúng tôi thử 4 cách trên 2.000 tin nhắn tiếng Việt.</p>
   <nav class="toc" aria-label="Mục lục">
-    <a href="#bang-xep-hang">Kết quả</a><a href="#so-do">Sơ đồ</a><a href="#bon-cach">4 cách</a>
+    <a href="#bang-xep-hang">Kết quả</a><a href="#so-do">Sơ đồ</a><a href="#train-val-test">Train/Val/Test</a><a href="#bon-cach">4 cách</a>
     <a href="#ket-hop">Kết hợp</a><a href="#rut-ra">Rút ra</a><a href="#thuat-ngu">Thuật ngữ</a>
     <a class="faq" href="#hoi-dap">Hỏi đáp cho người mới</a><a href="#thu-vien">Thư viện</a>
     <a href="#cach-chay">Cách chạy</a><a href="#input">Input</a><a href="#output">Kiểm tra output</a>
@@ -238,6 +238,46 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   </div>
   <div class="cap">Tin gán tay và tin LLM được trộn rồi chia ngẫu nhiên. Tập test có 37 tin gán tay + 263 tin LLM. Ngưỡng của router chọn trên train+val (cross-validation 5-fold), test chỉ dùng để chấm điểm cuối.</div>
 </div>
+
+<h3 id="train-val-test">Train, val, test — từng bước dùng tập nào</h3>
+<p><b>Cả 3 tập đều có nhãn như nhau</b>; chúng chỉ khác ở <b>việc được phép làm gì</b>. Ví như đầu bếp đi thi:</p>
+<div class="table-wrap"><table>
+  <thead><tr><th>Tập</th><th>Đầu bếp</th><th>Model</th></tr></thead>
+  <tbody>
+    <tr><td><b>Train</b></td><td>Tập nấu theo công thức có vị chuẩn</td><td><b>Học</b> quy luật từ tin có nhãn</td></tr>
+    <tr><td><b>Val</b></td><td>Nấu cho người nhà nếm để chỉnh muối, lửa — nếm bao nhiêu lần cũng được</td><td><b>Thử và chọn</b> thiết lập (thông số, ngưỡng)</td></tr>
+    <tr><td><b>Test</b></td><td>Giám khảo chấm <b>một lần</b>, không nấu lại</td><td><b>Chấm điểm cuối</b> để báo cáo</td></tr>
+    <tr><td><i>Khách thật</i></td><td><i>Sau khi mở quán</i></td><td><i>Tin nhắn mới khi chạy thật</i></td></tr>
+  </tbody>
+</table></div>
+<div class="table-wrap"><table>
+  <thead><tr><th>Bước</th><th>Việc</th><th>Train (1.400)</th><th>Val (300)</th><th>Test (300)</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Chia 2.000 tin, <b>khóa test lại</b></td><td></td><td></td><td>🔒</td></tr>
+    <tr><td>2</td><td>Model <b>học</b></td><td>✅ học</td><td></td><td></td></tr>
+    <tr><td>3</td><td><b>Chọn thông số</b> <code>C</code> (thử 0,1 / 1 / 10 / 100 → chọn 10)</td><td>✅ học</td><td>✅ chấm thử</td><td></td></tr>
+    <tr><td>4</td><td><b>Chọn ngưỡng</b> 0,72 bằng cross-validation (gộp train + val, thi thử 5 lần)</td><td>✅</td><td>✅</td><td></td></tr>
+    <tr class="hl"><td>5</td><td><b>Chấm điểm cuối</b>: A 90,6 · D 94,3…</td><td>(model học từ đây)</td><td></td><td>✅ mở khóa, dùng 1 lần</td></tr>
+    <tr><td>6</td><td><b>Model dùng thật</b>: học lại trên train + val → <code>models/tfidf_lr.joblib</code></td><td>✅</td><td>✅</td><td></td></tr>
+  </tbody>
+</table></div>
+<ul>
+  <li><b>Val khác test ở đâu?</b> Val: được nhìn điểm rồi sửa. Test: không. Đã chọn theo điểm của tập nào thì tập đó hết trung thực, nên phải giữ riêng một tập chưa bị nhìn.</li>
+  <li><b>Cross-validation thì val ở đâu?</b> Gộp train + val, chia 5 phần, mỗi lượt học 4 phần và thi thử 1 phần — phần thi thử chính là "val", làm 5 lần cho chắc. Test vẫn đứng ngoài.</li>
+  <li><b>Sao điểm 90,6 dùng model học trên train, còn model dùng thật học trên train + val?</b> Điểm phải đo bằng model chưa thấy test với cách làm đã chốt. Chấm xong rồi thì gộp thêm val để model học nhiều hơn trước khi mở quán.</li>
+  <li><b>Lỡ nhìn test rồi sửa?</b> Điểm đẹp giả: chọn ngưỡng theo test cho 95,1 thay vì 93,1 thật — đó là <a href="#leakage">data leakage</a>.</li>
+</ul>
+<details class="qa">
+  <summary>Tự kiểm tra: đúng hay sai? (bấm để xem đáp án)</summary>
+  <div class="body">
+    <ol>
+      <li>Tập test không có nhãn. → <b>Sai</b>: có nhãn, không thì không chấm được.</li>
+      <li>Được dùng val để chọn giữa logistic regression và XGBoost. → <b>Đúng</b>.</li>
+      <li>Điểm test thấp thì đổi <code>C</code> rồi chấm lại test. → <b>Sai</b>: đó là leakage; đổi dựa trên val.</li>
+      <li>Train đạt 100 điểm nghĩa là model rất tốt. → <b>Sai</b>: có thể chỉ học thuộc; phải xem val / test.</li>
+    </ol>
+  </div>
+</details>
 
 <h2 id="bon-cach">4 cách hoạt động thế nào?</h2>
 <p>A, B, C đều làm 2 bước: <b>(1) biến câu thành dãy số</b> (gọi là đặc trưng) → <b>(2) model phân loại</b> học từ 1.400 tin có nhãn để đoán nhãn. D bỏ qua cả hai bước, hỏi thẳng LLM.</p>
