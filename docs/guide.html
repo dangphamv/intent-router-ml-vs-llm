@@ -339,7 +339,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
 <details>
   <summary>D. Zero-shot LLM — just ask</summary>
   <div class="body">
-    <p>Send the message to <code>gpt-4o-mini</code> along with a short description of the 5 labels, and ask it to return exactly one label. "Zero-shot" means <b>no examples and no training</b>. <code>temperature=0</code> so that every time you ask, you get the same answer.</p>
+    <p>Send the message to <code>gpt-4o-mini</code> along with a short description of the 5 labels, and ask it to return exactly one label. "Zero-shot" means <b>no examples and no training</b>. <code>temperature=0</code> so that asking again gives (almost always) the same answer — see <a href="#temperature">What is temperature?</a></p>
     <p><b>Strengths:</b> understands context, tone, and messages with several intents. <b>Weaknesses:</b> slow (~0.7–0.9 seconds/message), costs money per message, and doesn't know your own rules (e.g. "billed incorrectly → complaint, not pricing") unless you write them into the prompt.</p>
   </div>
 </details>
@@ -407,6 +407,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
   <dt>Logistic regression / XGBoost</dt><dd>Two kinds of models that learn from labelled examples. Logistic regression is simpler; XGBoost is more complex but is not better on this task.</dd>
   <dt>Zero-shot LLM</dt><dd>Ask a large language model directly "which category is this message?", no training needed.</dd>
   <dt>Confidence threshold</dt><dd>The cheap model only answers on its own when its confidence is above the threshold (72%); below it, the message goes to the LLM.</dd>
+  <dt>Temperature</dt><dd>How "adventurous" the LLM is when picking each next word. 0 = always the most likely word (stable answers); higher = more varied, more creative, more risk of going off track. See <a href="#temperature">the Q&amp;A</a>.</dd>
   <dt>p95</dt><dd>95% of messages are answered faster than this number.</dd>
 </dl>
 
@@ -657,6 +658,47 @@ Return exactly one label: pricing, complaint, cancellation, tech_support, other.
       <li>Menu <b>Run → Restart Kernel and Run All</b> (clears memory and reruns from the top; this menu is only enabled once a notebook is open). Wait 1–2 minutes: a running cell shows <code>[*]</code>, and when done shows a number <code>[1]</code>, <code>[2]</code>…</li>
     </ul>
     <p>"Python 3 (ipykernel)" means the notebook runs with the Python in the project's <code>.venv</code>, so the libraries are already installed.</p>
+  </div>
+</details>
+
+<div class="faq-group">LLM concepts (stage 1)</div>
+<details class="qa" id="temperature">
+  <summary>What is temperature?</summary>
+  <div class="body">
+    <p><b>The roadmap's definition</b> (stage 1 concept table, p. 13):</p>
+    <ul>
+      <li><b>In plain words:</b> how adventurous the model is. Temperature 0 is a careful accountant — always picks the safest answer. A high temperature is an artist — dares to pick unusual options.</li>
+      <li><b>Precisely:</b> a parameter that controls how random the choice of the next token is.</li>
+      <li><b>Real examples:</b> extracting invoice fields → 0. Brainstorming an ad slogan → 0.8–1.</li>
+    </ul>
+    <p><b>How it works.</b> An LLM writes one token at a time. At each step it gives every possible next token a probability. Illustrative numbers (made up, not measured) for <i>"Hôm nay trời ___"</i> ("Today the weather is ___"):</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Temperature</th><th>đẹp (nice)</th><th>nắng (sunny)</th><th>mưa (rainy)</th><th>buồn (gloomy)</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td><b>0</b></td><td class="num">always</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>Accountant: always takes the top choice ("greedy")</td></tr>
+        <tr><td>0.5</td><td class="num">83%</td><td class="num">14%</td><td class="num">2%</td><td class="num">1%</td><td>The leader dominates even more</td></tr>
+        <tr><td><b>1</b></td><td class="num">60%</td><td class="num">25%</td><td class="num">10%</td><td class="num">5%</td><td>Draws using the model's own probabilities</td></tr>
+        <tr><td>2</td><td class="num">43%</td><td class="num">28%</td><td class="num">17%</td><td class="num">12%</td><td>Artist: rare options get a real chance</td></tr>
+      </tbody>
+    </table></div>
+    <p>Low temperature makes the distribution "sharper" (high gets higher, low goes to ~0); high temperature makes it "flatter" (more variety, but also more off-topic or made-up output). Mathematically the model divides each token's score (logit) by the temperature before turning scores into probabilities. OpenAI accepts 0 to 2.</p>
+    <p><b>Observed example:</b> asking <code>gpt-4o-mini</code> 4 times for a slogan for a book café — at temperature 0 all 4 answers were identical (<i>"Thưởng thức cà phê, đắm chìm trong sách!"</i> — "Enjoy coffee, get lost in books!"); at 1.2 all 4 were different.</p>
+    <p><b>How to choose:</b> ask "is there one right answer, or do I want many ideas?"</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Task</th><th>Temperature</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Extraction, classification, JSON output</td><td><b>0</b></td><td>One right answer, needs to be stable</td></tr>
+        <tr><td>Answering from documents (RAG)</td><td>low</td><td>Stay close to the sources, less made-up content</td></tr>
+        <tr><td>Slogans, brainstorming</td><td><b>0.8–1</b></td><td>Needs variety and creativity</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>In this project:</b> intent classification (method D) and labelling with <code>gpt-4o</code> use <b>temperature 0</b> (stable answers); generating the 1,700 synthetic messages uses <b>temperature 1.0</b> (varied, non-repetitive messages).</p>
+    <p><b>Related roadmap interview questions (stage 2, p. 27):</b></p>
+    <ul>
+      <li><i>"Does temperature 0 make the output fully deterministic?"</i> — <b>Not quite.</b> It removes most randomness, but results can still differ because of parallel GPU arithmetic, batching of many requests together, or provider-side model updates. Run important eval cases several times.</li>
+      <li><i>"Why do LLMs make things up, and how do you reduce it?"</i> — one of the levers is a <b>low temperature</b> (alongside RAG, citations, allowing "I don't know", and faithfulness evals).</li>
+    </ul>
+    <p><b>Related:</b> temperature is one <i>sampling</i> setting. Another is <b>top-p</b>: only draw from the smallest group of tokens whose probabilities add up to p (e.g. 90%), cutting off the long tail of unlikely tokens.</p>
   </div>
 </details>
 
