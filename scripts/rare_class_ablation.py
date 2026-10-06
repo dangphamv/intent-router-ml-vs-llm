@@ -32,12 +32,12 @@ def main():
     (RESULTS / "rare_class_ablation.json").write_text(json.dumps(summary.to_dict("records"), indent=2))
 
     lines = [
-        f"| Cách | `{RARE}` trong train | Class weight | Macro-F1 | {RARE} precision | {RARE} recall | {RARE} F1 |",
+        f"| Method | `{RARE}` share in train | Class weight | Macro-F1 | {RARE} precision | {RARE} recall | {RARE} F1 |",
         "|---|---|---|---|---|---|---|",
     ]
     for r in summary.itertuples():
         lines.append(
-            f"| {ex.NAMES[r.method]} | {r.rare_share_train:.1%} | {'balanced' if r.balanced else 'không'} | "
+            f"| {ex.NAMES[r.method]} | {r.rare_share_train:.1%} | {'balanced' if r.balanced else 'none'} | "
             f"{r.macro_f1:.3f} | {r.rare_precision:.3f} | {r.rare_recall:.3f} | {r.rare_f1:.3f} ± {r.rare_f1_std:.3f} |"
         )
     (RESULTS / "rare_class_ablation.md").write_text("\n".join(lines) + "\n")

@@ -1,4 +1,7 @@
-"""Route messages: uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "app bị lỗi 500" """
+"""Route messages: uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "app bị lỗi 500"
+
+(Example inputs are Vietnamese: "How many seats does the Pro plan have?", "the app has a 500 error".)
+"""
 
 import asyncio
 import sys

@@ -24,6 +24,11 @@ TARGETS = {"pricing": 380, "complaint": 355, "cancellation": 145, "tech_support"
 BATCH = 20
 OVERSAMPLE = 1.2
 
+# Prompts below are intentionally in Vietnamese: they produced the cached dataset and ask the
+# LLM to write Vietnamese messages. Writing styles, in order: polite with diacritics; teencode
+# abbreviations without diacritics; no diacritics at all; Vietnamese-English mix; long-winded with
+# 2-3 sentences of context; very short (2-6 words); annoyed with many exclamation marks; typed in a
+# hurry with typos; fully English; formal like a work email.
 STYLES = [
     "lịch sự, viết đầy đủ dấu",
     "viết tắt kiểu teencode, không dấu (vd: ko, dc, j, z, ak)",
@@ -36,6 +41,8 @@ STYLES = [
     "tiếng Anh hoàn toàn",
     "trang trọng như email công việc",
 ]
+# Personas: startup owner, IT manager, accountant, student, freelancer, agency PM, HR staff,
+# developer, SME director, teacher, sysadmin.
 PERSONAS = [
     "chủ startup", "trưởng phòng IT", "kế toán", "sinh viên", "freelancer", "PM ở agency",
     "nhân viên HR", "lập trình viên", "giám đốc doanh nghiệp vừa", "giáo viên", "admin hệ thống",
@@ -64,7 +71,7 @@ async def generate(seed: list[dict]) -> list[dict]:
     path = CACHE / "generated_raw.jsonl"
     done = [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
     have = {(r["gen_label"], r["batch"]) for r in done}
-    guide = (DATA / "LABELING_GUIDE.md").read_text()
+    guide = (DATA / "LABELING_GUIDE.vi.md").read_text()
     rng = random.Random(SEED)
     jobs = []
     for label, n in TARGETS.items():
@@ -80,6 +87,10 @@ async def generate(seed: list[dict]) -> list[dict]:
     sem = asyncio.Semaphore(8)
 
     async def one(label, b, styles, persona, shots):
+        # "Write {BATCH} DIFFERENT, natural customer messages for label X. Sender: persona. Spread
+        # these styles evenly. Vary sub-topics, length and openings; don't repeat the examples. ~20%
+        # hard cases that sound like another label but belong to X under the tie-break rules.
+        # No numbering, no explanations. Reference examples: ..."
         prompt = (
             f"{guide}\n\nViết {BATCH} tin nhắn khách hàng KHÁC NHAU, tự nhiên như người thật gõ vào "
             f"khung chat, thuộc nhãn `{label}`.\n"

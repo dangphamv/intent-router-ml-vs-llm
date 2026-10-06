@@ -24,7 +24,7 @@ def macro_f1(y_true, y_pred) -> float:
 
 
 def tfidf_lr(balanced: bool = True):
-    """Word 1-2 grams catch keywords ("hủy", "giá"); char 2-5 grams survive missing diacritics and typos."""
+    """Word 1-2 grams catch keywords ("hủy" = cancel, "giá" = price); char 2-5 grams survive missing diacritics and typos."""
     features = FeatureUnion([
         ("word", TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, min_df=1)),
         ("char", TfidfVectorizer(analyzer="char_wb", ngram_range=(2, 5), sublinear_tf=True, min_df=2)),

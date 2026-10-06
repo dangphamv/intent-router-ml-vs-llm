@@ -126,7 +126,7 @@ async def main():
 
 def write_tables(results, hybrid):
     lines = [
-        "| Cách | Macro-F1 test (95% CI) | Macro-F1 CV 5-fold | p95 (ms) | $/100k tin nhắn |",
+        "| Method | Macro-F1 test (95% CI) | Macro-F1 CV 5-fold | p95 (ms) | $/100k messages |",
         "|---|---|---|---|---|",
     ]
     for k in "ABCD":
@@ -134,9 +134,9 @@ def write_tables(results, hybrid):
         cv = f"{np.mean(r['cv_macro_f1']):.3f} ± {np.std(r['cv_macro_f1']):.3f}" if r["cv_macro_f1"] else "—"
         lo, hi = r["test_macro_f1_ci95"]
         lines.append(f"| {r['name']} | {r['test_macro_f1']:.3f} ({lo:.2f}–{hi:.2f}) | {cv} | {r['p95_ms']:.1f} | {r['cost_per_100k']:.2f} |")
-    lines += ["", "| Hybrid (ngưỡng chọn trên OOF train+val) | Ngưỡng | % chuyển LLM | Macro-F1 test | p95 (ms) | $/100k |", "|---|---|---|---|---|---|"]
+    lines += ["", "| Hybrid (threshold tuned on OOF train+val) | Threshold | % routed to LLM | Macro-F1 test | p95 (ms) | $/100k |", "|---|---|---|---|---|---|"]
     for k in ("A", "B"):
-        for tag, row in (("chọn", hybrid[k]["at_chosen"]), ("0.8", hybrid[k]["at_0.8"])):
+        for tag, row in (("chosen", hybrid[k]["at_chosen"]), ("0.8", hybrid[k]["at_0.8"])):
             lines.append(
                 f"| {ex.NAMES[k][:2]} → D ({tag}) | {row['threshold']:.2f} | {row['routed_pct']:.1f}% | "
                 f"{row['macro_f1']:.3f} | {row['p95_ms']:.0f} | {row['cost_per_100k']:.2f} |"
@@ -161,17 +161,17 @@ def plot_tradeoff(results, hybrid):
     colors = {"A": "#2a6fdb", "B": "#e07b00"}
     for k in ("A", "B"):
         c = ex.pd.read_csv(RESULTS / f"hybrid_{k}_test.csv")
-        ax.plot(c.cost_per_100k, c.macro_f1, "-", color=colors[k], label=f"Hybrid {k} → D (quét ngưỡng)")
+        ax.plot(c.cost_per_100k, c.macro_f1, "-", color=colors[k], label=f"Hybrid {k} → D (threshold sweep)")
         ch = hybrid[k]["at_chosen"]
         ax.scatter(ch["cost_per_100k"], ch["macro_f1"], s=120, marker="*", color=colors[k], zorder=5,
-                   label=f"{k}: ngưỡng chọn {ch['threshold']:.2f} ({ch['routed_pct']:.0f}% → LLM)")
+                   label=f"{k}: chosen threshold {ch['threshold']:.2f} ({ch['routed_pct']:.0f}% → LLM)")
     for k in "ABCD":
         r = results[k]
         ax.scatter(r["cost_per_100k"], r["test_macro_f1"], color="black", zorder=6)
         ax.annotate(k, (r["cost_per_100k"], r["test_macro_f1"]), textcoords="offset points", xytext=(6, -12))
-    ax.set_xlabel("$ / 100k tin nhắn")
+    ax.set_xlabel("$ / 100k messages")
     ax.set_ylabel("Macro-F1 (test)")
-    ax.set_title("Đánh đổi chi phí – chất lượng")
+    ax.set_title("Cost–quality trade-off")
     ax.grid(alpha=0.3)
     ax.legend(fontsize=8, loc="lower right")
 
@@ -180,12 +180,12 @@ def plot_tradeoff(results, hybrid):
         c = ex.pd.read_csv(RESULTS / f"hybrid_{k}_cv.csv")
         ax.plot(c.threshold, c.macro_f1, color=colors[k], label=f"{k}: macro-F1 (OOF)")
         ax2 = ax.twinx() if k == "A" else ax2
-        ax2.plot(c.threshold, c.routed_pct, "--", color=colors[k], alpha=0.6, label=f"{k}: % chuyển LLM")
+        ax2.plot(c.threshold, c.routed_pct, "--", color=colors[k], alpha=0.6, label=f"{k}: % routed to LLM")
         ax.axvline(hybrid[k]["chosen_threshold"], color=colors[k], ls=":", alpha=0.8)
-    ax.set_xlabel("Ngưỡng xác suất (cheap model trả lời khi max p > ngưỡng)")
+    ax.set_xlabel("Probability threshold (cheap model answers when max p > threshold)")
     ax.set_ylabel("Macro-F1 (out-of-fold, train+val)")
-    ax2.set_ylabel("% tin nhắn chuyển sang LLM")
-    ax.set_title("Chọn ngưỡng trên out-of-fold train+val")
+    ax2.set_ylabel("% of messages routed to LLM")
+    ax.set_title("Threshold selection on out-of-fold train+val")
     ax.axhline(hybrid["A"]["llm_only_cv_macro_f1"], color="gray", ls="--", lw=1, label="LLM-only (OOF)")
     ax.grid(alpha=0.3)
     h1, l1 = ax.get_legend_handles_labels()

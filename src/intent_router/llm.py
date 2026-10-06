@@ -28,7 +28,7 @@ Return exactly one label: {", ".join(LABELS)}.
 ANNOTATOR_PROMPT = (
     "You are a careful data annotator. Label the customer message with exactly one intent "
     "following this guideline (written in Vietnamese):\n\n"
-    + (DATA / "LABELING_GUIDE.md").read_text()
+    + (DATA / "LABELING_GUIDE.vi.md").read_text()
 )
 
 

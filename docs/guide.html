@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ai thắng: ML hay LLM?</title>
-<meta name="description" content="Báo cáo bài tập lớn: phân loại ý định tin nhắn khách hàng — ML cổ điển đấu với LLM, và cách kết hợp hai bên.">
+<title>Who Wins: ML or LLM?</title>
+<meta name="description" content="Course project report: classifying the intent of customer messages — classical ML vs. an LLM, and how to combine the two.">
 <style>
 :root {
   --bg: #fbfbfa; --surface: #ffffff; --surface-2: #f3f4f2; --text: #1d2321; --muted: #5d6763;
@@ -115,7 +115,7 @@ nav.toc a { font-size: 14px; color: var(--text); text-decoration: none; padding:
 nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
 nav.toc a.faq { border-color: var(--accent); color: var(--accent); font-weight: 600; }
 .faq-group { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 22px 0 6px; }
-details.qa summary::before { content: "Hỏi: "; color: var(--accent); }
+details.qa summary::before { content: "Q: "; color: var(--accent); }
 details.qa .body p:first-child { margin-top: 8px; }
 .diagram { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin: 14px 0 18px; }
 .diagram .cap { font-size: 13px; color: var(--muted); margin-top: 10px; }
@@ -160,404 +160,404 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
 </style>
 </head>
 <body>
-<button class="theme-btn" id="themeBtn" type="button" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle light/dark theme">◐ Theme</button>
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">Bài tập lớn · Báo cáo</div>
-  <h1>Ai thắng: ML cổ điển hay LLM?</h1>
-  <p class="lede">Bài toán: đọc tin nhắn của khách hàng và đoán họ muốn gì — <b>hỏi giá</b>, <b>khiếu nại</b>, <b>hủy gói</b>, <b>hỗ trợ kỹ thuật</b> hay <b>khác</b> — để chuyển đúng bộ phận. Chúng tôi thử 4 cách trên 2.000 tin nhắn tiếng Việt.</p>
-  <nav class="toc" aria-label="Mục lục">
-    <a href="#bang-xep-hang">Kết quả</a><a href="#so-do">Sơ đồ</a><a href="#train-val-test">Train/Val/Test</a><a href="#bon-cach">4 cách</a>
-    <a href="#ket-hop">Kết hợp</a><a href="#rut-ra">Rút ra</a><a href="#thuat-ngu">Thuật ngữ</a>
-    <a class="faq" href="#hoi-dap">Hỏi đáp cho người mới</a><a href="#thu-vien">Thư viện</a>
-    <a href="#cach-chay">Cách chạy</a><a href="#input">Input</a><a href="#output">Kiểm tra output</a>
-    <a href="#tieu-chi">Tiêu chí chấm</a><a href="#giai-doan">Hoàn thành giai đoạn</a><a class="faq" href="#phong-van">Câu hỏi phỏng vấn</a><a href="#gioi-han">Giới hạn</a>
+  <div class="eyebrow">Course project · Report</div>
+  <h1>Who wins: classical ML or an LLM?</h1>
+  <p class="lede">The task: read a customer's message and guess what they want — <b>pricing</b>, <b>complaint</b>, <b>cancellation</b>, <b>tech support</b> or <b>other</b> — so it goes to the right team. We tried 4 approaches on 2,000 Vietnamese messages.</p>
+  <nav class="toc" aria-label="Table of contents">
+    <a href="#bang-xep-hang">Results</a><a href="#so-do">Diagram</a><a href="#train-val-test">Train/Val/Test</a><a href="#bon-cach">4 approaches</a>
+    <a href="#ket-hop">Hybrid</a><a href="#rut-ra">Takeaways</a><a href="#thuat-ngu">Glossary</a>
+    <a class="faq" href="#hoi-dap">Beginner Q&amp;A</a><a href="#thu-vien">Libraries</a>
+    <a href="#cach-chay">How to run</a><a href="#input">Input</a><a href="#output">Check the output</a>
+    <a href="#tieu-chi">Grading criteria</a><a href="#giai-doan">Stage completion</a><a class="faq" href="#phong-van">Interview questions</a><a href="#gioi-han">Limitations</a>
   </nav>
 </header>
 
 <div class="verdict">
-  <div class="label">🏆 Người thắng</div>
-  <div class="winner">Kết hợp: model rẻ trả lời trước, chỉ hỏi LLM khi không chắc</div>
+  <div class="label">🏆 Winner</div>
+  <div class="winner">Hybrid: a cheap model answers first, and the LLM is only asked when it's unsure</div>
   <ul>
-    <li><b>Gần chính xác bằng LLM</b>: 93,1 điểm so với 94,3 điểm.</li>
-    <li><b>Rẻ hơn 4 lần</b>: $8 thay vì $32 cho mỗi 1 triệu tin nhắn.</li>
-    <li><b>3/4 số tin được trả lời ngay lập tức</b> (dưới 1 phần nghìn giây), không cần chờ LLM.</li>
+    <li><b>Almost as accurate as the LLM</b>: 93.1 points vs. 94.3 points.</li>
+    <li><b>4 times cheaper</b>: $8 instead of $32 per 1 million messages.</li>
+    <li><b>3/4 of messages are answered instantly</b> (under 1 millisecond), with no waiting for the LLM.</li>
   </ul>
 </div>
 
-<h2 id="bang-xep-hang">Bảng xếp hạng</h2>
-<p>Điểm chính xác tính trên thang 100, đo trên 300 tin nhắn mà model chưa từng thấy.</p>
+<h2 id="bang-xep-hang">Leaderboard</h2>
+<p>Accuracy score is on a 100-point scale, measured on 300 messages the models had never seen.</p>
 <div class="table-wrap"><table>
-  <thead><tr><th>Cách</th><th class="num">Điểm chính xác</th><th>Tốc độ trả lời</th><th class="num">Chi phí / 1 triệu tin</th></tr></thead>
+  <thead><tr><th>Approach</th><th class="num">Accuracy score</th><th>Response speed</th><th class="num">Cost / 1 million messages</th></tr></thead>
   <tbody>
-    <tr><td><b>A.</b> Đếm từ khóa (TF-IDF) + hồi quy logistic</td><td class="num">90,6</td><td>Tức thì (&lt; 1 ms)</td><td class="num">~$0</td></tr>
-    <tr><td><b>B.</b> Embedding + hồi quy logistic</td><td class="num">88,2</td><td>~0,3 giây</td><td class="num">$0,6</td></tr>
-    <tr><td><b>C.</b> Embedding + XGBoost</td><td class="num">89,6</td><td>~0,3 giây</td><td class="num">$0,6</td></tr>
-    <tr><td><b>D.</b> Hỏi thẳng LLM (<code>gpt-4o-mini</code>)</td><td class="num">94,3</td><td>~0,9 giây</td><td class="num">$32</td></tr>
-    <tr class="hl"><td>🏆 <b>Kết hợp A + D</b></td><td class="num">93,1</td><td>75% tin: tức thì<br>25% tin: ~0,8 giây</td><td class="num">$8</td></tr>
+    <tr><td><b>A.</b> Keyword counting (TF-IDF) + logistic regression</td><td class="num">90.6</td><td>Instant (&lt; 1 ms)</td><td class="num">~$0</td></tr>
+    <tr><td><b>B.</b> Embedding + logistic regression</td><td class="num">88.2</td><td>~0.3 seconds</td><td class="num">$0.6</td></tr>
+    <tr><td><b>C.</b> Embedding + XGBoost</td><td class="num">89.6</td><td>~0.3 seconds</td><td class="num">$0.6</td></tr>
+    <tr><td><b>D.</b> Ask the LLM directly (<code>gpt-4o-mini</code>)</td><td class="num">94.3</td><td>~0.9 seconds</td><td class="num">$32</td></tr>
+    <tr class="hl"><td>🏆 <b>Hybrid A + D</b></td><td class="num">93.1</td><td>75% of messages: instant<br>25% of messages: ~0.8 seconds</td><td class="num">$8</td></tr>
   </tbody>
 </table></div>
 
-<h3>Chi phí cho 1 triệu tin nhắn</h3>
-<div class="bars" role="img" aria-label="Chi phí: D 32 đô, Kết hợp 8 đô, B và C 0,6 đô, A gần 0">
-  <div class="bar-row"><span>D. LLM</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">$32,3</span></div>
-  <div class="bar-row hl"><span>🏆 Kết hợp A+D</span><div class="bar-track"><div class="bar-fill" style="width:24.7%"></div></div><span class="bar-val">$8,0</span></div>
-  <div class="bar-row"><span>B / C. Embedding</span><div class="bar-track"><div class="bar-fill" style="width:1.8%"></div></div><span class="bar-val">$0,6</span></div>
-  <div class="bar-row"><span>A. Từ khóa</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">~$0</span></div>
+<h3>Cost per 1 million messages</h3>
+<div class="bars" role="img" aria-label="Cost: D $32, Hybrid $8, B and C $0.6, A near 0">
+  <div class="bar-row"><span>D. LLM</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">$32.3</span></div>
+  <div class="bar-row hl"><span>🏆 Hybrid A+D</span><div class="bar-track"><div class="bar-fill" style="width:24.7%"></div></div><span class="bar-val">$8.0</span></div>
+  <div class="bar-row"><span>B / C. Embedding</span><div class="bar-track"><div class="bar-fill" style="width:1.8%"></div></div><span class="bar-val">$0.6</span></div>
+  <div class="bar-row"><span>A. Keywords</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">~$0</span></div>
 </div>
 
-<h3>Ai giỏi nhất ở từng mặt?</h3>
+<h3>Who is best at what?</h3>
 <div class="cards">
-  <div class="card"><div class="k">🎯 Chính xác nhất</div><div class="v">D. LLM</div><div class="s">94,3 điểm — nhưng chậm và đắt nhất</div></div>
-  <div class="card"><div class="k">⚡ Nhanh và rẻ nhất</div><div class="v">A. Từ khóa</div><div class="s">90,6 điểm, gần như miễn phí, trả lời tức thì</div></div>
-  <div class="card win"><div class="k">⚖️ Cân bằng nhất</div><div class="v">🏆 Kết hợp A + D</div><div class="s">93,1 điểm, rẻ hơn LLM 4 lần, phần lớn tin trả lời tức thì</div></div>
+  <div class="card"><div class="k">🎯 Most accurate</div><div class="v">D. LLM</div><div class="s">94.3 points — but the slowest and most expensive</div></div>
+  <div class="card"><div class="k">⚡ Fastest and cheapest</div><div class="v">A. Keywords</div><div class="s">90.6 points, almost free, answers instantly</div></div>
+  <div class="card win"><div class="k">⚖️ Best balance</div><div class="v">🏆 Hybrid A + D</div><div class="s">93.1 points, 4 times cheaper than the LLM, most messages answered instantly</div></div>
 </div>
 
-<h2 id="so-do">Sơ đồ dự án</h2>
-<p>Toàn bộ dự án đi qua 4 chặng: <b>tạo dữ liệu → chia dữ liệu → thi đấu 4 cách → ghép thành router</b>.</p>
+<h2 id="so-do">Project diagram</h2>
+<p>The whole project goes through 4 stages: <b>create data → split data → pit the 4 approaches against each other → combine into a router</b>.</p>
 <div class="diagram">
   <div class="pipe">
-    <div class="node"><b>① Dữ liệu</b>300 tin gán tay<br>+ 1.700 tin LLM viết, <code>gpt-4o</code> gán nhãn<br><small>kiểm tra mẫu 100 tin: đúng 95%</small></div>
+    <div class="node"><b>① Data</b>300 hand-labelled messages<br>+ 1,700 LLM-written messages, labelled by <code>gpt-4o</code><br><small>spot check of 100 messages: 95% correct</small></div>
     <div class="arrow"></div>
-    <div class="node"><b>② Chia 70/15/15</b>train 1.400 · val 300 · test 300<br><small>giữ tỷ lệ từng nhãn</small></div>
+    <div class="node"><b>② Split 70/15/15</b>train 1,400 · val 300 · test 300<br><small>keeps each label's proportion</small></div>
     <div class="arrow"></div>
-    <div class="node"><b>③ Thi đấu</b>A · B · C học trên train<br>D hỏi thẳng LLM<br><small>chấm trên 300 tin test</small></div>
+    <div class="node"><b>③ Competition</b>A · B · C learn on train<br>D asks the LLM directly<br><small>scored on 300 test messages</small></div>
     <div class="arrow"></div>
-    <div class="node hl"><b>④ Router</b>A trả lời khi tự tin &gt; 72%<br>còn lại → LLM<br><small>dùng lại cho dự án #3</small></div>
+    <div class="node hl"><b>④ Router</b>A answers when confidence &gt; 72%<br>the rest → LLM<br><small>reused in project #3</small></div>
   </div>
-  <div class="cap">Script tương ứng: ① ② <code>build_dataset.py</code> · ③ ④ <code>run_experiments.py</code> · thử router: <code>route.py</code>.</div>
+  <div class="cap">Matching scripts: ① ② <code>build_dataset.py</code> · ③ ④ <code>run_experiments.py</code> · try the router: <code>route.py</code>.</div>
 </div>
 
-<h3>Dữ liệu được chia thế nào</h3>
+<h3>How the data is split</h3>
 <div class="diagram">
-  <div class="split" role="img" aria-label="2.000 tin: train 1.400, val 300, test 300">
-    <div class="tr"><b>Train · 1.400</b><small>214 tay + 1.186 LLM — để model học</small></div>
-    <div class="va"><b>Val · 300</b><small>thi thử</small></div>
-    <div class="te"><b>Test · 300</b><small>thi thật</small></div>
+  <div class="split" role="img" aria-label="2,000 messages: train 1,400, val 300, test 300">
+    <div class="tr"><b>Train · 1,400</b><small>214 hand + 1,186 LLM — for the model to learn from</small></div>
+    <div class="va"><b>Val · 300</b><small>practice exam</small></div>
+    <div class="te"><b>Test · 300</b><small>real exam</small></div>
   </div>
-  <div class="cap">Tin gán tay và tin LLM được trộn rồi chia ngẫu nhiên. Tập test có 37 tin gán tay + 263 tin LLM. Ngưỡng của router chọn trên train+val (cross-validation 5-fold), test chỉ dùng để chấm điểm cuối.</div>
+  <div class="cap">Hand-labelled and LLM messages are shuffled together and then split randomly. The test set has 37 hand-labelled + 263 LLM messages. The router's threshold is chosen on train+val (5-fold cross-validation); test is only used for the final score.</div>
 </div>
 
-<h3 id="train-val-test">Train, val, test — từng bước dùng tập nào</h3>
-<p><b>Cả 3 tập đều có nhãn như nhau</b>; chúng chỉ khác ở <b>việc được phép làm gì</b>. Ví như đầu bếp đi thi:</p>
+<h3 id="train-val-test">Train, val, test — which set each step uses</h3>
+<p><b>All 3 sets have labels in the same way</b>; they only differ in <b>what you are allowed to do with them</b>. Think of a chef taking an exam:</p>
 <div class="table-wrap"><table>
-  <thead><tr><th>Tập</th><th>Đầu bếp</th><th>Model</th></tr></thead>
+  <thead><tr><th>Set</th><th>Chef</th><th>Model</th></tr></thead>
   <tbody>
-    <tr><td><b>Train</b></td><td>Tập nấu theo công thức có vị chuẩn</td><td><b>Học</b> quy luật từ tin có nhãn</td></tr>
-    <tr><td><b>Val</b></td><td>Nấu cho người nhà nếm để chỉnh muối, lửa — nếm bao nhiêu lần cũng được</td><td><b>Thử và chọn</b> thiết lập (thông số, ngưỡng)</td></tr>
-    <tr><td><b>Test</b></td><td>Giám khảo chấm <b>một lần</b>, không nấu lại</td><td><b>Chấm điểm cuối</b> để báo cáo</td></tr>
-    <tr><td><i>Khách thật</i></td><td><i>Sau khi mở quán</i></td><td><i>Tin nhắn mới khi chạy thật</i></td></tr>
+    <tr><td><b>Train</b></td><td>Practises cooking from recipes with the correct taste</td><td><b>Learns</b> patterns from labelled messages</td></tr>
+    <tr><td><b>Val</b></td><td>Cooks for family to taste and adjust salt and heat — they can taste as many times as they like</td><td><b>Tries and picks</b> settings (parameters, threshold)</td></tr>
+    <tr><td><b>Test</b></td><td>The judges score it <b>once</b>, no re-cooking</td><td><b>Final score</b> for the report</td></tr>
+    <tr><td><i>Real customers</i></td><td><i>After the restaurant opens</i></td><td><i>New messages in production</i></td></tr>
   </tbody>
 </table></div>
 <div class="table-wrap"><table>
-  <thead><tr><th>Bước</th><th>Việc</th><th>Train (1.400)</th><th>Val (300)</th><th>Test (300)</th></tr></thead>
+  <thead><tr><th>Step</th><th>Task</th><th>Train (1,400)</th><th>Val (300)</th><th>Test (300)</th></tr></thead>
   <tbody>
-    <tr><td>1</td><td>Chia 2.000 tin, <b>khóa test lại</b></td><td></td><td></td><td>🔒</td></tr>
-    <tr><td>2</td><td>Model <b>học</b></td><td>✅ học</td><td></td><td></td></tr>
-    <tr><td>3</td><td><b>Chọn thông số</b> <code>C</code> (thử 0,1 / 1 / 10 / 100 → chọn 10)</td><td>✅ học</td><td>✅ chấm thử</td><td></td></tr>
-    <tr><td>4</td><td><b>Chọn ngưỡng</b> 0,72 bằng cross-validation (gộp train + val, thi thử 5 lần)</td><td>✅</td><td>✅</td><td></td></tr>
-    <tr class="hl"><td>5</td><td><b>Chấm điểm cuối</b>: A 90,6 · D 94,3…</td><td>(model học từ đây)</td><td></td><td>✅ mở khóa, dùng 1 lần</td></tr>
-    <tr><td>6</td><td><b>Model dùng thật</b>: học lại trên train + val → <code>models/tfidf_lr.joblib</code></td><td>✅</td><td>✅</td><td></td></tr>
+    <tr><td>1</td><td>Split the 2,000 messages, <b>lock the test set away</b></td><td></td><td></td><td>🔒</td></tr>
+    <tr><td>2</td><td>Model <b>learns</b></td><td>✅ learn</td><td></td><td></td></tr>
+    <tr><td>3</td><td><b>Pick the parameter</b> <code>C</code> (try 0.1 / 1 / 10 / 100 → pick 10)</td><td>✅ learn</td><td>✅ practice score</td><td></td></tr>
+    <tr><td>4</td><td><b>Pick the threshold</b> 0.72 with cross-validation (merge train + val, 5 practice exams)</td><td>✅</td><td>✅</td><td></td></tr>
+    <tr class="hl"><td>5</td><td><b>Final score</b>: A 90.6 · D 94.3…</td><td>(model learns from here)</td><td></td><td>✅ unlocked, used once</td></tr>
+    <tr><td>6</td><td><b>Production model</b>: retrain on train + val → <code>models/tfidf_lr.joblib</code></td><td>✅</td><td>✅</td><td></td></tr>
   </tbody>
 </table></div>
 <ul>
-  <li><b>Val khác test ở đâu?</b> Val: được nhìn điểm rồi sửa. Test: không. Đã chọn theo điểm của tập nào thì tập đó hết trung thực, nên phải giữ riêng một tập chưa bị nhìn.</li>
-  <li><b>Cross-validation thì val ở đâu?</b> Gộp train + val, chia 5 phần, mỗi lượt học 4 phần và thi thử 1 phần — phần thi thử chính là "val", làm 5 lần cho chắc. Test vẫn đứng ngoài.</li>
-  <li><b>Sao điểm 90,6 dùng model học trên train, còn model dùng thật học trên train + val?</b> Điểm phải đo bằng model chưa thấy test với cách làm đã chốt. Chấm xong rồi thì gộp thêm val để model học nhiều hơn trước khi mở quán.</li>
-  <li><b>Lỡ nhìn test rồi sửa?</b> Điểm đẹp giả: chọn ngưỡng theo test cho 95,1 thay vì 93,1 thật — đó là <a href="#leakage">data leakage</a>.</li>
+  <li><b>How is val different from test?</b> Val: you may look at the score and then make changes. Test: you may not. Once you pick things based on a set's score, that set is no longer honest, so you must keep one set that nobody has looked at.</li>
+  <li><b>With cross-validation, where is val?</b> Merge train + val, split into 5 parts; each round learns on 4 parts and takes a practice exam on 1 part — that practice part is the "val", done 5 times to be safe. Test still stays outside.</li>
+  <li><b>Why does the 90.6 score use a model trained on train, while the production model is trained on train + val?</b> The score must be measured by a model that has never seen test, using the approach that was already locked in. Once scoring is done, val is added so the model learns from more data before the restaurant opens.</li>
+  <li><b>What if you peeked at test and then made changes?</b> A fake-good score: choosing the threshold on test gives 95.1 instead of the real 93.1 — that is <a href="#leakage">data leakage</a>.</li>
 </ul>
 <details class="qa">
-  <summary>Tự kiểm tra: đúng hay sai? (bấm để xem đáp án)</summary>
+  <summary>Self-check: true or false? (click to see the answers)</summary>
   <div class="body">
     <ol>
-      <li>Tập test không có nhãn. → <b>Sai</b>: có nhãn, không thì không chấm được.</li>
-      <li>Được dùng val để chọn giữa logistic regression và XGBoost. → <b>Đúng</b>.</li>
-      <li>Điểm test thấp thì đổi <code>C</code> rồi chấm lại test. → <b>Sai</b>: đó là leakage; đổi dựa trên val.</li>
-      <li>Train đạt 100 điểm nghĩa là model rất tốt. → <b>Sai</b>: có thể chỉ học thuộc; phải xem val / test.</li>
+      <li>The test set has no labels. → <b>False</b>: it has labels, otherwise it couldn't be scored.</li>
+      <li>You may use val to choose between logistic regression and XGBoost. → <b>True</b>.</li>
+      <li>If the test score is low, change <code>C</code> and score test again. → <b>False</b>: that is leakage; make changes based on val.</li>
+      <li>Scoring 100 on train means the model is very good. → <b>False</b>: it may just have memorised; look at val / test.</li>
     </ol>
   </div>
 </details>
 
-<h2 id="bon-cach">4 cách hoạt động thế nào?</h2>
-<p>A, B, C đều làm 2 bước: <b>(1) biến câu thành dãy số</b> (gọi là đặc trưng) → <b>(2) model phân loại</b> học từ 1.400 tin có nhãn để đoán nhãn. D bỏ qua cả hai bước, hỏi thẳng LLM.</p>
+<h2 id="bon-cach">How do the 4 approaches work?</h2>
+<p>A, B and C all do 2 steps: <b>(1) turn the sentence into a list of numbers</b> (called features) → <b>(2) a classification model</b> learns from 1,400 labelled messages to guess the label. D skips both steps and asks the LLM directly.</p>
 <div class="table-wrap"><table>
-  <thead><tr><th>Cách</th><th>Bước 1: câu → số</th><th>Bước 2: đoán nhãn</th><th>Có phải classical ML?</th></tr></thead>
+  <thead><tr><th>Approach</th><th>Step 1: sentence → numbers</th><th>Step 2: guess the label</th><th>Is it classical ML?</th></tr></thead>
   <tbody>
-    <tr><td><b>A</b></td><td>TF-IDF — đếm từ và cụm chữ cái <span class="ok">(classical)</span></td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Hoàn toàn classical</b> — không có mạng neural nào</td></tr>
-    <tr><td><b>B</b></td><td>Embedding — mạng neural có sẵn qua API</td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Classical trên embedding</b></td></tr>
-    <tr><td><b>C</b></td><td>Embedding — giống B</td><td>XGBoost <span class="ok">(classical)</span></td><td><b>Classical trên embedding</b></td></tr>
-    <tr><td><b>D</b></td><td>—</td><td>LLM đọc câu và trả lời</td><td>Không — đây là LLM</td></tr>
+    <tr><td><b>A</b></td><td>TF-IDF — counts words and letter chunks <span class="ok">(classical)</span></td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Fully classical</b> — no neural network at all</td></tr>
+    <tr><td><b>B</b></td><td>Embedding — a ready-made neural network via API</td><td>Logistic regression <span class="ok">(classical)</span></td><td><b>Classical on top of embeddings</b></td></tr>
+    <tr><td><b>C</b></td><td>Embedding — same as B</td><td>XGBoost <span class="ok">(classical)</span></td><td><b>Classical on top of embeddings</b></td></tr>
+    <tr><td><b>D</b></td><td>—</td><td>The LLM reads the sentence and answers</td><td>No — this is an LLM</td></tr>
   </tbody>
 </table></div>
 <div class="diagram">
   <div class="model-rows">
-    <div class="model-row"><span class="tag">A</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node"><b>TF-IDF</b><small>đếm từ + cụm chữ cái → ~20.000 số</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>chạy trên máy</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
-    <div class="model-row"><span class="tag">B</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>mạng neural → 1.536 số</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>chạy trên máy</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
-    <div class="model-row"><span class="tag">C</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>giống B</small></div><div class="arrow"></div><div class="node"><b>XGBoost</b><small>400 cây quyết định</small></div><div class="arrow"></div><div class="node hl">Nhãn + xác suất</div></div></div>
-    <div class="model-row"><span class="tag">D</span><div class="pipe"><div class="node">Tin nhắn</div><div class="arrow"></div><div class="node llm" style="flex:2.1"><b>LLM <code>gpt-4o-mini</code></b><small>đọc câu + mô tả 5 nhãn, trả lời thẳng</small></div><div class="arrow"></div><div class="node hl">Nhãn</div></div></div>
+    <div class="model-row"><span class="tag">A</span><div class="pipe"><div class="node">Message</div><div class="arrow"></div><div class="node"><b>TF-IDF</b><small>count words + letter chunks → ~20,000 numbers</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>runs locally</small></div><div class="arrow"></div><div class="node hl">Label + probability</div></div></div>
+    <div class="model-row"><span class="tag">B</span><div class="pipe"><div class="node">Message</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>neural network → 1,536 numbers</small></div><div class="arrow"></div><div class="node"><b>Logistic regression</b><small>runs locally</small></div><div class="arrow"></div><div class="node hl">Label + probability</div></div></div>
+    <div class="model-row"><span class="tag">C</span><div class="pipe"><div class="node">Message</div><div class="arrow"></div><div class="node llm"><b>Embedding API</b><small>same as B</small></div><div class="arrow"></div><div class="node"><b>XGBoost</b><small>400 decision trees</small></div><div class="arrow"></div><div class="node hl">Label + probability</div></div></div>
+    <div class="model-row"><span class="tag">D</span><div class="pipe"><div class="node">Message</div><div class="arrow"></div><div class="node llm" style="flex:2.1"><b>LLM <code>gpt-4o-mini</code></b><small>reads the sentence + a description of the 5 labels, answers directly</small></div><div class="arrow"></div><div class="node hl">Label</div></div></div>
   </div>
-  <div class="cap">Ô viền nét đứt = gọi API qua mạng (tốn thời gian và tiền). Ô viền liền = chạy trên máy.</div>
+  <div class="cap">Dashed border = API call over the network (costs time and money). Solid border = runs locally.</div>
 </div>
-<p>Đề bài cũng xếp B, C vào nhóm "model cổ điển trên embedding". Điểm chung của A, B, C: phải <b>học từ dữ liệu có nhãn</b>, chạy nhanh, rẻ, và trả về <b>xác suất</b> cho từng nhãn — nhờ có xác suất mới làm được chiến lược "tự tin thì tự trả lời".</p>
+<p>The assignment also puts B and C in the "classical models on embeddings" group. What A, B and C have in common: they must <b>learn from labelled data</b>, they run fast and cheaply, and they return a <b>probability</b> for each label — the probability is what makes the "answer it yourself when confident" strategy possible.</p>
 
 <details open>
-  <summary>A. TF-IDF + logistic regression — đếm chữ</summary>
+  <summary>A. TF-IDF + logistic regression — counting text</summary>
   <div class="body">
-    <p><b>Bước 1 — TF-IDF.</b> Tách câu thành các mảnh rồi đếm:</p>
+    <p><b>Step 1 — TF-IDF.</b> Break the sentence into pieces and count them:</p>
     <ul>
-      <li><b>Từ và cặp từ</b>: <code>huy</code>, <code>goi</code>, <code>huy goi</code>…</li>
-      <li><b>Cụm 2–5 chữ cái</b>: <code>hu</code>, <code>huy</code>, <code>uy g</code>… → nhờ vậy <i>"huy goi"</i> (không dấu), <i>"hủy gói"</i> và <i>"huỷ gói"</i> vẫn có nhiều mảnh chung.</li>
-      <li>Mảnh nào xuất hiện ở <b>mọi</b> tin (như "mình", "ạ") bị giảm trọng số; mảnh hiếm mà đặc trưng (như "hủy", "giá") được tăng trọng số. Đó là ý nghĩa của "TF-IDF".</li>
+      <li><b>Words and word pairs</b>: <code>huy</code>, <code>goi</code>, <code>huy goi</code>…</li>
+      <li><b>Chunks of 2–5 letters</b>: <code>hu</code>, <code>huy</code>, <code>uy g</code>… → this way <i>"huy goi"</i> (no diacritics), <i>"hủy gói"</i> and <i>"huỷ gói"</i> (two spellings of "cancel plan") still share many pieces.</li>
+      <li>Pieces that appear in <b>every</b> message (like "mình" ("I/me"), "ạ" (a politeness particle)) get a lower weight; rare but telling pieces (like "hủy" ("cancel"), "giá" ("price")) get a higher weight. That is what "TF-IDF" means.</li>
     </ul>
-    <p>Kết quả: mỗi tin thành một dãy hàng chục nghìn con số, hầu hết bằng 0.</p>
-    <p><b>Bước 2 — Logistic regression.</b> Học một <b>trọng số</b> cho mỗi mảnh với mỗi nhãn. Ví dụ "hủy" có trọng số cao cho <code>cancellation</code>, "lỗi" cao cho <code>tech_support</code>. Cộng trọng số của các mảnh trong câu → ra xác suất cho 5 nhãn.</p>
-    <p><b>Thông số:</b> từ 1–2 chữ + cụm 2–5 ký tự (<code>char_wb</code>), <code>C=10</code> (mức độ cho phép model khớp sát dữ liệu), <code>class_weight="balanced"</code> (tăng trọng số cho lớp hiếm).</p>
-    <p><b>Mạnh:</b> tức thì, miễn phí, chạy offline, xử lý tốt tin không dấu. <b>Yếu:</b> chỉ thấy chữ, không hiểu nghĩa — <i>"ngưng dịch vụ"</i> và <i>"hủy gói"</i> khác chữ nên phải có cả hai trong dữ liệu học.</p>
+    <p>Result: each message becomes a list of tens of thousands of numbers, most of them 0.</p>
+    <p><b>Step 2 — Logistic regression.</b> Learns a <b>weight</b> for each piece for each label. For example "hủy" ("cancel") has a high weight for <code>cancellation</code>, and "lỗi" ("error") a high weight for <code>tech_support</code>. Add up the weights of the pieces in the sentence → get a probability for each of the 5 labels.</p>
+    <p><b>Settings:</b> 1–2 word n-grams + 2–5 character chunks (<code>char_wb</code>), <code>C=10</code> (how closely the model is allowed to fit the data), <code>class_weight="balanced"</code> (more weight for rare classes).</p>
+    <p><b>Strengths:</b> instant, free, works offline, handles messages without diacritics well. <b>Weaknesses:</b> only sees text, doesn't understand meaning — <i>"ngưng dịch vụ"</i> ("stop the service") and <i>"hủy gói"</i> ("cancel plan") use different words, so both must appear in the training data.</p>
   </div>
 </details>
 
 <details>
-  <summary>B. Embedding + logistic regression — đo ý nghĩa</summary>
+  <summary>B. Embedding + logistic regression — measuring meaning</summary>
   <div class="body">
-    <p><b>Bước 1 — Embedding.</b> Gửi câu tới API <code>text-embedding-3-small</code> của OpenAI (một mạng neural đã được train sẵn trên lượng văn bản rất lớn). API trả về <b>1.536 con số</b> thể hiện <i>ý nghĩa</i> của câu. Hai câu cùng nghĩa cho ra hai dãy số gần nhau, kể cả khi không chung chữ nào: <i>"hủy gói"</i> ≈ <i>"không dùng nữa, ngưng giúp mình"</i>.</p>
-    <p><b>Bước 2 — Logistic regression</b>, giống A, nhưng học trên 1.536 con số này thay vì đếm chữ.</p>
-    <p><b>Mạnh:</b> hiểu từ đồng nghĩa, cách diễn đạt mới. <b>Yếu:</b> mỗi tin tốn 1 lần gọi mạng (~0,2–0,3 giây) và một ít tiền; cảm xúc mạnh trong câu dễ "kéo" ý nghĩa về <code>complaint</code>.</p>
+    <p><b>Step 1 — Embedding.</b> Send the sentence to OpenAI's <code>text-embedding-3-small</code> API (a neural network already trained on a huge amount of text). The API returns <b>1,536 numbers</b> that represent the sentence's <i>meaning</i>. Two sentences with the same meaning produce two lists of numbers that are close together, even if they share no words: <i>"hủy gói"</i> ("cancel plan") ≈ <i>"không dùng nữa, ngưng giúp mình"</i> ("not using it anymore, please stop it for me").</p>
+    <p><b>Step 2 — Logistic regression</b>, same as A, but it learns on these 1,536 numbers instead of word counts.</p>
+    <p><b>Strengths:</b> understands synonyms and new ways of phrasing things. <b>Weaknesses:</b> each message costs one network call (~0.2–0.3 seconds) and a little money; strong emotion in a sentence easily "pulls" its meaning towards <code>complaint</code>.</p>
   </div>
 </details>
 
 <details>
-  <summary>C. Embedding + XGBoost — nhiều cây quyết định</summary>
+  <summary>C. Embedding + XGBoost — many decision trees</summary>
   <div class="body">
-    <p><b>Bước 1</b>: dùng lại đúng embedding của B.</p>
-    <p><b>Bước 2 — XGBoost</b>: xây <b>400 cây quyết định</b> nối tiếp nhau; mỗi cây là chuỗi câu hỏi "số thứ 37 có lớn hơn 0,02 không?…", và cây sau tập trung sửa lỗi của các cây trước. Kết quả cuối là tổng phiếu của cả 400 cây.</p>
-    <p><b>Thông số:</b> 400 cây, độ sâu tối đa 4, <code>learning_rate=0.08</code>, mỗi cây chỉ xem 80% số tin và 40% số cột.</p>
-    <p><b>Kết quả:</b> không tốt hơn B. XGBoost mạnh với dữ liệu dạng bảng (tuổi, thu nhập…), còn với 1.536 con số dày đặc và chỉ 1.400 mẫu học, một model tuyến tính như logistic regression là đủ — và XGBoost xử lý lớp hiếm kém nhất.</p>
+    <p><b>Step 1</b>: reuses exactly B's embeddings.</p>
+    <p><b>Step 2 — XGBoost</b>: builds <b>400 decision trees</b> one after another; each tree is a chain of questions like "is number 37 greater than 0.02?…", and each new tree focuses on fixing the mistakes of the trees before it. The final result is the combined vote of all 400 trees.</p>
+    <p><b>Settings:</b> 400 trees, max depth 4, <code>learning_rate=0.08</code>, each tree only sees 80% of the messages and 40% of the columns.</p>
+    <p><b>Result:</b> no better than B. XGBoost is strong on tabular data (age, income…), but with 1,536 dense numbers and only 1,400 training examples, a linear model like logistic regression is enough — and XGBoost handles the rare class worst.</p>
   </div>
 </details>
 
 <details>
-  <summary>D. LLM zero-shot — hỏi thẳng</summary>
+  <summary>D. Zero-shot LLM — just ask</summary>
   <div class="body">
-    <p>Gửi tin nhắn cho <code>gpt-4o-mini</code> kèm mô tả ngắn 5 nhãn, yêu cầu trả về đúng một nhãn. "Zero-shot" nghĩa là <b>không đưa ví dụ và không train</b>. <code>temperature=0</code> để mỗi lần hỏi cho cùng câu trả lời.</p>
-    <p><b>Mạnh:</b> hiểu ngữ cảnh, giọng điệu, câu nhiều ý. <b>Yếu:</b> chậm (~0,7–0,9 giây/tin), tốn tiền mỗi tin, và không biết các quy tắc riêng của mình (ví dụ "bị tính tiền sai → khiếu nại, không phải hỏi giá") trừ khi viết vào prompt.</p>
+    <p>Send the message to <code>gpt-4o-mini</code> along with a short description of the 5 labels, and ask it to return exactly one label. "Zero-shot" means <b>no examples and no training</b>. <code>temperature=0</code> so that every time you ask, you get the same answer.</p>
+    <p><b>Strengths:</b> understands context, tone, and messages with several intents. <b>Weaknesses:</b> slow (~0.7–0.9 seconds/message), costs money per message, and doesn't know your own rules (e.g. "billed incorrectly → complaint, not pricing") unless you write them into the prompt.</p>
   </div>
 </details>
 
-<h2 id="ket-hop">Vì sao cách kết hợp thắng?</h2>
+<h2 id="ket-hop">Why does the hybrid approach win?</h2>
 <div class="diagram">
   <div class="router">
-    <div class="node"><b>Tin nhắn khách hàng</b></div>
+    <div class="node"><b>Customer message</b></div>
     <div class="down">↓</div>
-    <div class="node"><b>Model A</b> (TF-IDF + LR) đoán nhãn và độ tự tin<small><br>&lt; 1 ms · $0</small></div>
+    <div class="node"><b>Model A</b> (TF-IDF + LR) guesses the label and its confidence<small><br>&lt; 1 ms · $0</small></div>
     <div class="down">↓</div>
-    <div class="node q"><b>Độ tự tin &gt; 72%?</b></div>
+    <div class="node q"><b>Confidence &gt; 72%?</b></div>
     <div class="branches">
-      <div class="branch"><div class="lbl ok">Có · 75% số tin</div><div class="node hl"><b>Trả lời ngay</b>dùng nhãn của A<small><br>vd. "Gói Pro bao nhiêu tiền?"</small></div></div>
-      <div class="branch"><div class="lbl">Không · 25% số tin</div><div class="node llm"><b>Hỏi LLM</b> <code>gpt-4o-mini</code><small><br>~0,8 giây · vd. "Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!"</small></div></div>
+      <div class="branch"><div class="lbl ok">Yes · 75% of messages</div><div class="node hl"><b>Answer right away</b>using A's label<small><br>e.g. "Gói Pro bao nhiêu tiền?" ("How much is the Pro plan?")</small></div></div>
+      <div class="branch"><div class="lbl">No · 25% of messages</div><div class="node llm"><b>Ask the LLM</b> <code>gpt-4o-mini</code><small><br>~0.8 seconds · e.g. "Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!" ("Every time I use it there's an error, I can't work in peace!")</small></div></div>
     </div>
   </div>
-  <div class="cap">Kết quả trên 300 tin test: 93,1 điểm (LLM-only 94,3), chi phí $8 / 1 triệu tin (LLM-only $32).</div>
+  <div class="cap">Results on 300 test messages: 93.1 points (LLM-only 94.3), cost $8 / 1 million messages (LLM-only $32).</div>
 </div>
 <div class="analogy">
-  <p style="margin-top:0">Hãy hình dung một quầy lễ tân và một chuyên gia:</p>
+  <p style="margin-top:0">Picture a receptionist and an expert:</p>
   <ul class="steps">
-    <li><b>Lễ tân (model A)</b> đọc tin nhắn trước. Tin rõ ràng như <i>"Gói Pro bao nhiêu tiền?"</i> hay <i>"Hủy gói giúp mình"</i> thì trả lời ngay, không tốn tiền.</li>
-    <li>Khi lễ tân <b>không chắc</b> (độ tự tin ≤ 72%), ví dụ <i>"Hơi thất vọng, thôi hủy luôn cho đơn giản"</i>, tin đó được chuyển cho <b>chuyên gia (LLM)</b>.</li>
-    <li>Kết quả: chỉ <b>1/4</b> số tin phải trả tiền cho LLM, mà chất lượng gần như ngang với việc gửi tất cả cho LLM.</li>
+    <li><b>The receptionist (model A)</b> reads the message first. Clear messages like <i>"Gói Pro bao nhiêu tiền?"</i> ("How much is the Pro plan?") or <i>"Hủy gói giúp mình"</i> ("Please cancel my plan") get answered right away, at no cost.</li>
+    <li>When the receptionist is <b>unsure</b> (confidence ≤ 72%), for example <i>"Hơi thất vọng, thôi hủy luôn cho đơn giản"</i> ("A bit disappointed, I'll just cancel to keep it simple"), the message is passed to <b>the expert (LLM)</b>.</li>
+    <li>Result: only <b>1/4</b> of messages have to be paid for with the LLM, while the quality is almost the same as sending everything to the LLM.</li>
   </ul>
-  <p style="margin-bottom:0">Cách này hiệu quả vì hai bên <b>sai ở những chỗ khác nhau</b>: trong 29 tin A đoán sai, LLM đúng 24 tin.</p>
+  <p style="margin-bottom:0">This works because the two sides <b>make mistakes in different places</b>: of the 29 messages A got wrong, the LLM got 24 right.</p>
 </div>
 
-<h3>Đường chi phí – chất lượng</h3>
+<h3>The cost–quality curve</h3>
 <figure>
-  <img src="../results/tradeoff.png" alt="Trái: macro-F1 theo chi phí khi quét ngưỡng; phải: macro-F1 và tỷ lệ chuyển LLM theo ngưỡng" loading="lazy">
-  <figcaption><b>Cách đọc hình trái:</b> trục ngang = chi phí, trục dọc = điểm chính xác. Mỗi chấm đen là một cách (A, B, C, D). Đường cong là cách kết hợp khi đổi ngưỡng: ngưỡng thấp → gần A (rẻ, kém hơn), ngưỡng cao → gần D (đắt). Ngôi sao = ngưỡng được chọn — đã gần bằng điểm của D mà chi phí chỉ khoảng 1/4. <b>Hình phải:</b> điểm (nét liền) và % tin chuyển LLM (nét đứt) theo từng ngưỡng; đường xám ngang = điểm của LLM-only.</figcaption>
+  <img src="../results/tradeoff.png" alt="Left: macro-F1 vs. cost when sweeping the threshold; right: macro-F1 and share of messages sent to the LLM vs. threshold" loading="lazy">
+  <figcaption><b>How to read the left chart:</b> horizontal axis = cost, vertical axis = accuracy score. Each black dot is one approach (A, B, C, D). The curve is the hybrid approach as the threshold changes: low threshold → close to A (cheap, less accurate), high threshold → close to D (expensive). The star = the chosen threshold — already close to D's score at only about 1/4 of the cost. <b>Right chart:</b> score (solid line) and % of messages sent to the LLM (dashed line) for each threshold; the horizontal grey line = the LLM-only score.</figcaption>
 </figure>
 
-<h2 id="rut-ra">4 điều rút ra</h2>
+<h2 id="rut-ra">4 takeaways</h2>
 <ol>
-  <li><b>A, B, C ngang nhau.</b> Chênh lệch giữa ba cách (88–91 điểm) nhỏ hơn sai số đo, nên không cách nào thắng rõ. Cách đơn giản nhất (A) là đủ dùng.</li>
-  <li><b>LLM giỏi hơn khoảng 4 điểm</b>, nhưng <b>chậm hơn khoảng 1.000 lần</b> và <b>đắt hơn khoảng 50 lần</b> so với B.</li>
-  <li><b>Lỗi phổ biến nhất không phải do model.</b> Mọi cách, kể cả LLM, đều hay nhầm giữa "khác" và "hỗ trợ kỹ thuật". Ví dụ <i>"Có tính năng đổi mã dự án không?"</i> thuộc loại nào chính người cũng khó nói. Muốn cải thiện, cần làm rõ định nghĩa nhãn trước.</li>
-  <li><b>Lỗi đáng sợ nhất là bỏ sót khách muốn hủy.</b> Tin vừa phàn nàn vừa đòi hủy dễ bị xếp nhầm thành "khiếu nại". Cân bằng trọng số giữa các lớp giúp giảm lỗi này rõ rệt.</li>
+  <li><b>A, B and C are on par.</b> The gap between the three (88–91 points) is smaller than the measurement error, so none is a clear winner. The simplest one (A) is good enough.</li>
+  <li><b>The LLM is about 4 points better</b>, but <b>about 1,000 times slower</b> and <b>about 50 times more expensive</b> than B.</li>
+  <li><b>The most common error isn't the model's fault.</b> Every approach, including the LLM, often confuses "other" and "tech support". For example, which category <i>"Có tính năng đổi mã dự án không?"</i> ("Is there a feature to change the project code?") belongs to is hard even for a human to say. To improve, clarify the label definitions first.</li>
+  <li><b>The scariest error is missing a customer who wants to cancel.</b> Messages that both complain and demand cancellation are easily misclassified as "complaint". Balancing the weights between classes clearly reduces this error.</li>
 </ol>
 
-<h3>Confusion matrix — model hay nhầm ở đâu</h3>
+<h3>Confusion matrix — where the models get confused</h3>
 <figure>
-  <img src="../results/confusion_matrices.png" alt="Confusion matrix của 4 cách A, B, C, D trên 300 tin test" loading="lazy">
-  <figcaption><b>Cách đọc:</b> hàng = nhãn thật, cột = nhãn model đoán. Đường chéo (xanh đậm) = đoán đúng; mọi số ngoài đường chéo = tin bị nhầm. Ví dụ ở A, hàng <code>other</code> cột <code>tech_support</code> là 7: có 7 tin "khác" bị đoán thành "hỗ trợ kỹ thuật".</figcaption>
+  <img src="../results/confusion_matrices.png" alt="Confusion matrices for the 4 approaches A, B, C, D on 300 test messages" loading="lazy">
+  <figcaption><b>How to read it:</b> row = true label, column = label the model guessed. The diagonal (dark green) = correct guesses; every number off the diagonal = misclassified messages. For example, in A, row <code>other</code> column <code>tech_support</code> is 7: 7 "other" messages were guessed as "tech support".</figcaption>
 </figure>
 <div class="table-wrap"><table>
-  <thead><tr><th>Cặp nhầm nhiều nhất (thật → đoán)</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th></tr></thead>
+  <thead><tr><th>Most confused pairs (true → guessed)</th><th class="num">A</th><th class="num">B</th><th class="num">C</th><th class="num">D</th></tr></thead>
   <tbody>
-    <tr><td>khác → hỗ trợ kỹ thuật</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num">4</td></tr>
-    <tr><td>hỗ trợ kỹ thuật → khác</td><td class="num">5</td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
-    <tr><td>hỗ trợ kỹ thuật → khiếu nại</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">2</td></tr>
-    <tr><td>hủy gói → khiếu nại</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">1</td></tr>
-    <tr><td>khiếu nại → hỏi giá</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">3</td></tr>
+    <tr><td>other → tech support</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num">4</td></tr>
+    <tr><td>tech support → other</td><td class="num">5</td><td class="num">5</td><td class="num">3</td><td class="num">1</td></tr>
+    <tr><td>tech support → complaint</td><td class="num">3</td><td class="num">3</td><td class="num">3</td><td class="num">2</td></tr>
+    <tr><td>cancellation → complaint</td><td class="num">2</td><td class="num">3</td><td class="num">0</td><td class="num">1</td></tr>
+    <tr><td>complaint → pricing</td><td class="num">1</td><td class="num">2</td><td class="num">0</td><td class="num">3</td></tr>
   </tbody>
 </table></div>
 
-<h2 id="thuat-ngu">Giải thích thuật ngữ</h2>
+<h2 id="thuat-ngu">Glossary</h2>
 <dl class="terms">
-  <dt>Điểm chính xác</dt><dd>Chỉ số <b>macro-F1</b> nhân 100. Tính điểm cho từng loại ý định rồi lấy trung bình, nên loại ít tin (như "hủy gói") cũng quan trọng ngang loại nhiều tin.</dd>
-  <dt>TF-IDF</dt><dd>Biến tin nhắn thành bảng đếm từ và cụm chữ cái. Nhờ đếm cụm chữ cái, model vẫn hiểu được tin <i>không dấu</i> như "huy goi".</dd>
-  <dt>Embedding</dt><dd>Dùng API biến câu thành một dãy 1.536 con số thể hiện <i>ý nghĩa</i> của câu. Tốn một lần gọi mạng cho mỗi tin.</dd>
-  <dt>Hồi quy logistic / XGBoost</dt><dd>Hai loại model học từ ví dụ có nhãn. Hồi quy logistic đơn giản hơn; XGBoost phức tạp hơn nhưng ở bài này không tốt hơn.</dd>
-  <dt>LLM zero-shot</dt><dd>Hỏi thẳng mô hình ngôn ngữ lớn "tin này thuộc loại nào?", không cần train.</dd>
-  <dt>Ngưỡng tự tin</dt><dd>Model rẻ chỉ tự trả lời khi độ tự tin vượt ngưỡng (72%); dưới ngưỡng thì chuyển LLM.</dd>
-  <dt>p95</dt><dd>95% số tin được trả lời nhanh hơn con số này.</dd>
+  <dt>Accuracy score</dt><dd>The <b>macro-F1</b> metric times 100. A score is computed for each intent and then averaged, so intents with few messages (like "cancellation") matter just as much as intents with many.</dd>
+  <dt>TF-IDF</dt><dd>Turns a message into a table of word and letter-chunk counts. Thanks to the letter-chunk counts, the model still understands messages <i>without diacritics</i> like "huy goi" (= "hủy gói", "cancel plan").</dd>
+  <dt>Embedding</dt><dd>Uses an API to turn a sentence into a list of 1,536 numbers that represent the sentence's <i>meaning</i>. Costs one network call per message.</dd>
+  <dt>Logistic regression / XGBoost</dt><dd>Two kinds of models that learn from labelled examples. Logistic regression is simpler; XGBoost is more complex but is not better on this task.</dd>
+  <dt>Zero-shot LLM</dt><dd>Ask a large language model directly "which category is this message?", no training needed.</dd>
+  <dt>Confidence threshold</dt><dd>The cheap model only answers on its own when its confidence is above the threshold (72%); below it, the message goes to the LLM.</dd>
+  <dt>p95</dt><dd>95% of messages are answered faster than this number.</dd>
 </dl>
 
-<h3>Các chữ viết tắt</h3>
+<h3>Abbreviations</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Viết tắt</th><th>Viết đầy đủ</th><th>Nghĩa dễ hiểu</th></tr></thead>
+  <thead><tr><th>Abbreviation</th><th>Full name</th><th>Plain meaning</th></tr></thead>
   <tbody>
-    <tr><td><b>TF-IDF</b></td><td><b>T</b>erm <b>F</b>requency – <b>I</b>nverse <b>D</b>ocument <b>F</b>requency</td><td>Tần suất từ × độ hiếm của từ (xem ví dụ bên dưới)</td></tr>
-    <tr><td><b>XGBoost</b></td><td>e<b>X</b>treme <b>G</b>radient <b>Boost</b>ing</td><td>"Gradient boosting phiên bản cực mạnh": ghép nhiều cây quyết định nhỏ, cây sau sửa lỗi cây trước</td></tr>
-    <tr><td>LR</td><td>Logistic Regression</td><td>Hồi quy logistic: cộng trọng số của các đặc trưng → ra xác suất từng nhãn</td></tr>
-    <tr><td>LLM</td><td>Large Language Model</td><td>Mô hình ngôn ngữ lớn, vd. <code>gpt-4o-mini</code></td></tr>
-    <tr><td>F1</td><td>F1-score</td><td>Điểm gộp precision và recall (xem <a href="#metric">mục precision/recall</a>)</td></tr>
-    <tr><td>CV</td><td>Cross-Validation</td><td>Chia dữ liệu thành 5 phần, thi thử 5 lần xoay vòng</td></tr>
-    <tr><td>OOF</td><td>Out-Of-Fold</td><td>Dự đoán cho mỗi tin khi tin đó nằm ở phần "thi thử" của cross-validation</td></tr>
-    <tr><td>p95</td><td>95th percentile</td><td>95% số tin được trả lời nhanh hơn con số này</td></tr>
-    <tr><td>API</td><td>Application Programming Interface</td><td>Cổng để code gọi dịch vụ của bên khác (ở đây: OpenAI)</td></tr>
-    <tr><td>RAG</td><td>Retrieval-Augmented Generation</td><td>Tìm tài liệu liên quan rồi đưa cho LLM để trả lời</td></tr>
+    <tr><td><b>TF-IDF</b></td><td><b>T</b>erm <b>F</b>requency – <b>I</b>nverse <b>D</b>ocument <b>F</b>requency</td><td>How often a word appears × how rare the word is (see the example below)</td></tr>
+    <tr><td><b>XGBoost</b></td><td>e<b>X</b>treme <b>G</b>radient <b>Boost</b>ing</td><td>"A souped-up version of gradient boosting": combines many small decision trees, each new tree fixes the previous trees' mistakes</td></tr>
+    <tr><td>LR</td><td>Logistic Regression</td><td>Logistic regression: add up the weights of the features → get a probability for each label</td></tr>
+    <tr><td>LLM</td><td>Large Language Model</td><td>A large language model, e.g. <code>gpt-4o-mini</code></td></tr>
+    <tr><td>F1</td><td>F1-score</td><td>A score combining precision and recall (see the <a href="#metric">precision/recall section</a>)</td></tr>
+    <tr><td>CV</td><td>Cross-Validation</td><td>Split the data into 5 parts and take 5 practice exams in rotation</td></tr>
+    <tr><td>OOF</td><td>Out-Of-Fold</td><td>The prediction for each message made while that message is in the "practice exam" part of cross-validation</td></tr>
+    <tr><td>p95</td><td>95th percentile</td><td>95% of messages are answered faster than this number</td></tr>
+    <tr><td>API</td><td>Application Programming Interface</td><td>A gateway that lets code call someone else's service (here: OpenAI)</td></tr>
+    <tr><td>RAG</td><td>Retrieval-Augmented Generation</td><td>Find relevant documents and hand them to the LLM so it can answer</td></tr>
   </tbody>
 </table></div>
 
-<h3>TF-IDF với số liệu thật</h3>
+<h3>TF-IDF with real numbers</h3>
 <ul>
-  <li><b>TF (tần suất từ)</b>: từ xuất hiện bao nhiêu lần <i>trong tin này</i>. "hủy gói, hủy luôn" → "hủy" có TF = 2.</li>
-  <li><b>IDF (độ hiếm)</b>: từ xuất hiện trong bao nhiêu tin <i>của cả bộ dữ liệu</i> — càng ít tin chứa thì càng "đáng chú ý".</li>
+  <li><b>TF (term frequency)</b>: how many times a word appears <i>in this message</i>. "hủy gói, hủy luôn" ("cancel the plan, cancel it right now") → "hủy" ("cancel") has TF = 2.</li>
+  <li><b>IDF (rarity)</b>: how many messages <i>in the whole dataset</i> contain the word — the fewer messages contain it, the more "noteworthy" it is.</li>
 </ul>
 <div class="table-wrap"><table>
-  <thead><tr><th>Từ</th><th class="num">Số tin chứa từ (trên 1.700)</th><th class="num">IDF</th><th>Ý nghĩa</th></tr></thead>
+  <thead><tr><th>Word</th><th class="num">Messages containing the word (out of 1,700)</th><th class="num">IDF</th><th>Meaning</th></tr></thead>
   <tbody>
-    <tr><td>có</td><td class="num">653</td><td class="num">1,96</td><td>quá phổ biến → ít giá trị</td></tr>
-    <tr><td>mình</td><td class="num">491</td><td class="num">2,24</td><td>phổ biến</td></tr>
-    <tr><td>giá</td><td class="num">180</td><td class="num">3,24</td><td>khá hiếm, gợi ý <code>pricing</code></td></tr>
-    <tr><td>lỗi</td><td class="num">121</td><td class="num">3,63</td><td>hiếm, gợi ý <code>tech_support</code></td></tr>
-    <tr><td>hủy</td><td class="num">98</td><td class="num">3,84</td><td>hiếm, gợi ý <code>cancellation</code></td></tr>
-    <tr><td>seat</td><td class="num">53</td><td class="num">4,45</td><td>rất hiếm, rất đặc trưng</td></tr>
+    <tr><td>có ("have / is there")</td><td class="num">653</td><td class="num">1.96</td><td>too common → little value</td></tr>
+    <tr><td>mình ("I / me")</td><td class="num">491</td><td class="num">2.24</td><td>common</td></tr>
+    <tr><td>giá ("price")</td><td class="num">180</td><td class="num">3.24</td><td>fairly rare, hints at <code>pricing</code></td></tr>
+    <tr><td>lỗi ("error")</td><td class="num">121</td><td class="num">3.63</td><td>rare, hints at <code>tech_support</code></td></tr>
+    <tr><td>hủy ("cancel")</td><td class="num">98</td><td class="num">3.84</td><td>rare, hints at <code>cancellation</code></td></tr>
+    <tr><td>seat</td><td class="num">53</td><td class="num">4.45</td><td>very rare, very distinctive</td></tr>
   </tbody>
 </table></div>
-<p>Điểm của một từ trong một tin = TF × IDF. Nhờ vậy "hủy" nặng ký gần gấp đôi "có", dù cả hai đều chỉ xuất hiện một lần trong câu. Số IDF lấy từ model đã lưu (<code>models/tfidf_lr.joblib</code>).</p>
+<p>A word's score in a message = TF × IDF. That's why "hủy" ("cancel") weighs almost twice as much as "có" ("have"), even though both appear only once in the sentence. The IDF numbers come from the saved model (<code>models/tfidf_lr.joblib</code>).</p>
 
-<h2 id="hoi-dap">Hỏi đáp cho người mới</h2>
-<p>Những câu hỏi thường gặp khi mới học dự án này, trả lời ngắn và có số liệu thật. Bấm vào từng câu để xem.</p>
+<h2 id="hoi-dap">Q&amp;A for beginners</h2>
+<p>Common questions when you're first learning this project, with short answers and real numbers. Click each question to see the answer.</p>
 
-<div class="faq-group">Dữ liệu</div>
+<div class="faq-group">Data</div>
 <details class="qa">
-  <summary>"Tự gán ~300, phần còn lại dùng LLM gán nhãn rồi kiểm tra mẫu" nghĩa là gì?</summary>
+  <summary>What does "hand-label ~300, label the rest with an LLM, then spot-check a sample" mean?</summary>
   <div class="body">
-    <p><b>Nhãn</b> là đáp án đúng của mỗi tin (tin này thuộc loại nào). Gán tay cả 2.000 tin thì quá lâu, nên: người gán kỹ 300 tin làm "đáp án chuẩn" → LLM gán 1.700 tin còn lại → rút ngẫu nhiên 100 tin LLM đã gán cho người xem lại. Đúng ≥ 90% thì tin được phần còn lại. Giống giáo viên chấm vài bài mẫu, giao phần còn lại cho trợ giảng rồi kiểm tra ngẫu nhiên. Xem <a href="#input">Input</a>.</p>
+    <p>A <b>label</b> is the correct answer for each message (which category the message belongs to). Hand-labelling all 2,000 messages would take too long, so: a person carefully labels 300 messages as the "answer key" → the LLM labels the remaining 1,700 → 100 messages the LLM labelled are picked at random for a person to review. If ≥ 90% are correct, the rest can be trusted. It's like a teacher marking a few sample papers, handing the rest to a teaching assistant, and then spot-checking at random. See <a href="#input">Input</a>.</p>
   </div>
 </details>
 <details class="qa">
-  <summary>Đã gán đủ 1.700 tin chưa?</summary>
+  <summary>Were all 1,700 messages labelled?</summary>
   <div class="body">
-    <p>Đủ. LLM viết 2.135 tin, lọc trùng còn đúng 1.700; <code>gpt-4o</code> gán nhãn cả 1.700. Trong đó 100 tin được người kiểm tra, 5 tin bị sửa nhãn. Tổng dataset: 300 gán tay + 1.700 LLM = 2.000 tin.</p>
+    <p>Yes. The LLM wrote 2,135 messages, and after removing duplicates exactly 1,700 were left; <code>gpt-4o</code> labelled all 1,700. Of those, 100 were checked by a person and 5 had their label corrected. Total dataset: 300 hand-labelled + 1,700 LLM = 2,000 messages.</p>
   </div>
 </details>
 <details class="qa">
-  <summary><code>audit_sample.csv</code> là gì?</summary>
+  <summary>What is <code>audit_sample.csv</code>?</summary>
   <div class="body">
-    <p>"Audit" = kiểm tra. Đây là 100 tin chọn ngẫu nhiên trong 1.700 tin LLM gán, có 3 cột: <code>text</code> (tin nhắn), <code>llm_label</code> (LLM gán), <code>human_label</code> (người gán lại). Script so hai cột: khớp 95/100 = 95%, và sửa nhãn trong dataset cho những tin người không đồng ý. Ví dụ LLM thấy chữ "cắt dịch vụ" nên gán <code>cancellation</code>, nhưng khách đang phàn nàn bị cắt không báo trước → người sửa thành <code>complaint</code>.</p>
+    <p>"Audit" = check. These are 100 messages picked at random from the 1,700 the LLM labelled, with 3 columns: <code>text</code> (the message), <code>llm_label</code> (the LLM's label), <code>human_label</code> (the person's label). The script compares the two columns: 95/100 match = 95%, and it fixes the label in the dataset for messages where the person disagreed. For example, the LLM saw the words "cắt dịch vụ" ("cut off the service") and labelled it <code>cancellation</code>, but the customer was complaining about being cut off without notice → the person changed it to <code>complaint</code>.</p>
   </div>
 </details>
 <details class="qa">
-  <summary>Train, val, test khác nhau thế nào?</summary>
+  <summary>How are train, val and test different?</summary>
   <div class="body">
-    <p>Cả 3 tập đều có nhãn, chất lượng như nhau — chỉ khác <b>mục đích</b>. Ví như ôn thi: <b>train</b> (1.400) = sách bài tập có lời giải, model học từ đây; <b>val</b> (300) = đề thi thử, dùng để chọn cách làm (ví dụ chọn ngưỡng); <b>test</b> (300) = đề thi thật, chỉ dùng một lần để chấm điểm cuối. Nếu dùng test để chọn cách làm thì điểm sẽ "đẹp giả" (xem <a href="#leakage">data leakage</a>).</p>
-    <p>Trong dự án, val 300 tin quá ít nên ngưỡng được chọn bằng cross-validation trên train + val (1.700 tin) — giống làm 5 đề thi thử thay vì 1.</p>
+    <p>All 3 sets have labels of the same quality — only their <b>purpose</b> differs. Think of exam prep: <b>train</b> (1,400) = a workbook with worked solutions, the model learns from it; <b>val</b> (300) = a practice exam, used to choose how to do things (e.g. choose the threshold); <b>test</b> (300) = the real exam, used only once for the final score. If you use test to choose how to do things, the score will be "fake-good" (see <a href="#leakage">data leakage</a>).</p>
+    <p>In this project, 300 val messages are too few, so the threshold is chosen with cross-validation on train + val (1,700 messages) — like taking 5 practice exams instead of 1.</p>
   </div>
 </details>
 <details class="qa">
-  <summary>Ý nghĩa của val là gì? Sao không chấm luôn trên train hoặc test?</summary>
+  <summary>What is val for? Why not just score on train or test?</summary>
   <div class="body">
-    <p><b>Val cho mình một điểm số trung thực trong lúc vẫn còn được phép thay đổi cách làm.</b></p>
+    <p><b>Val gives you an honest score while you are still allowed to change your approach.</b></p>
     <ul>
-      <li><b>Chấm trên train thì vô nghĩa</b> — model đã thấy đáp án. Model A đạt <b>100 điểm</b> trên train (thuộc lòng), nhưng chỉ <b>88,5</b> trên val và <b>90,6</b> trên test. Như học sinh làm lại đúng bài trong sách có lời giải: luôn đúng, nhưng không nói lên gì.</li>
-      <li><b>Chấm trên test để chọn thì test hết trung thực</b> — chọn ngưỡng theo test, điểm báo cáo thành <span class="bad">95,1</span> thay vì <b>93,1</b> thật.</li>
-      <li><b>Val ở giữa</b>: model chưa học từ nó (nên điểm trung thực), và mình được phép nhìn điểm để quyết định. Test thì để dành cho lần chấm cuối.</li>
+      <li><b>Scoring on train is meaningless</b> — the model has already seen the answers. Model A scores <b>100 points</b> on train (memorised), but only <b>88.5</b> on val and <b>90.6</b> on test. Like a student redoing exercises from a book with worked solutions: always right, but it tells you nothing.</li>
+      <li><b>Using test to choose makes test dishonest</b> — choosing the threshold on test makes the reported score <span class="bad">95.1</span> instead of the real <b>93.1</b>.</li>
+      <li><b>Val sits in between</b>: the model hasn't learned from it (so the score is honest), and you are allowed to look at the score to make decisions. Test is saved for the final scoring.</li>
     </ul>
-    <p><b>Ví dụ chọn thông số bằng val</b> — thông số <code>C</code> của logistic regression (C càng lớn, model càng bám sát dữ liệu train):</p>
+    <p><b>Example of choosing a parameter with val</b> — logistic regression's <code>C</code> parameter (the bigger C is, the more closely the model sticks to the training data):</p>
     <div class="table-wrap"><table>
-      <thead><tr><th class="num">C</th><th class="num">Điểm trên train</th><th class="num">Điểm trên val</th></tr></thead>
+      <thead><tr><th class="num">C</th><th class="num">Score on train</th><th class="num">Score on val</th></tr></thead>
       <tbody>
-        <tr><td class="num">0,1</td><td class="num">92,9</td><td class="num">87,4</td></tr>
-        <tr><td class="num">1</td><td class="num">99,1</td><td class="num">86,9</td></tr>
-        <tr class="hl"><td class="num">10</td><td class="num">100</td><td class="num">88,5</td></tr>
-        <tr><td class="num">100</td><td class="num">100</td><td class="num">87,2</td></tr>
+        <tr><td class="num">0.1</td><td class="num">92.9</td><td class="num">87.4</td></tr>
+        <tr><td class="num">1</td><td class="num">99.1</td><td class="num">86.9</td></tr>
+        <tr class="hl"><td class="num">10</td><td class="num">100</td><td class="num">88.5</td></tr>
+        <tr><td class="num">100</td><td class="num">100</td><td class="num">87.2</td></tr>
       </tbody>
     </table></div>
-    <p>Nhìn train thì C = 10 và C = 100 đều 100 điểm — không phân biệt được, và dễ chọn nhầm C lớn nhất. Val cho thấy C = 10 tốt nhất; C = 100 "học thuộc" quá mức nên kém hơn với tin mới (gọi là <b>overfitting</b>). Giá trị C = 10 mà dự án dùng cũng chính là giá trị tốt nhất trên val.</p>
-    <p><b>Giới hạn của val</b>: 300 tin là ít nên điểm dao động — chênh 1 điểm có thể chỉ là may rủi. Vì vậy với ngưỡng router, dự án dùng cross-validation (5 lần thi thử trên 1.700 tin) cho chắc hơn.</p>
+    <p>Looking at train, C = 10 and C = 100 both score 100 — you can't tell them apart, and it's easy to wrongly pick the biggest C. Val shows C = 10 is best; C = 100 "memorises" too much, so it does worse on new messages (this is called <b>overfitting</b>). The value C = 10 the project uses is exactly the best value on val.</p>
+    <p><b>Val's limitation</b>: 300 messages is small, so the score fluctuates — a 1-point difference may just be luck. That's why, for the router threshold, the project uses cross-validation (5 practice exams on 1,700 messages) to be safer.</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Val dùng để ra "quyết định" — cụ thể là quyết định gì?</summary>
+  <summary>Val is used to make "decisions" — which decisions exactly?</summary>
   <div class="body">
-    <p>Là các lựa chọn về <b>cách làm</b> phải chốt trước khi chấm điểm cuối trên test (gọi chung là chọn <b>model</b> và <b>hyperparameter</b>):</p>
+    <p>They are the choices about <b>how to do things</b> that must be locked in before the final scoring on test (collectively called choosing the <b>model</b> and <b>hyperparameters</b>):</p>
     <div class="table-wrap"><table>
-      <thead><tr><th>Quyết định</th><th>Câu hỏi cụ thể</th><th>Trong dự án</th></tr></thead>
+      <thead><tr><th>Decision</th><th>Concrete question</th><th>In this project</th></tr></thead>
       <tbody>
-        <tr><td>Thông số model</td><td><code>C</code> = 0,1 / 1 / 10 / 100? XGBoost bao nhiêu cây?</td><td><code>C</code>: val cho thấy 10 tốt nhất. Số cây: đặt cố định, chưa thử</td></tr>
-        <tr><td>Ngưỡng router</td><td>Tự tin bao nhiêu thì tự trả lời?</td><td><b>0,72</b>, chọn bằng cross-validation trên train + val</td></tr>
-        <tr><td>Xử lý lớp hiếm</td><td>Có bật <code>class_weight</code> không?</td><td>Có — cross-validation cho thấy bắt được nhiều tin hủy hơn</td></tr>
-        <tr><td>Đặc trưng</td><td>Chỉ đếm từ, hay đếm thêm cụm chữ cái?</td><td>Đếm cả hai; chưa so sánh bằng val</td></tr>
-        <tr><td>Model dùng cho router</td><td>A hay B?</td><td>A — cùng mức điểm với B trong cross-validation nhưng nhanh hơn và miễn phí</td></tr>
-        <tr><td>Prompt LLM</td><td>Zero-shot hay thêm ví dụ?</td><td>Chưa thử, chỉ dùng một prompt</td></tr>
+        <tr><td>Model parameters</td><td><code>C</code> = 0.1 / 1 / 10 / 100? How many trees for XGBoost?</td><td><code>C</code>: val shows 10 is best. Number of trees: fixed, not yet tested</td></tr>
+        <tr><td>Router threshold</td><td>How confident before answering on its own?</td><td><b>0.72</b>, chosen with cross-validation on train + val</td></tr>
+        <tr><td>Handling the rare class</td><td>Turn on <code>class_weight</code> or not?</td><td>Yes — cross-validation shows it catches more cancellation messages</td></tr>
+        <tr><td>Features</td><td>Count only words, or also count letter chunks?</td><td>Count both; not yet compared with val</td></tr>
+        <tr><td>Model for the router</td><td>A or B?</td><td>A — same score as B in cross-validation, but faster and free</td></tr>
+        <tr><td>LLM prompt</td><td>Zero-shot or add examples?</td><td>Not tested yet, only one prompt used</td></tr>
       </tbody>
     </table></div>
-    <p>Mẫu chung: thử phương án → học trên train → chấm trên val → chọn phương án tốt nhất → (học lại trên train + val) → chấm test <b>một lần</b>.</p>
+    <p>The general pattern: try an option → learn on train → score on val → pick the best option → (retrain on train + val) → score on test <b>once</b>.</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Val dùng để thi thử thì có sửa lại tập train không? Kết quả lưu ở đâu?</summary>
+  <summary>If val is the practice exam, does it change the training set? Where are the results saved?</summary>
   <div class="body">
-    <p><b>Không sửa dữ liệu train.</b> Thi thử không sửa sách bài tập — nó giúp chọn <b>cách học</b> (gọi là <i>thiết lập</i>: ngưỡng, thông số model…). Dữ liệu trong <code>data/intents.jsonl</code> giữ nguyên.</p>
+    <p><b>The training data is not changed.</b> A practice exam doesn't edit the workbook — it helps you choose <b>how to study</b> (called <i>settings</i>: threshold, model parameters…). The data in <code>data/intents.jsonl</code> stays the same.</p>
     <ul class="steps">
-      <li>Thử nhiều thiết lập: với mỗi thiết lập, học trên train → làm bài trên val → ghi điểm.</li>
-      <li>Chọn thiết lập có điểm tốt nhất.</li>
-      <li>Thường học lại một lần nữa trên <b>train + val</b> với thiết lập đã chọn (nhiều dữ liệu hơn).</li>
-      <li>Chấm trên test <b>đúng một lần</b>.</li>
+      <li>Try many settings: for each setting, learn on train → take the exam on val → record the score.</li>
+      <li>Pick the setting with the best score.</li>
+      <li>Usually retrain once more on <b>train + val</b> with the chosen setting (more data).</li>
+      <li>Score on test <b>exactly once</b>.</li>
     </ul>
-    <p><b>Trong dự án này:</b></p>
+    <p><b>In this project:</b></p>
     <div class="table-wrap"><table>
-      <thead><tr><th>Thứ được chọn</th><th>Chọn bằng gì</th><th>Lưu ở đâu</th></tr></thead>
+      <thead><tr><th>What is chosen</th><th>Chosen with</th><th>Saved where</th></tr></thead>
       <tbody>
-        <tr><td>Ngưỡng chuyển LLM (<b>0,72</b>)</td><td>Cross-validation trên train + val (5 lần thi thử thay vì 1 — val 300 tin quá ít, kết quả nhiễu)</td><td><code>models/tfidf_lr.joblib</code> (trường <code>threshold</code>), <code>results/metrics.json</code>; điểm của mọi ngưỡng ở <code>results/hybrid_A_cv.csv</code></td></tr>
-        <tr><td>Model A cho router</td><td>Học lại trên train + val (1.700 tin) với thiết lập đã chọn</td><td><code>models/tfidf_lr.joblib</code></td></tr>
-        <tr><td>Thông số model (<code>C=10</code>, 400 cây…)</td><td><b>Chưa chọn bằng val</b> — đặt cố định theo giá trị thường dùng</td><td>Ghi thẳng trong code: <code>src/intent_router/experiments.py</code></td></tr>
+        <tr><td>Threshold for sending to the LLM (<b>0.72</b>)</td><td>Cross-validation on train + val (5 practice exams instead of 1 — 300 val messages is too few, the results are noisy)</td><td><code>models/tfidf_lr.joblib</code> (field <code>threshold</code>), <code>results/metrics.json</code>; the score for every threshold is in <code>results/hybrid_A_cv.csv</code></td></tr>
+        <tr><td>Model A for the router</td><td>Retrained on train + val (1,700 messages) with the chosen setting</td><td><code>models/tfidf_lr.joblib</code></td></tr>
+        <tr><td>Model parameters (<code>C=10</code>, 400 trees…)</td><td><b>Not chosen with val</b> — fixed at commonly used values</td><td>Hard-coded in <code>src/intent_router/experiments.py</code></td></tr>
       </tbody>
     </table></div>
-    <p>Chỉ có 2 thứ từng làm thay đổi dữ liệu: bước kiểm tra mẫu (sửa 5 nhãn sai) và lọc trùng — cả hai đều xảy ra <b>trước khi chia</b> train/val/test, trong <code>build_dataset.py</code>.</p>
+    <p>Only 2 things ever changed the data: the spot-check step (fixing 5 wrong labels) and deduplication — both happen <b>before splitting</b> into train/val/test, in <code>build_dataset.py</code>.</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>300 tin test có phải lấy từ 1.700 tin LLM tạo không?</summary>
+  <summary>Are the 300 test messages taken from the 1,700 LLM-generated messages?</summary>
   <div class="body">
-    <p>Không. Cả 2.000 tin được trộn rồi chia ngẫu nhiên 70/15/15, nên test có <b>263 tin LLM + 37 tin gán tay</b>. Xem thanh chia dữ liệu ở <a href="#so-do">Sơ đồ dự án</a>.</p>
+    <p>No. All 2,000 messages are shuffled and then split randomly 70/15/15, so test has <b>263 LLM messages + 37 hand-labelled messages</b>. See the data split bar in <a href="#so-do">Project diagram</a>.</p>
   </div>
 </details>
 
-<div class="faq-group">Model</div>
+<div class="faq-group">Models</div>
 <details class="qa">
-  <summary>A, B, C có phải đều là classical ML không?</summary>
+  <summary>Are A, B and C all classical ML?</summary>
   <div class="body">
-    <p>Có, nhưng khác mức độ. Phần <b>đoán nhãn</b> của cả ba là classical (logistic regression, XGBoost). Riêng phần <b>biến câu thành số</b>: A dùng TF-IDF (classical), còn B, C dùng embedding từ mạng neural. Nên A là classical hoàn toàn; B, C là "model cổ điển trên embedding" — đúng như đề bài gọi. Chỉ D là LLM. Xem <a href="#bon-cach">4 cách hoạt động</a>.</p>
+    <p>Yes, but to different degrees. The <b>label-guessing</b> part of all three is classical (logistic regression, XGBoost). As for the <b>sentence-to-numbers</b> part: A uses TF-IDF (classical), while B and C use embeddings from a neural network. So A is fully classical; B and C are "classical models on embeddings" — exactly what the assignment calls them. Only D is an LLM. See <a href="#bon-cach">How the 4 approaches work</a>.</p>
   </div>
 </details>
 <details class="qa">
-  <summary>Model classical được lưu ở đâu?</summary>
+  <summary>Where are the classical models saved?</summary>
   <div class="body">
-    <p>Chỉ model A được lưu: <code>models/tfidf_lr.joblib</code> (1,25 MB), gồm model (TF-IDF + logistic regression, đã train lại trên train + val), ngưỡng <code>0.72</code> và danh sách nhãn. Router đọc file này. B, C không lưu — mỗi lần chạy script/notebook train lại trong vài giây từ embedding đã cache.</p>
+    <p>Only model A is saved: <code>models/tfidf_lr.joblib</code> (1.25 MB), containing the model (TF-IDF + logistic regression, retrained on train + val), the threshold <code>0.72</code> and the list of labels. The router reads this file. B and C aren't saved — every time the script/notebook runs, they are retrained in a few seconds from the cached embeddings.</p>
 <pre><code>import joblib
 b = joblib.load("models/tfidf_lr.joblib")
 p = b["model"].predict_proba(["Hủy gói giúp mình"])[0]
@@ -565,56 +565,56 @@ print(b["model"].classes_[p.argmax()], p.max())</code></pre>
   </div>
 </details>
 <details class="qa">
-  <summary>Model <code>text-embedding-3-small</code> được gọi ở đâu?</summary>
+  <summary>Where is the <code>text-embedding-3-small</code> model called?</summary>
   <div class="body">
-    <p>Model chạy trên server OpenAI, dự án gọi qua API — không tải về máy.</p>
+    <p>The model runs on OpenAI's servers and the project calls it through the API — it isn't downloaded to your machine.</p>
     <ul>
-      <li>Tên model khai báo ở <code>src/intent_router/config.py</code> (<code>EMBED_MODEL</code>, đổi được trong <code>.env</code>).</li>
-      <li>Gọi API ở <code>src/intent_router/embed.py</code>: <code>embed_texts()</code> embed 2.000 tin theo lô 256 và lưu cache; <code>measure_latency()</code> gửi từng tin một để đo tốc độ.</li>
-      <li>Được dùng trong <code>scripts/run_experiments.py</code>, <code>scripts/rare_class_ablation.py</code> và notebook — tin nào đã có trong <code>data/cache/embeddings_*.npz</code> thì không gọi lại.</li>
+      <li>The model name is declared in <code>src/intent_router/config.py</code> (<code>EMBED_MODEL</code>, can be changed in <code>.env</code>).</li>
+      <li>The API is called in <code>src/intent_router/embed.py</code>: <code>embed_texts()</code> embeds the 2,000 messages in batches of 256 and caches them; <code>measure_latency()</code> sends messages one by one to measure speed.</li>
+      <li>Used in <code>scripts/run_experiments.py</code>, <code>scripts/rare_class_ablation.py</code> and the notebook — messages already in <code>data/cache/embeddings_*.npz</code> aren't sent again.</li>
     </ul>
   </div>
 </details>
 <details class="qa">
-  <summary>Sau khi embedding thì dữ liệu lưu ở đâu?</summary>
+  <summary>After embedding, where is the data stored?</summary>
   <div class="body">
-    <p>Trong <b>một file trên ổ đĩa</b>: <code>data/cache/embeddings_text-embedding-3-small.npz</code> (5,8 MB). Không dùng database hay vector database.</p>
-    <p><code>.npz</code> là định dạng nén của thư viện <code>numpy</code>, giống một file zip chứa 2 mảng xếp song song:</p>
+    <p>In <b>a single file on disk</b>: <code>data/cache/embeddings_text-embedding-3-small.npz</code> (5.8 MB). No database or vector database is used.</p>
+    <p><code>.npz</code> is the compressed format of the <code>numpy</code> library, like a zip file holding 2 arrays side by side:</p>
     <div class="table-wrap"><table>
-      <thead><tr><th>Mảng</th><th>Kích thước</th><th>Nội dung</th></tr></thead>
+      <thead><tr><th>Array</th><th>Size</th><th>Contents</th></tr></thead>
       <tbody>
-        <tr><td><code>texts</code></td><td>2.000</td><td>câu gốc, vd. <i>"Gói Pro có bao nhiêu seat?"</i></td></tr>
-        <tr><td><code>vectors</code></td><td>2.000 × 1.536</td><td>vector của từng câu, vd. <code>[-0.024, -0.023, 0.037, …]</code> (1.536 số)</td></tr>
+        <tr><td><code>texts</code></td><td>2,000</td><td>the original sentence, e.g. <i>"Gói Pro có bao nhiêu seat?"</i> ("How many seats does the Pro plan have?")</td></tr>
+        <tr><td><code>vectors</code></td><td>2,000 × 1,536</td><td>the vector for each sentence, e.g. <code>[-0.024, -0.023, 0.037, …]</code> (1,536 numbers)</td></tr>
       </tbody>
     </table></div>
-    <p>Dòng thứ <i>i</i> của <code>texts</code> ứng với dòng thứ <i>i</i> của <code>vectors</code>. Số được lưu dạng <code>float16</code> (độ chính xác vừa đủ) để file nhẹ bằng một nửa.</p>
-    <p><b>Khi chạy:</b> <code>embed_texts()</code> đọc file → tin nào đã có thì lấy luôn, chưa có thì gọi API rồi ghi thêm vào file → trả về bảng số cho logistic regression / XGBoost dùng trong bộ nhớ.</p>
+    <p>Row <i>i</i> of <code>texts</code> matches row <i>i</i> of <code>vectors</code>. The numbers are stored as <code>float16</code> (just enough precision) so the file is half the size.</p>
+    <p><b>At run time:</b> <code>embed_texts()</code> reads the file → messages already there are used as-is, missing ones are sent to the API and appended to the file → it returns a table of numbers for logistic regression / XGBoost to use in memory.</p>
 <pre><code>import numpy as np
 z = np.load("data/cache/embeddings_text-embedding-3-small.npz")
 print(z["texts"][0], z["vectors"][0][:6])</code></pre>
-    <p>Các file khác trong <code>data/cache/</code>: <code>embed_latency_*.jsonl</code> (thời gian + số token của từng lần gọi embedding), <code>zeroshot_gpt-4o-mini.jsonl</code> (câu trả lời của D), <code>annotator_gpt-4o.jsonl</code> (nhãn LLM gán), <code>generated_raw.jsonl</code> (2.135 tin LLM viết).</p>
+    <p>Other files in <code>data/cache/</code>: <code>embed_latency_*.jsonl</code> (time + token count for each embedding call), <code>zeroshot_gpt-4o-mini.jsonl</code> (D's answers), <code>annotator_gpt-4o.jsonl</code> (labels assigned by the LLM), <code>generated_raw.jsonl</code> (the 2,135 messages the LLM wrote).</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Embedding ở B, C có giống bước ingest của RAG không?</summary>
+  <summary>Is the embedding in B and C the same as RAG's ingest step?</summary>
   <div class="body">
-    <p><b>Bước tạo embedding giống hệt</b> (cùng model, cùng API: câu → 1.536 số). <b>Cách dùng thì khác:</b></p>
+    <p><b>Creating the embeddings is exactly the same</b> (same model, same API: sentence → 1,536 numbers). <b>How they're used is different:</b></p>
     <ul>
-      <li><b>RAG</b>: cắt tài liệu thành đoạn → embed → lưu vào vector database. Khi có câu hỏi, embed câu hỏi rồi <b>tìm</b> đoạn gần nhất đưa cho LLM. Embedding = mục lục để tra cứu, không cần nhãn.</li>
-      <li><b>B, C</b>: embed tin nhắn → dùng 1.536 số làm <b>đầu vào cho model học</b> cùng nhãn → đoán ý định. Không có vector database, không tìm kiếm.</li>
+      <li><b>RAG</b>: cut documents into chunks → embed → store in a vector database. When a question comes in, embed the question, then <b>search</b> for the closest chunks and hand them to the LLM. Embedding = an index for looking things up, no labels needed.</li>
+      <li><b>B, C</b>: embed the message → use the 1,536 numbers as <b>input to a model that learns</b> together with the labels → guess the intent. No vector database, no search.</li>
     </ul>
-    <p>Bước kiểm tra rò rỉ (tìm tin train giống tin test nhất) chính là thao tác "retrieval" của RAG. Phần ingest đầy đủ sẽ gặp ở dự án #2.</p>
+    <p>The leakage check (finding the train message most similar to each test message) is exactly RAG's "retrieval" operation. The full ingest part comes up in project #2.</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Cách D có phải lấy 300 tin test gửi thẳng cho ChatGPT, không dùng train/val?</summary>
+  <summary>Does approach D just send the 300 test messages straight to ChatGPT, without using train/val?</summary>
   <div class="body">
-    <p><b>Đúng về ý</b>, chỉ khác 2 chi tiết:</p>
+    <p><b>The idea is right</b>, with just 2 differences in detail:</p>
     <ul>
-      <li><b>Không phải ChatGPT</b> (ứng dụng chat) mà là <b>API</b> của OpenAI, model <code>gpt-4o-mini</code>, gọi bằng code (<code>classify()</code> trong <code>src/intent_router/llm.py</code>). Mỗi tin là <b>một lần gọi riêng</b>, <code>temperature=0</code>, LLM bắt buộc trả về 1 trong 5 nhãn.</li>
-      <li>Mỗi lần gọi gửi kèm <b>mô tả ngắn 5 nhãn</b> (prompt bên dưới) — <b>không có ví dụ nào</b> từ train/val. Đó là nghĩa của "zero-shot": LLM không học gì từ dữ liệu của mình, chỉ dựa vào hiểu biết sẵn có.</li>
+      <li><b>It's not ChatGPT</b> (the chat app) but OpenAI's <b>API</b>, model <code>gpt-4o-mini</code>, called from code (<code>classify()</code> in <code>src/intent_router/llm.py</code>). Each message is <b>a separate call</b>, <code>temperature=0</code>, and the LLM is forced to return 1 of the 5 labels.</li>
+      <li>Each call includes a <b>short description of the 5 labels</b> (the prompt below) — <b>no examples at all</b> from train/val. That's what "zero-shot" means: the LLM learns nothing from our data and relies only on what it already knows.</li>
     </ul>
 <pre><code>Classify the customer message sent to a SaaS project-management product's support channel.
 Return exactly one label: pricing, complaint, cancellation, tech_support, other.
@@ -623,48 +623,48 @@ Return exactly one label: pricing, complaint, cancellation, tech_support, other.
 - cancellation: cancel, downgrade, pause, stop renewal, delete/close account
 - tech_support: how-to questions, bugs, login, integrations, API
 - other: greetings, thanks, feature ideas, jobs, partnerships, off-topic</code></pre>
-    <p><b>Điểm 94,3 của D</b> tính từ 300 tin test. Nhưng thực tế D cũng được chạy trên 1.700 tin train + val — <b>không phải để học</b>, mà để mô phỏng chiến lược kết hợp khi chọn ngưỡng (cần biết "nếu chuyển tin này cho LLM thì LLM trả lời gì"). Tổng cộng 2.000 lần gọi, kết quả lưu ở <code>data/cache/zeroshot_gpt-4o-mini.jsonl</code>.</p>
-    <p>So với A, B, C: ba cách đó phải <b>học</b> từ 1.400 tin train có nhãn; D thì không học, chỉ "đọc đề và trả lời".</p>
+    <p><b>D's score of 94.3</b> is computed on the 300 test messages. But in practice D was also run on the 1,700 train + val messages — <b>not to learn</b>, but to simulate the hybrid strategy while choosing the threshold (you need to know "if this message is sent to the LLM, what would the LLM answer"). 2,000 calls in total, with results saved in <code>data/cache/zeroshot_gpt-4o-mini.jsonl</code>.</p>
+    <p>Compared with A, B, C: those three must <b>learn</b> from the 1,400 labelled training messages; D doesn't learn, it just "reads the question and answers".</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Ngưỡng tự tin có phải là threshold trong RAG không?</summary>
+  <summary>Is the confidence threshold the same as the threshold in RAG?</summary>
   <div class="body">
-    <p><b>Không hẳn.</b> Cả hai đều là threshold — mức cắt "đủ tin cậy chưa" — nhưng đo hai thứ khác nhau:</p>
+    <p><b>Not quite.</b> Both are thresholds — a "trustworthy enough?" cut-off — but they measure two different things:</p>
     <div class="table-wrap"><table>
-      <thead><tr><th></th><th>Ngưỡng tự tin (dự án này)</th><th>Ngưỡng similarity (RAG)</th></tr></thead>
+      <thead><tr><th></th><th>Confidence threshold (this project)</th><th>Similarity threshold (RAG)</th></tr></thead>
       <tbody>
-        <tr><td>Đo cái gì</td><td>Model <b>chắc chắn bao nhiêu</b> về nhãn nó đoán</td><td>Đoạn tài liệu <b>giống câu hỏi bao nhiêu</b></td></tr>
-        <tr><td>Con số từ đâu</td><td>Xác suất cao nhất trong 5 nhãn (<code>predict_proba</code>)</td><td>Cosine similarity giữa vector câu hỏi và vector đoạn tài liệu</td></tr>
-        <tr><td>Ví dụ</td><td>"Hủy gói giúp mình" → <code>cancellation</code> 0,98</td><td>"Chính sách hoàn tiền?" ↔ "Hoàn tiền trong 7 ngày…" (ví dụ minh họa)</td></tr>
-        <tr><td>Dưới ngưỡng thì</td><td>Chuyển tin cho LLM</td><td>Bỏ đoạn đó; không đoạn nào qua ngưỡng → trả lời "không tìm thấy thông tin"</td></tr>
+        <tr><td>What it measures</td><td><b>How sure</b> the model is about the label it guessed</td><td><b>How similar</b> a document chunk is to the question</td></tr>
+        <tr><td>Where the number comes from</td><td>The highest probability among the 5 labels (<code>predict_proba</code>)</td><td>Cosine similarity between the question's vector and the chunk's vector</td></tr>
+        <tr><td>Example</td><td>"Hủy gói giúp mình" ("Please cancel my plan") → <code>cancellation</code> 0.98</td><td>"Chính sách hoàn tiền?" ("Refund policy?") ↔ "Hoàn tiền trong 7 ngày…" ("Refunds within 7 days…") (illustrative example)</td></tr>
+        <tr><td>Below the threshold</td><td>Send the message to the LLM</td><td>Drop that chunk; if no chunk passes the threshold → answer "no information found"</td></tr>
       </tbody>
     </table></div>
-    <p><b>Giống nhau ở cách chọn</b>: thử nhiều ngưỡng trên val, vẽ đường đánh đổi, chọn có lý do. Router: ngưỡng cao → gọi LLM nhiều hơn, chính xác hơn nhưng đắt. RAG: ngưỡng cao → ít đoạn lạc đề nhưng dễ bỏ sót đoạn đúng (precision ↔ recall).</p>
-    <p>Dự án này có dùng một ngưỡng kiểu RAG: khi kiểm tra rò rỉ dữ liệu, cặp test–train có cosine similarity &gt; <b>0,9</b> bị coi là gần trùng (kết quả: 0 cặp, cao nhất 0,899). Ngưỡng similarity phụ thuộc embedding model, nên đổi model thì phải đo và chọn lại.</p>
+    <p><b>They are chosen the same way</b>: try many thresholds on val, plot the trade-off curve, and choose with a reason. Router: higher threshold → more LLM calls, more accurate but more expensive. RAG: higher threshold → fewer off-topic chunks but more likely to miss the right chunk (precision ↔ recall).</p>
+    <p>This project does use one RAG-style threshold: in the data-leakage check, test–train pairs with cosine similarity &gt; <b>0.9</b> are treated as near-duplicates (result: 0 pairs, highest 0.899). Similarity thresholds depend on the embedding model, so if you change the model you must measure and choose again.</p>
   </div>
 </details>
 
 <details class="qa">
-  <summary>Notebook dùng để làm gì? Mở thế nào cho đúng?</summary>
+  <summary>What is the notebook for? How do I open it correctly?</summary>
   <div class="body">
-    <p><b>Notebook</b> (file <code>.ipynb</code>) là tài liệu trộn <b>code + kết quả + chữ giải thích</b>. Code chia thành từng ô, chạy từng ô, kết quả (bảng, hình) hiện ngay bên dưới — như vở thí nghiệm vừa ghi cách làm vừa thấy kết quả.</p>
-    <p><code>notebooks/intent_router.ipynb</code> là <b>bản báo cáo chạy lại được</b> (yêu cầu "Notebook chạy lại được" của đề): đọc dữ liệu → train A, B, C + cross-validation → bảng so sánh → confusion matrix, phân tích lỗi → chiến lược kết hợp → thí nghiệm lớp hiếm. Không cần API key.</p>
+    <p>A <b>notebook</b> (an <code>.ipynb</code> file) is a document that mixes <b>code + results + explanatory text</b>. The code is split into cells; you run them one by one, and the results (tables, charts) show up right below — like a lab notebook where you write down the method and see the results at the same time.</p>
+    <p><code>notebooks/intent_router.ipynb</code> is the <b>re-runnable report</b> (the assignment's "re-runnable notebook" requirement): read the data → train A, B, C + cross-validation → comparison table → confusion matrices, error analysis → hybrid strategy → rare-class experiment. No API key needed.</p>
     <ul class="steps">
-      <li>Chạy <code>uv run jupyter lab</code> trong thư mục repo.</li>
-      <li>Cột trái: vào thư mục <code>notebooks</code> → double-click <code>intent_router.ipynb</code>. (Đừng bấm ô "Notebook" ở Launcher — ô đó tạo notebook <b>mới, trống</b> tên <code>Untitled.ipynb</code>.)</li>
-      <li>Menu <b>Run → Restart Kernel and Run All</b> (xóa bộ nhớ rồi chạy lại từ đầu; menu này chỉ sáng khi đã mở notebook). Chờ 1–2 phút: ô đang chạy hiện <code>[*]</code>, xong hiện số <code>[1]</code>, <code>[2]</code>…</li>
+      <li>Run <code>uv run jupyter lab</code> in the repo folder.</li>
+      <li>Left sidebar: go into the <code>notebooks</code> folder → double-click <code>intent_router.ipynb</code>. (Don't click the "Notebook" tile in the Launcher — that creates a <b>new, empty</b> notebook called <code>Untitled.ipynb</code>.)</li>
+      <li>Menu <b>Run → Restart Kernel and Run All</b> (clears memory and reruns from the top; this menu is only enabled once a notebook is open). Wait 1–2 minutes: a running cell shows <code>[*]</code>, and when done shows a number <code>[1]</code>, <code>[2]</code>…</li>
     </ul>
-    <p>"Python 3 (ipykernel)" nghĩa là notebook chạy bằng Python trong <code>.venv</code> của dự án, nên đã có sẵn các thư viện.</p>
+    <p>"Python 3 (ipykernel)" means the notebook runs with the Python in the project's <code>.venv</code>, so the libraries are already installed.</p>
   </div>
 </details>
 
-<div class="faq-group">Đánh giá &amp; chi phí</div>
+<div class="faq-group">Evaluation &amp; cost</div>
 <details class="qa">
-  <summary>Điểm 90,6 / 88,2 / 89,6 / 94,3 / 93,1 được tính từ đâu?</summary>
+  <summary>Where do the scores 90.6 / 88.2 / 89.6 / 94.3 / 93.1 come from?</summary>
   <div class="body">
-    <p>Từ <b>300 tin test</b> — model chưa từng học từ các tin này. Mỗi cách đoán nhãn 300 tin, so với nhãn đúng, rồi tính <b>macro-F1</b> (tính F1 cho từng nhãn rồi lấy trung bình 5 nhãn) × 100. Đếm đơn giản: A đúng 271/300, B 265, C 269, D 283. Dự đoán từng tin lưu ở <code>results/test_predictions.csv</code>, tự tính lại được:</p>
+    <p>From the <b>300 test messages</b> — the models never learned from these. Each approach guesses labels for the 300 messages, they are compared with the correct labels, and then <b>macro-F1</b> is computed (F1 for each label, then averaged over the 5 labels) × 100. Simple counts: A got 271/300 right, B 265, C 269, D 283. Per-message predictions are saved in <code>results/test_predictions.csv</code>, so you can recompute them yourself:</p>
 <pre><code>uv run python -c "
 import pandas as pd; from sklearn.metrics import f1_score
 t = pd.read_csv('results/test_predictions.csv')
@@ -672,135 +672,135 @@ for k in 'ABCD': print(k, round(f1_score(t.label, t['pred_'+k], average='macro')
   </div>
 </details>
 <details class="qa">
-  <summary>Dùng embedding có tốn phí không?</summary>
+  <summary>Do embeddings cost money?</summary>
   <div class="body">
-    <p>Có nhưng rất ít: $0,02 / 1 triệu token, mỗi tin ~29 token. Cả dự án embed ~71.000 token ≈ <b>$0,0014</b> (khoảng 35 đồng). Dùng thật ~$0,58 / 1 triệu tin — rẻ hơn LLM (~$32) khoảng 55 lần. Cái giá thật của B, C là <b>thời gian chờ</b> (+0,2–0,3 giây/tin) và cần mạng + API key. Chạy lại notebook không tốn thêm vì đã có cache.</p>
+    <p>Yes, but very little: $0.02 / 1 million tokens, ~29 tokens per message. The whole project embedded ~71,000 tokens ≈ <b>$0.0014</b> (about 35 VND). In production, ~$0.58 / 1 million messages — about 55 times cheaper than the LLM (~$32). The real price of B and C is <b>waiting time</b> (+0.2–0.3 seconds/message) and needing a network connection + API key. Rerunning the notebook costs nothing extra because of the cache.</p>
   </div>
 </details>
 <details class="qa">
-  <summary>Rốt cuộc cách nào thắng?</summary>
+  <summary>So which approach wins in the end?</summary>
   <div class="body">
-    <p><b>Kết hợp A + D</b>: model A trả lời khi tự tin &gt; 72% (75% số tin), còn lại hỏi LLM. Đạt 93,1 điểm (LLM-only 94,3) với chi phí $8 thay vì $32 / 1 triệu tin. Nếu chỉ cần chính xác nhất thì là D; rẻ và nhanh nhất là A. Xem <a href="#bang-xep-hang">Bảng xếp hạng</a>.</p>
+    <p><b>Hybrid A + D</b>: model A answers when confidence &gt; 72% (75% of messages), the rest go to the LLM. It scores 93.1 points (LLM-only 94.3) at a cost of $8 instead of $32 / 1 million messages. If you only care about accuracy, it's D; the cheapest and fastest is A. See the <a href="#bang-xep-hang">Leaderboard</a>.</p>
   </div>
 </details>
 
-<h2 id="thu-vien">Thư viện sử dụng</h2>
-<p>Khai báo trong <code>pyproject.toml</code>, cài bằng <code>uv sync</code>.</p>
+<h2 id="thu-vien">Libraries used</h2>
+<p>Declared in <code>pyproject.toml</code>, installed with <code>uv sync</code>.</p>
 
 <h3>Machine learning</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th><th>Ở file nào</th></tr></thead>
+  <thead><tr><th>Library</th><th>What it is</th><th>What it's used for in the project</th><th>In which file</th></tr></thead>
   <tbody>
-    <tr><td><code>scikit-learn</code></td><td>Thư viện ML cổ điển phổ biến nhất của Python</td><td>
-      <code>TfidfVectorizer</code>, <code>FeatureUnion</code>, <code>make_pipeline</code>: bước đếm chữ của A ·
-      <code>LogisticRegression</code>: model của A, B ·
-      <code>train_test_split</code>: chia 70/15/15 · <code>StratifiedKFold</code>: cross-validation 5-fold ·
-      <code>f1_score</code>, <code>confusion_matrix</code>, <code>classification_report</code>: chấm điểm ·
-      <code>accuracy_score</code>, <code>cohen_kappa_score</code>: đo độ khớp giữa nhãn LLM và nhãn người ·
-      <code>compute_sample_weight</code>: cân bằng lớp hiếm cho XGBoost</td>
+    <tr><td><code>scikit-learn</code></td><td>Python's most popular classical ML library</td><td>
+      <code>TfidfVectorizer</code>, <code>FeatureUnion</code>, <code>make_pipeline</code>: A's text-counting step ·
+      <code>LogisticRegression</code>: the model for A, B ·
+      <code>train_test_split</code>: 70/15/15 split · <code>StratifiedKFold</code>: 5-fold cross-validation ·
+      <code>f1_score</code>, <code>confusion_matrix</code>, <code>classification_report</code>: scoring ·
+      <code>accuracy_score</code>, <code>cohen_kappa_score</code>: measuring agreement between LLM labels and human labels ·
+      <code>compute_sample_weight</code>: balancing the rare class for XGBoost</td>
       <td><code>experiments.py</code>, <code>build_dataset.py</code>, <code>run_experiments.py</code></td></tr>
-    <tr><td><code>xgboost</code></td><td>Thư viện gradient boosting (nhiều cây quyết định)</td><td><code>XGBClassifier</code>: model của C. Trên macOS cần <code>brew install libomp</code></td><td><code>experiments.py</code></td></tr>
+    <tr><td><code>xgboost</code></td><td>Gradient boosting library (many decision trees)</td><td><code>XGBClassifier</code>: the model for C. On macOS it needs <code>brew install libomp</code></td><td><code>experiments.py</code></td></tr>
   </tbody>
 </table></div>
 
-<h3>Gọi LLM và embedding</h3>
+<h3>Calling the LLM and embeddings</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th><th>Ở file nào</th></tr></thead>
+  <thead><tr><th>Library</th><th>What it is</th><th>What it's used for in the project</th><th>In which file</th></tr></thead>
   <tbody>
-    <tr><td><code>openai</code></td><td>SDK chính thức để gọi API OpenAI</td><td>
-      <code>chat.completions.parse</code>: sinh 1.700 tin, gán nhãn bằng <code>gpt-4o</code>, chạy D bằng <code>gpt-4o-mini</code> ·
-      <code>embeddings.create</code>: lấy embedding cho B, C · <code>AsyncOpenAI</code>: gọi nhiều request song song</td>
+    <tr><td><code>openai</code></td><td>Official SDK for calling the OpenAI API</td><td>
+      <code>chat.completions.parse</code>: generate the 1,700 messages, label them with <code>gpt-4o</code>, run D with <code>gpt-4o-mini</code> ·
+      <code>embeddings.create</code>: get embeddings for B, C · <code>AsyncOpenAI</code>: send many requests in parallel</td>
       <td><code>llm.py</code>, <code>embed.py</code>, <code>build_dataset.py</code>, <code>router.py</code></td></tr>
-    <tr><td><code>pydantic</code></td><td>Khai báo kiểu dữ liệu và kiểm tra dữ liệu</td><td>Định nghĩa khuôn câu trả lời của LLM, ví dụ <code>label: Literal["pricing", "complaint", …]</code> → LLM <b>bắt buộc</b> trả về 1 trong 5 nhãn hợp lệ (structured output), không cần tự cắt chuỗi</td><td><code>llm.py</code>, <code>build_dataset.py</code></td></tr>
-    <tr><td><code>python-dotenv</code></td><td>Đọc file <code>.env</code></td><td>Nạp <code>OPENAI_API_KEY</code> và tên model từ <code>.env</code> mà không phải ghi key vào code</td><td><code>config.py</code></td></tr>
+    <tr><td><code>pydantic</code></td><td>Declaring data types and validating data</td><td>Defines the shape of the LLM's answer, e.g. <code>label: Literal["pricing", "complaint", …]</code> → the LLM is <b>forced</b> to return 1 of the 5 valid labels (structured output), no need to parse strings yourself</td><td><code>llm.py</code>, <code>build_dataset.py</code></td></tr>
+    <tr><td><code>python-dotenv</code></td><td>Reads the <code>.env</code> file</td><td>Loads <code>OPENAI_API_KEY</code> and model names from <code>.env</code> so the key isn't written into the code</td><td><code>config.py</code></td></tr>
   </tbody>
 </table></div>
 
-<h3>Xử lý dữ liệu, vẽ hình, lưu model</h3>
+<h3>Data processing, charts, saving models</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Thư viện</th><th>Là gì</th><th>Dùng để làm gì trong dự án</th></tr></thead>
+  <thead><tr><th>Library</th><th>What it is</th><th>What it's used for in the project</th></tr></thead>
   <tbody>
-    <tr><td><code>pandas</code></td><td>Bảng dữ liệu</td><td>Đọc <code>intents.jsonl</code>, lọc theo train/val/test, đếm nhãn (<code>crosstab</code>), ghi các file <code>.csv</code> kết quả</td></tr>
-    <tr><td><code>numpy</code></td><td>Tính toán trên mảng số</td><td>Lưu embedding (mảng 2.000 × 1.536), tính p50/p95 latency, lấy mẫu ngẫu nhiên cho bootstrap</td></tr>
-    <tr><td><code>matplotlib</code></td><td>Vẽ biểu đồ</td><td>Vẽ <code>confusion_matrices.png</code> và <code>tradeoff.png</code></td></tr>
-    <tr><td><code>joblib</code></td><td>Lưu / nạp object Python</td><td>Lưu model A + ngưỡng vào <code>models/tfidf_lr.joblib</code> để router nạp lại</td></tr>
-    <tr><td><code>tqdm</code></td><td>Thanh tiến trình</td><td>Hiện % hoàn thành khi gọi hàng nghìn request API</td></tr>
+    <tr><td><code>pandas</code></td><td>Data tables</td><td>Reads <code>intents.jsonl</code>, filters by train/val/test, counts labels (<code>crosstab</code>), writes the result <code>.csv</code> files</td></tr>
+    <tr><td><code>numpy</code></td><td>Computation on arrays of numbers</td><td>Stores embeddings (a 2,000 × 1,536 array), computes p50/p95 latency, random sampling for the bootstrap</td></tr>
+    <tr><td><code>matplotlib</code></td><td>Plotting charts</td><td>Draws <code>confusion_matrices.png</code> and <code>tradeoff.png</code></td></tr>
+    <tr><td><code>joblib</code></td><td>Saving / loading Python objects</td><td>Saves model A + threshold to <code>models/tfidf_lr.joblib</code> so the router can load it back</td></tr>
+    <tr><td><code>tqdm</code></td><td>Progress bars</td><td>Shows % complete while making thousands of API requests</td></tr>
   </tbody>
 </table></div>
 
-<h3>Notebook (chỉ dùng khi phát triển)</h3>
+<h3>Notebook (development only)</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Thư viện</th><th>Dùng để làm gì</th></tr></thead>
+  <thead><tr><th>Library</th><th>What it's used for</th></tr></thead>
   <tbody>
-    <tr><td><code>jupyter</code></td><td>Mở và chạy <code>notebooks/intent_router.ipynb</code> (<code>uv run jupyter lab</code>)</td></tr>
-    <tr><td><code>ipykernel</code></td><td>"Bộ máy" chạy code Python bên trong notebook, dùng đúng môi trường <code>.venv</code> của dự án</td></tr>
-    <tr><td><code>nbconvert</code></td><td>Chạy toàn bộ notebook từ dòng lệnh để kiểm tra không có ô nào lỗi</td></tr>
+    <tr><td><code>jupyter</code></td><td>Open and run <code>notebooks/intent_router.ipynb</code> (<code>uv run jupyter lab</code>)</td></tr>
+    <tr><td><code>ipykernel</code></td><td>The "engine" that runs Python code inside the notebook, using the project's own <code>.venv</code> environment</td></tr>
+    <tr><td><code>nbconvert</code></td><td>Runs the whole notebook from the command line to check that no cell errors</td></tr>
   </tbody>
 </table></div>
 
-<h3>Thư viện có sẵn của Python và công cụ</h3>
+<h3>Python built-ins and tools</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>Tên</th><th>Dùng để làm gì</th></tr></thead>
+  <thead><tr><th>Name</th><th>What it's used for</th></tr></thead>
   <tbody>
-    <tr><td><code>asyncio</code></td><td>Gửi nhiều request API cùng lúc, giới hạn số request song song (<code>Semaphore</code>)</td></tr>
-    <tr><td><code>unicodedata</code>, <code>re</code></td><td>Bỏ dấu tiếng Việt và ký tự đặc biệt để phát hiện tin trùng</td></tr>
-    <tr><td><code>time</code></td><td>Đo thời gian trả lời của từng tin (latency)</td></tr>
-    <tr><td><code>json</code>, <code>csv</code>, <code>pathlib</code></td><td>Đọc / ghi file dữ liệu và cache</td></tr>
-    <tr><td><code>random</code></td><td>Chọn ngẫu nhiên văn phong, persona, 100 tin kiểm tra mẫu (cố định seed 42)</td></tr>
-    <tr><td><code>uv</code></td><td>Công cụ quản lý Python và thư viện: tạo <code>.venv</code>, cài đúng phiên bản theo <code>uv.lock</code>, chạy script (<code>uv run</code>)</td></tr>
-    <tr><td><code>libomp</code></td><td>Thư viện hệ thống (cài bằng Homebrew) để XGBoost chạy đa luồng trên macOS</td></tr>
+    <tr><td><code>asyncio</code></td><td>Sends many API requests at once, limiting the number of parallel requests (<code>Semaphore</code>)</td></tr>
+    <tr><td><code>unicodedata</code>, <code>re</code></td><td>Strips Vietnamese diacritics and special characters to detect duplicate messages</td></tr>
+    <tr><td><code>time</code></td><td>Measures the response time for each message (latency)</td></tr>
+    <tr><td><code>json</code>, <code>csv</code>, <code>pathlib</code></td><td>Reading / writing data and cache files</td></tr>
+    <tr><td><code>random</code></td><td>Randomly picks writing styles, personas, and the 100 spot-check messages (fixed seed 42)</td></tr>
+    <tr><td><code>uv</code></td><td>Tool for managing Python and libraries: creates <code>.venv</code>, installs the exact versions from <code>uv.lock</code>, runs scripts (<code>uv run</code>)</td></tr>
+    <tr><td><code>libomp</code></td><td>System library (installed with Homebrew) that lets XGBoost run multi-threaded on macOS</td></tr>
   </tbody>
 </table></div>
 
-<h2 id="cach-chay">Cách chạy</h2>
+<h2 id="cach-chay">How to run</h2>
 <pre><code>git clone https://github.com/dangphamv/intent-router-ml-vs-llm
 cd intent-router-ml-vs-llm
-brew install libomp && uv sync                    <span class="cm"># cài đặt (macOS)</span>
-uv run jupyter lab notebooks/intent_router.ipynb  <span class="cm"># xem toàn bộ kết quả — không cần API key</span>
-uv run scripts/route.py "Hủy gói giúp mình"       <span class="cm"># thử router (cần OPENAI_API_KEY trong .env)</span></code></pre>
-<p>Chạy lại từ đầu (cần key): <code>scripts/build_dataset.py</code> → <code>scripts/run_experiments.py</code> → <code>scripts/rare_class_ablation.py</code>. Kết quả ghi vào <code>data/</code>, <code>results/</code>, <code>models/</code>.</p>
+brew install libomp && uv sync                    <span class="cm"># install (macOS)</span>
+uv run jupyter lab notebooks/intent_router.ipynb  <span class="cm"># see all results — no API key needed</span>
+uv run scripts/route.py "Hủy gói giúp mình"       <span class="cm"># try the router (needs OPENAI_API_KEY in .env)</span></code></pre>
+<p>Rerun from scratch (needs a key): <code>scripts/build_dataset.py</code> → <code>scripts/run_experiments.py</code> → <code>scripts/rare_class_ablation.py</code>. Results are written to <code>data/</code>, <code>results/</code>, <code>models/</code>.</p>
 
-<h2 id="input">Input: dữ liệu đầu vào</h2>
-<p>Đề bài yêu cầu: <i>"Khoảng 2.000 tin nhắn có nhãn ý định: tự gán khoảng 300, phần còn lại dùng LLM gán nhãn rồi kiểm tra mẫu."</i> <b>Nhãn</b> là đáp án đúng của mỗi tin — tin đó thuộc loại nào. Model cần đáp án để học và để được chấm điểm.</p>
+<h2 id="input">Input: the input data</h2>
+<p>The assignment says: <i>"About 2,000 messages labelled with intents: hand-label about 300, label the rest with an LLM, then spot-check a sample."</i> A <b>label</b> is the correct answer for each message — which category the message belongs to. The model needs the answers to learn and to be scored.</p>
 
 <div class="analogy">
-  <p style="margin-top:0">Giống giáo viên chấm bài: tự chấm kỹ vài bài mẫu, giao phần còn lại cho trợ giảng, rồi rút ngẫu nhiên vài bài để xem trợ giảng chấm có đúng không.</p>
+  <p style="margin-top:0">Like a teacher marking papers: carefully mark a few sample papers yourself, hand the rest to a teaching assistant, then pick a few at random to check the assistant marked them correctly.</p>
   <ul class="steps">
-    <li><b>Tự gán 300 tin</b> — người đọc từng tin và ghi nhãn. Đây là "đáp án chuẩn". File: <code>data/seed_raw.tsv</code>.</li>
-    <li><b>LLM lo 1.700 tin còn lại</b> — <code>gpt-4o-mini</code> viết 2.135 tin, lọc trùng còn 1.700; <code>gpt-4o</code> gán nhãn theo <a href="../data/LABELING_GUIDE.md">hướng dẫn gán nhãn</a>.</li>
-    <li><b>Kiểm tra mẫu</b> — rút ngẫu nhiên 100 tin LLM đã gán, người xem lại. Đúng ≥ 90% thì tin được phần còn lại. Kết quả: <b>95%</b>; 5 tin sai được sửa. File: <code>data/audit_sample.csv</code>.</li>
+    <li><b>Hand-label 300 messages</b> — a person reads each message and writes down the label. This is the "answer key". File: <code>data/seed_raw.tsv</code>.</li>
+    <li><b>The LLM handles the other 1,700 messages</b> — <code>gpt-4o-mini</code> writes 2,135 messages, deduplicated down to 1,700; <code>gpt-4o</code> labels them following the <a href="../data/LABELING_GUIDE.md">labelling guide</a>.</li>
+    <li><b>Spot-check a sample</b> — pick 100 LLM-labelled messages at random for a person to review. If ≥ 90% are correct, the rest can be trusted. Result: <b>95%</b>; the 5 wrong ones were fixed. File: <code>data/audit_sample.csv</code>.</li>
   </ul>
-  <p style="margin-bottom:0">Kiểm tra thêm: cho LLM gán lại cả 300 tin chuẩn rồi so với nhãn người — khớp <b>99%</b>.</p>
+  <p style="margin-bottom:0">Extra check: have the LLM relabel all 300 answer-key messages and compare with the human labels — <b>99%</b> agreement.</p>
 </div>
 
-<h3>Các file input</h3>
+<h3>Input files</h3>
 <div class="table-wrap"><table>
-  <thead><tr><th>File</th><th>Nội dung</th><th>Ví dụ một dòng</th></tr></thead>
+  <thead><tr><th>File</th><th>Contents</th><th>Example row</th></tr></thead>
   <tbody>
-    <tr><td><code>data/seed_raw.tsv</code></td><td>300 tin gán tay. Mỗi dòng: <code>nhãn</code> ⇥ <code>tin nhắn</code></td><td><code>pricing&nbsp;&nbsp;Gói Pro có bao nhiêu seat?</code></td></tr>
-    <tr><td><code>data/LABELING_GUIDE.md</code></td><td>Định nghĩa 5 nhãn + quy tắc cho ca khó</td><td>"Có ý định hủy → luôn là <code>cancellation</code>"</td></tr>
-    <tr><td><code>data/audit_sample.csv</code></td><td>100 tin kiểm tra mẫu. Cột <code>text</code>, <code>llm_label</code> (LLM gán), <code>human_label</code> (người gán)</td><td><code>"...cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.", cancellation, complaint</code></td></tr>
-    <tr><td><code>data/intents.jsonl</code></td><td><b>Dataset cuối</b>: 2.000 tin, dùng cho mọi thực nghiệm</td><td><code>{"text": "Gói Pro có bao nhiêu seat?", "label": "pricing", "split": "val", "source": "human"}</code></td></tr>
-    <tr><td><code>.env</code></td><td>API key (chỉ cần khi chạy lại từ đầu)</td><td><code>OPENAI_API_KEY=sk-...</code></td></tr>
+    <tr><td><code>data/seed_raw.tsv</code></td><td>300 hand-labelled messages. Each row: <code>label</code> ⇥ <code>message</code></td><td><code>pricing&nbsp;&nbsp;Gói Pro có bao nhiêu seat?</code> ("How many seats does the Pro plan have?")</td></tr>
+    <tr><td><code>data/LABELING_GUIDE.md</code></td><td>Definitions of the 5 labels + rules for tricky cases</td><td>"Any intent to cancel → always <code>cancellation</code>"</td></tr>
+    <tr><td><code>data/audit_sample.csv</code></td><td>100 spot-check messages. Columns <code>text</code>, <code>llm_label</code> (LLM's label), <code>human_label</code> (person's label)</td><td><code>"...cắt dịch vụ mà không thấy thông báo gì, rất khó chịu.", cancellation, complaint</code> ("...cut off the service without any notice, very annoying.")</td></tr>
+    <tr><td><code>data/intents.jsonl</code></td><td><b>Final dataset</b>: 2,000 messages, used for every experiment</td><td><code>{"text": "Gói Pro có bao nhiêu seat?", "label": "pricing", "split": "val", "source": "human"}</code></td></tr>
+    <tr><td><code>.env</code></td><td>API key (only needed when rerunning from scratch)</td><td><code>OPENAI_API_KEY=sk-...</code></td></tr>
   </tbody>
 </table></div>
-<p>Trong <code>intents.jsonl</code>: <code>split</code> cho biết tin thuộc tập <code>train</code> (học), <code>val</code> (tinh chỉnh) hay <code>test</code> (chấm điểm cuối); <code>source</code> là <code>human</code> (300 tin gán tay) hoặc <code>llm</code> (1.700 tin LLM gán).</p>
+<p>In <code>intents.jsonl</code>: <code>split</code> says whether a message is in the <code>train</code> (learning), <code>val</code> (tuning) or <code>test</code> (final scoring) set; <code>source</code> is <code>human</code> (the 300 hand-labelled messages) or <code>llm</code> (the 1,700 LLM-labelled messages).</p>
 
-<h3>Muốn tự gán nhãn / tự kiểm tra mẫu</h3>
+<h3>Want to label / spot-check it yourself?</h3>
 <ul class="steps">
-  <li>Mở <code>data/seed_raw.tsv</code>, sửa nhãn ở đầu dòng nếu không đồng ý.</li>
-  <li>Mở <code>data/audit_sample.csv</code>, sửa cột <code>human_label</code> theo ý mình.</li>
-  <li>Chạy <code>uv run scripts/build_dataset.py</code> rồi <code>uv run scripts/run_experiments.py</code> (cần API key).</li>
+  <li>Open <code>data/seed_raw.tsv</code> and change the label at the start of a row if you disagree.</li>
+  <li>Open <code>data/audit_sample.csv</code> and edit the <code>human_label</code> column as you see fit.</li>
+  <li>Run <code>uv run scripts/build_dataset.py</code> and then <code>uv run scripts/run_experiments.py</code> (needs an API key).</li>
 </ul>
 
-<h2 id="output">Kiểm tra output</h2>
-<p>Chạy từng lệnh trong thư mục repo và so với cột "Kết quả đúng". Các lệnh này <b>không cần API key</b>.</p>
+<h2 id="output">Check the output</h2>
+<p>Run each command in the repo folder and compare with the "Expected result". These commands <b>don't need an API key</b>.</p>
 
-<h3>1. Dataset có đúng 2.000 tin, 300 tay + 1.700 LLM?</h3>
+<h3>1. Does the dataset have exactly 2,000 messages, 300 hand + 1,700 LLM?</h3>
 <pre><code>uv run python -c "
 import pandas as pd; df = pd.read_json('data/intents.jsonl', lines=True)
 print(df.source.value_counts().to_dict()); print(pd.crosstab(df.label, df.split, margins=True))"</code></pre>
-<p>Kết quả đúng:</p>
+<p>Expected result:</p>
 <pre><code>{'llm': 1700, 'human': 300}
 split         test  train  val   All
 cancellation    31    146   32   209
@@ -809,166 +809,166 @@ other           59    277   60   396
 pricing         65    303   65   433
 tech_support    83    386   82   551
 All            300   1400  300  2000</code></pre>
-<p>Cần thấy: tổng 2.000; train/val/test = 1.400 / 300 / 300 (70/15/15); mỗi nhãn chiếm tỷ lệ giống nhau ở cả 3 tập.</p>
+<p>You should see: a total of 2,000; train/val/test = 1,400 / 300 / 300 (70/15/15); each label has the same proportion in all 3 sets.</p>
 
-<h3>2. Nhãn LLM có đáng tin không?</h3>
+<h3>2. Can the LLM labels be trusted?</h3>
 <pre><code>uv run python -c "
 import json; r = json.load(open('data/dataset_report.json'))
 print('seed:', round(r['seed_agreement']['accuracy'], 3), 'audit:', r['audit']['agreement'])"</code></pre>
-<p>Kết quả đúng: <code>seed: 0.99 audit: 0.95</code> — cả hai phải <b>≥ 0.90</b>. Nếu <code>audit: None</code> nghĩa là cột <code>human_label</code> trong <code>audit_sample.csv</code> còn ô trống.</p>
+<p>Expected result: <code>seed: 0.99 audit: 0.95</code> — both must be <b>≥ 0.90</b>. If you see <code>audit: None</code>, the <code>human_label</code> column in <code>audit_sample.csv</code> still has empty cells.</p>
 
-<h3>3. Bảng so sánh 4 cách + kết hợp</h3>
+<h3>3. Comparison table of the 4 approaches + hybrid</h3>
 <pre><code>cat results/comparison.md</code></pre>
-<p>Kết quả đúng (macro-F1 = điểm chính xác / 100):</p>
+<p>Expected result (macro-F1 = accuracy score / 100):</p>
 <div class="table-wrap"><table>
-  <thead><tr><th>Cần thấy</th><th class="num">Giá trị</th></tr></thead>
+  <thead><tr><th>You should see</th><th class="num">Value</th></tr></thead>
   <tbody>
     <tr><td>A. TF-IDF + LR</td><td class="num">0.906</td></tr>
     <tr><td>B. Embedding + LR</td><td class="num">0.882</td></tr>
     <tr><td>C. Embedding + XGBoost</td><td class="num">0.896</td></tr>
     <tr><td>D. LLM zero-shot</td><td class="num">0.943</td></tr>
-    <tr class="hl"><td>A → D, ngưỡng 0.72: % chuyển LLM / macro-F1 / $ per 100k</td><td class="num">24.7% / 0.931 / 0.80</td></tr>
+    <tr class="hl"><td>A → D, threshold 0.72: % sent to LLM / macro-F1 / $ per 100k</td><td class="num">24.7% / 0.931 / 0.80</td></tr>
   </tbody>
 </table></div>
-<p>Cột latency (ms) dao động nhẹ mỗi lần đo; các cột còn lại phải giống hệt.</p>
+<p>The latency (ms) column varies slightly each time it's measured; all other columns must match exactly.</p>
 
-<h3>4. Hình confusion matrix và đường chi phí – chất lượng</h3>
+<h3>4. Confusion matrix chart and cost–quality curve</h3>
 <pre><code>open results/confusion_matrices.png results/tradeoff.png</code></pre>
-<p>Cần thấy: 4 ma trận (A, B, C, D) với số lớn nằm trên đường chéo; biểu đồ có ngôi sao đánh dấu ngưỡng 0,72 (A) và 0,81 (B).</p>
+<p>You should see: 4 matrices (A, B, C, D) with the big numbers on the diagonal; the chart has stars marking the thresholds 0.72 (A) and 0.81 (B).</p>
 
-<h3>5. Notebook chạy lại không lỗi</h3>
+<h3>5. The notebook reruns without errors</h3>
 <pre><code>uv run jupyter nbconvert --to notebook --execute --output /tmp/check.ipynb notebooks/intent_router.ipynb
 grep -c '"output_type": "error"' /tmp/check.ipynb</code></pre>
-<p>Kết quả đúng: dòng cuối in ra <code>0</code> (không có ô nào lỗi).</p>
+<p>Expected result: the last line prints <code>0</code> (no cell errored).</p>
 
-<h3>6. Router hoạt động (cần API key cho tin khó)</h3>
+<h3>6. The router works (needs an API key for hard messages)</h3>
 <pre><code>uv run scripts/route.py "Gói Pro có bao nhiêu seat?" "ko muốn xài nữa, ngưng giúp mình" "Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!"</code></pre>
-<p>Kết quả đúng (độ tự tin có thể lệch chút):</p>
+<p>Expected result (confidence may differ slightly):</p>
 <pre><code>pricing       conf=1.00  via=local       Gói Pro có bao nhiêu seat?
 cancellation  conf=0.98  via=local       ko muốn xài nữa, ngưng giúp mình
 tech_support  conf=0.62  via=gpt-4o-mini Mỗi lần dùng là có lỗi, không thể yên tâm làm việc!</code></pre>
-<p><code>via=local</code> = model rẻ tự trả lời; <code>via=gpt-4o-mini</code> = không chắc nên chuyển LLM.</p>
+<p>The three messages mean: "How many seats does the Pro plan have?", "don't want to use it anymore, please stop it" and "Every time I use it there's an error, I can't work in peace!". <code>via=local</code> = the cheap model answered on its own; <code>via=gpt-4o-mini</code> = it wasn't sure, so the message went to the LLM.</p>
 
-<h2 id="tieu-chi">Chi tiết theo tiêu chí chấm điểm</h2>
-<p>Bấm vào từng mục để xem cách làm, công cụ và thông số.</p>
+<h2 id="tieu-chi">Details by grading criterion</h2>
+<p>Click each item to see the method, tools and parameters.</p>
 
 <details>
-  <summary>Dữ liệu (25%) — <span class="ok">đạt mức Xuất sắc</span> (xem Giới hạn)</summary>
+  <summary>Data (25%) — <span class="ok">meets the Excellent level</span> (see Limitations)</summary>
   <div class="body">
     <ul>
-      <li><b>2.000 tin</b>: 300 tin gán nhãn tay theo <a href="../data/LABELING_GUIDE.md">hướng dẫn gán nhãn</a>, 1.700 tin do <code>gpt-4o-mini</code> viết (10 văn phong, 11 kiểu người gửi, có tin không dấu, teencode), rồi <code>gpt-4o</code> gán nhãn.</li>
-      <li><b>Kiểm tra nhãn LLM bằng người</b>: khớp <b>99%</b> trên 300 tin gán tay; khớp <b>95%</b> trên 100 tin chọn ngẫu nhiên để review (yêu cầu ≥ 90%). 5 nhãn sai đã được sửa.</li>
-      <li><b>Chia 70/15/15</b> (1.400 / 300 / 300), giữ tỷ lệ từng loại ở cả 3 tập (<code>train_test_split(stratify=...)</code>). Không có tin test nào trùng gần với tin train.</li>
-      <li><b>Lớp hiếm</b> ("hủy gói", ~10%): bật cân bằng trọng số (<code>class_weight="balanced"</code>). Thí nghiệm: khi ép lớp này còn 3%, không cân bằng thì model chỉ bắt được 57% (A) và 64% (B) số tin hủy; có cân bằng tăng lên 72% và 84%.</li>
+      <li><b>2,000 messages</b>: 300 hand-labelled following the <a href="../data/LABELING_GUIDE.md">labelling guide</a>, 1,700 written by <code>gpt-4o-mini</code> (10 writing styles, 11 sender types, including messages without diacritics and teen slang), then labelled by <code>gpt-4o</code>.</li>
+      <li><b>LLM labels checked by a human</b>: <b>99%</b> agreement on the 300 hand-labelled messages; <b>95%</b> agreement on 100 randomly chosen messages for review (requirement ≥ 90%). The 5 wrong labels were fixed.</li>
+      <li><b>70/15/15 split</b> (1,400 / 300 / 300), keeping each category's proportion in all 3 sets (<code>train_test_split(stratify=...)</code>). No test message is a near-duplicate of a train message.</li>
+      <li><b>Rare class</b> ("cancellation", ~10%): weight balancing turned on (<code>class_weight="balanced"</code>). Experiment: when this class is forced down to 3%, without balancing the model only catches 57% (A) and 64% (B) of cancellation messages; with balancing this rises to 72% and 84%.</li>
     </ul>
   </div>
 </details>
 
 <details>
-  <summary>Thực nghiệm (35%) — <span class="ok">đạt mức Xuất sắc</span></summary>
+  <summary>Experiments (35%) — <span class="ok">meets the Excellent level</span></summary>
   <div class="body">
     <ul>
-      <li><b>4 cách</b> (yêu cầu ≥ 3), đo điểm chính xác, tốc độ thật cho từng tin, và chi phí từ số token thật.</li>
-      <li><b>Thông số</b>: A — đếm từ 1–2 chữ + cụm 2–5 ký tự, <code>LogisticRegression(C=10)</code>. B — <code>text-embedding-3-small</code> + <code>LogisticRegression(C=10)</code>. C — <code>XGBClassifier(400 cây, độ sâu 4, learning_rate 0.08)</code>. D — <code>gpt-4o-mini</code>, temperature 0.</li>
-      <li><b>Cross-validation 5-fold</b> trên 1.700 tin: A 88,6 · B 90,2 · C 87,9 điểm — xác nhận ba cách ngang nhau.</li>
-      <li><b>Confusion matrix</b> cho cả 4 cách và <b>phân tích lỗi từng cặp</b> (xem mục "Confusion matrix" và "4 điều rút ra" ở trên).</li>
+      <li><b>4 approaches</b> (requirement ≥ 3), measuring accuracy score, real per-message speed, and cost from real token counts.</li>
+      <li><b>Parameters</b>: A — 1–2 word n-grams + 2–5 character chunks, <code>LogisticRegression(C=10)</code>. B — <code>text-embedding-3-small</code> + <code>LogisticRegression(C=10)</code>. C — <code>XGBClassifier(400 trees, depth 4, learning_rate 0.08)</code>. D — <code>gpt-4o-mini</code>, temperature 0.</li>
+      <li><b>5-fold cross-validation</b> on 1,700 messages: A 88.6 · B 90.2 · C 87.9 points — confirms the three approaches are on par.</li>
+      <li><b>Confusion matrices</b> for all 4 approaches and <b>error analysis per pair</b> (see the "Confusion matrix" and "4 takeaways" sections above).</li>
     </ul>
   </div>
 </details>
 
 <details>
-  <summary>Chiến lược kết hợp (25%) — <span class="ok">đạt mức Xuất sắc</span></summary>
+  <summary>Hybrid strategy (25%) — <span class="ok">meets the Excellent level</span></summary>
   <div class="body">
     <ul>
-      <li><b>Ngưỡng 0,8 theo đề bài</b>: chuyển 33% tin sang LLM, đạt 94,0 điểm, tốn $10,6 / 1 triệu tin.</li>
-      <li><b>Ngưỡng chọn: 0,72</b> — chuyển 25% tin, đạt 93,1 điểm, tốn $8 / 1 triệu tin.</li>
-      <li><b>Lý do chọn</b>: thử mọi ngưỡng từ 0 đến 1 trên dữ liệu train (không đụng tập test), chọn <b>ngưỡng rẻ nhất mà vẫn chính xác ngang LLM</b>.</li>
-      <li>Hình đường chi phí – chất lượng: xem mục "Vì sao cách kết hợp thắng?" ở trên.</li>
-      <li>Biến thể B + D (ngưỡng 0,81) đạt 94,5 điểm — ngang LLM — với $9 / 1 triệu tin, nhưng chậm hơn A + D vì tin nào cũng phải gọi embedding.</li>
+      <li><b>Threshold 0.8 as given in the assignment</b>: sends 33% of messages to the LLM, scores 94.0 points, costs $10.6 / 1 million messages.</li>
+      <li><b>Chosen threshold: 0.72</b> — sends 25% of messages, scores 93.1 points, costs $8 / 1 million messages.</li>
+      <li><b>Why it was chosen</b>: try every threshold from 0 to 1 on the training data (without touching the test set), and pick <b>the cheapest threshold that is still as accurate as the LLM</b>.</li>
+      <li>Cost–quality curve chart: see the "Why does the hybrid approach win?" section above.</li>
+      <li>The B + D variant (threshold 0.81) scores 94.5 points — on par with the LLM — at $9 / 1 million messages, but it's slower than A + D because every message needs an embedding call.</li>
     </ul>
   </div>
 </details>
 
 <details>
-  <summary>Trình bày (15%) — <span class="ok">đạt mức Xuất sắc</span></summary>
+  <summary>Presentation (15%) — <span class="ok">meets the Excellent level</span></summary>
   <div class="body">
     <ul>
-      <li><b>Notebook chạy lại được</b> mà không cần API key: <code>notebooks/intent_router.ipynb</code>.</li>
-      <li><b>Blog "Khi nào không cần LLM"</b> có số liệu: <a href="blog-khi-nao-khong-can-llm.md"><code>docs/blog-khi-nao-khong-can-llm.md</code></a>.</li>
-      <li><b>Dùng lại cho dự án #3</b>: <code>IntentRouter</code> trong <code>src/intent_router/router.py</code>.</li>
+      <li><b>Re-runnable notebook</b> with no API key needed: <code>notebooks/intent_router.ipynb</code>.</li>
+      <li><b>Blog post "When you don't need an LLM"</b> with real numbers: <a href="blog-when-you-dont-need-an-llm.md"><code>docs/blog-when-you-dont-need-an-llm.md</code></a>.</li>
+      <li><b>Reused in project #3</b>: <code>IntentRouter</code> in <code>src/intent_router/router.py</code>.</li>
     </ul>
   </div>
 </details>
 
-<h2 id="giai-doan">Tiêu chí hoàn thành giai đoạn</h2>
+<h2 id="giai-doan">Stage completion criteria</h2>
 <div class="stage">
-  <div class="label">Tiêu chí hoàn thành giai đoạn</div>
+  <div class="label">Stage completion criteria</div>
   <ul>
-    <li>Giải thích precision / recall / F1 bằng ví dụ đời thường và chọn được metric cho một bài toán cụ thể → <a href="#metric">mục 1</a></li>
-    <li>Phát hiện được data leakage trong một pipeline cho sẵn → <a href="#leakage">mục 2</a></li>
-    <li>Bài tập lớn hoàn thành, có bảng so sánh ML cổ điển và LLM → <a href="#hoan-thanh">mục 3</a></li>
+    <li>Explain precision / recall / F1 with everyday examples and choose a metric for a specific problem → <a href="#metric">section 1</a></li>
+    <li>Spot data leakage in a given pipeline → <a href="#leakage">section 2</a></li>
+    <li>Course project completed, with a comparison table of classical ML vs. LLM → <a href="#hoan-thanh">section 3</a></li>
   </ul>
 </div>
 
-<h3 id="metric">1. Precision, recall, F1 — và chọn metric</h3>
+<h3 id="metric">1. Precision, recall, F1 — and choosing a metric</h3>
 
 <div class="analogy">
-  <p style="margin-top:0"><b>Ví dụ đời thường: thả lưới bắt cá trong hồ.</b> Hồ có 100 con cá, lẫn với rác. Kéo lưới lên được 50 thứ: 45 con cá và 5 cái rác.</p>
+  <p style="margin-top:0"><b>Everyday example: casting a fishing net in a pond.</b> The pond has 100 fish, mixed in with rubbish. You pull up the net with 50 things: 45 fish and 5 pieces of rubbish.</p>
   <ul>
-    <li><b>Precision (độ chính xác của lưới)</b> — trong những thứ kéo lên, bao nhiêu là cá? 45 / 50 = <b>90%</b>. Precision thấp = kéo lên nhiều rác (báo nhầm).</li>
-    <li><b>Recall (độ phủ của lưới)</b> — trong toàn bộ cá trong hồ, bắt được bao nhiêu? 45 / 100 = <b>45%</b>. Recall thấp = sót nhiều cá.</li>
-    <li><b>F1</b> — một điểm gộp cả hai, chỉ cao khi <i>cả hai</i> cùng cao: 2 × 0,90 × 0,45 / (0,90 + 0,45) = <b>60%</b>. Khác với trung bình cộng (67,5%), F1 kéo điểm xuống khi một bên quá thấp — không "ăn gian" được bằng cách chỉ giỏi một mặt.</li>
+    <li><b>Precision (how clean the net's catch is)</b> — of the things pulled up, how many are fish? 45 / 50 = <b>90%</b>. Low precision = pulling up lots of rubbish (false alarms).</li>
+    <li><b>Recall (how much of the pond the net covers)</b> — of all the fish in the pond, how many did you catch? 45 / 100 = <b>45%</b>. Low recall = missing lots of fish.</li>
+    <li><b>F1</b> — a single score combining both, which is only high when <i>both</i> are high: 2 × 0.90 × 0.45 / (0.90 + 0.45) = <b>60%</b>. Unlike the simple average (67.5%), F1 drags the score down when one side is too low — you can't "cheat" by being good at only one side.</li>
   </ul>
-  <p style="margin-bottom:0">Hai cách ăn gian: lưới siêu nhỏ chỉ bắt 1 con chắc chắn là cá → precision 100% nhưng recall 1%. Vét cả hồ → recall 100% nhưng toàn rác. F1 phạt cả hai.</p>
+  <p style="margin-bottom:0">Two ways to cheat: a tiny net that catches just 1 fish you're sure of → 100% precision but 1% recall. Dredge the whole pond → 100% recall but full of rubbish. F1 punishes both.</p>
 </div>
 
-<h4>Áp dụng vào dự án: nhãn "hủy gói", model A, trên 300 tin test</h4>
+<h4>Applied to the project: the "cancellation" label, model A, on 300 test messages</h4>
 <div class="table-wrap"><table>
-  <thead><tr><th></th><th class="num">Số tin</th><th>Ý nghĩa</th></tr></thead>
+  <thead><tr><th></th><th class="num">Messages</th><th>Meaning</th></tr></thead>
   <tbody>
-    <tr><td>Tin muốn hủy thật</td><td class="num">31</td><td>"cá trong hồ"</td></tr>
-    <tr><td>A gắn nhãn "hủy gói"</td><td class="num">29</td><td>"thứ kéo lên"</td></tr>
-    <tr><td>— trong đó đúng</td><td class="num">28</td><td>cá thật</td></tr>
-    <tr><td>— báo nhầm</td><td class="num">1</td><td><i>"Đợi chút nhé, để mình hỏi sếp đã"</i> (thật ra là <code>other</code>)</td></tr>
-    <tr><td>Bỏ sót</td><td class="num">3</td><td>vd. <i>"Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền…"</i> → A đoán <code>complaint</code></td></tr>
+    <tr><td>Messages that really want to cancel</td><td class="num">31</td><td>"fish in the pond"</td></tr>
+    <tr><td>A labelled "cancellation"</td><td class="num">29</td><td>"things pulled up"</td></tr>
+    <tr><td>— of which correct</td><td class="num">28</td><td>real fish</td></tr>
+    <tr><td>— false alarms</td><td class="num">1</td><td><i>"Đợi chút nhé, để mình hỏi sếp đã"</i> ("Hold on, let me ask my boss first") (actually <code>other</code>)</td></tr>
+    <tr><td>Missed</td><td class="num">3</td><td>e.g. <i>"Tôi đã liên hệ để hủy gói nhưng giờ vẫn thấy bị trừ tiền…"</i> ("I contacted you to cancel my plan but I'm still being charged…") → A guessed <code>complaint</code></td></tr>
   </tbody>
 </table></div>
-<p><b>Precision</b> = 28 / 29 = <b>96,6%</b> · <b>Recall</b> = 28 / 31 = <b>90,3%</b> · <b>F1</b> = <b>93,3</b>.</p>
+<p><b>Precision</b> = 28 / 29 = <b>96.6%</b> · <b>Recall</b> = 28 / 31 = <b>90.3%</b> · <b>F1</b> = <b>93.3</b>.</p>
 
-<h4>Precision / recall / F1 của cả 5 nhãn (A và D, trên 300 tin test)</h4>
+<h4>Precision / recall / F1 for all 5 labels (A and D, on 300 test messages)</h4>
 <div class="table-wrap"><table>
-  <thead><tr><th>Nhãn</th><th class="num">Số tin</th><th class="num">A · P</th><th class="num">A · R</th><th class="num">A · F1</th><th class="num">D · P</th><th class="num">D · R</th><th class="num">D · F1</th></tr></thead>
+  <thead><tr><th>Label</th><th class="num">Messages</th><th class="num">A · P</th><th class="num">A · R</th><th class="num">A · F1</th><th class="num">D · P</th><th class="num">D · R</th><th class="num">D · F1</th></tr></thead>
   <tbody>
-    <tr><td>pricing</td><td class="num">65</td><td class="num">94,0</td><td class="num">96,9</td><td class="num"><b>95,5</b></td><td class="num">91,3</td><td class="num">96,9</td><td class="num">94,0</td></tr>
-    <tr><td>complaint</td><td class="num">62</td><td class="num">91,9</td><td class="num">91,9</td><td class="num">91,9</td><td class="num">95,1</td><td class="num">93,5</td><td class="num"><b>94,3</b></td></tr>
-    <tr><td>cancellation</td><td class="num">31</td><td class="num">96,6</td><td class="num">90,3</td><td class="num">93,3</td><td class="num">96,7</td><td class="num">93,5</td><td class="num"><b>95,1</b></td></tr>
-    <tr><td>tech_support</td><td class="num">83</td><td class="num">88,1</td><td class="num">89,2</td><td class="num">88,6</td><td class="num">95,2</td><td class="num">96,4</td><td class="num"><b>95,8</b></td></tr>
-    <tr><td>other</td><td class="num">59</td><td class="num">84,5</td><td class="num">83,1</td><td class="num">83,8</td><td class="num">94,6</td><td class="num">89,8</td><td class="num"><b>92,2</b></td></tr>
-    <tr class="hl"><td>Trung bình (macro)</td><td class="num">300</td><td class="num"></td><td class="num"></td><td class="num">90,6</td><td class="num"></td><td class="num"></td><td class="num">94,3</td></tr>
+    <tr><td>pricing</td><td class="num">65</td><td class="num">94.0</td><td class="num">96.9</td><td class="num"><b>95.5</b></td><td class="num">91.3</td><td class="num">96.9</td><td class="num">94.0</td></tr>
+    <tr><td>complaint</td><td class="num">62</td><td class="num">91.9</td><td class="num">91.9</td><td class="num">91.9</td><td class="num">95.1</td><td class="num">93.5</td><td class="num"><b>94.3</b></td></tr>
+    <tr><td>cancellation</td><td class="num">31</td><td class="num">96.6</td><td class="num">90.3</td><td class="num">93.3</td><td class="num">96.7</td><td class="num">93.5</td><td class="num"><b>95.1</b></td></tr>
+    <tr><td>tech_support</td><td class="num">83</td><td class="num">88.1</td><td class="num">89.2</td><td class="num">88.6</td><td class="num">95.2</td><td class="num">96.4</td><td class="num"><b>95.8</b></td></tr>
+    <tr><td>other</td><td class="num">59</td><td class="num">84.5</td><td class="num">83.1</td><td class="num">83.8</td><td class="num">94.6</td><td class="num">89.8</td><td class="num"><b>92.2</b></td></tr>
+    <tr class="hl"><td>Average (macro)</td><td class="num">300</td><td class="num"></td><td class="num"></td><td class="num">90.6</td><td class="num"></td><td class="num"></td><td class="num">94.3</td></tr>
   </tbody>
 </table></div>
-<p>P = precision, R = recall. Đọc bảng: <code>other</code> là nhãn A yếu nhất (nhầm với <code>tech_support</code>); A <b>thắng</b> D ở <code>pricing</code> vì D hay gắn nhầm tin khiếu nại về tiền thành "hỏi giá" (precision D chỉ 91,3%); với <code>cancellation</code> cả hai đều ~97% precision, nhưng A bỏ sót 3/31 tin hủy, D bỏ sót 2/31. Macro-F1 = trung bình cột F1 của 5 nhãn.</p>
+<p>P = precision, R = recall. Reading the table: <code>other</code> is A's weakest label (confused with <code>tech_support</code>); A <b>beats</b> D on <code>pricing</code> because D often mislabels money-related complaints as "pricing" (D's precision is only 91.3%); for <code>cancellation</code> both have ~97% precision, but A misses 3/31 cancellation messages and D misses 2/31. Macro-F1 = the average of the F1 column over the 5 labels.</p>
 
-<h4>Chọn metric: hỏi "sai kiểu nào đắt hơn?"</h4>
+<h4>Choosing a metric: ask "which kind of mistake is more expensive?"</h4>
 <div class="table-wrap"><table>
-  <thead><tr><th>Bài toán</th><th>Sai kiểu nào đắt hơn</th><th>Ưu tiên</th></tr></thead>
+  <thead><tr><th>Problem</th><th>Which mistake is more expensive</th><th>Priority</th></tr></thead>
   <tbody>
-    <tr><td>Lọc thư rác</td><td>Chặn nhầm thư thật của sếp (báo nhầm)</td><td><b>Precision</b></td></tr>
-    <tr><td>Sàng lọc ung thư</td><td>Bỏ sót người bệnh</td><td><b>Recall</b></td></tr>
-    <tr><td>Hàng đợi "hủy gói" (dự án này)</td><td>Bỏ sót khách muốn hủy → khách bực, có thể bị khiếu nại vì không cho hủy</td><td><b>Recall</b> của <code>cancellation</code></td></tr>
-    <tr class="hl"><td>Router 5 nhãn (dự án này)</td><td>Nhãn nào cũng cần đúng; số tin mỗi nhãn không đều (10%–28%)</td><td><b>Macro-F1</b></td></tr>
+    <tr><td>Spam filter</td><td>Wrongly blocking a real email from your boss (false alarm)</td><td><b>Precision</b></td></tr>
+    <tr><td>Cancer screening</td><td>Missing a sick person</td><td><b>Recall</b></td></tr>
+    <tr><td>"Cancellation" queue (this project)</td><td>Missing a customer who wants to cancel → an annoyed customer, who may file a complaint about not being allowed to cancel</td><td><b>Recall</b> of <code>cancellation</code></td></tr>
+    <tr class="hl"><td>5-label router (this project)</td><td>Every label needs to be right; the number of messages per label is uneven (10%–28%)</td><td><b>Macro-F1</b></td></tr>
   </tbody>
 </table></div>
-<p><b>Vì sao không dùng accuracy (tỷ lệ đoán đúng)?</b> Vì lớp hiếm bị "chìm". Giả sử một model đoán đúng hoàn hảo 4 nhãn kia nhưng <b>không bao giờ</b> đoán "hủy gói" (31 tin đều bị đoán thành khiếu nại): accuracy vẫn là 269 / 300 = <b>89,7%</b> — trông ổn — nhưng macro-F1 chỉ <b>76</b>, vì F1 của "hủy gói" bằng 0 và kéo trung bình xuống.</p>
-<p><b>Quyết định của dự án:</b> dùng <b>macro-F1</b> làm thước đo chính, và theo dõi riêng <b>recall của <code>cancellation</code></b> — đó là lý do bật cân bằng trọng số lớp và chạy thí nghiệm lớp hiếm.</p>
+<p><b>Why not use accuracy (the share of correct guesses)?</b> Because the rare class gets "drowned out". Suppose a model guesses the other 4 labels perfectly but <b>never</b> guesses "cancellation" (all 31 messages are guessed as complaint): accuracy is still 269 / 300 = <b>89.7%</b> — looks fine — but macro-F1 is only <b>76</b>, because the F1 for "cancellation" is 0 and drags the average down.</p>
+<p><b>The project's decision:</b> use <b>macro-F1</b> as the main metric, and separately track <b>recall for <code>cancellation</code></b> — that's why class weight balancing is turned on and the rare-class experiment was run.</p>
 
-<h3 id="leakage">2. Data leakage — rò rỉ dữ liệu</h3>
-<p><b>Data leakage</b> là khi thông tin của tập test "lọt" vào quá trình huấn luyện hoặc lựa chọn model. Hậu quả: điểm báo cáo <b>đẹp giả</b>, mang ra dùng thật thì tụt. Giống học sinh được xem trước đề thi: điểm cao nhưng không phản ánh năng lực thật.</p>
+<h3 id="leakage">2. Data leakage</h3>
+<p><b>Data leakage</b> is when information from the test set "leaks" into training or model selection. The consequence: the reported score is <b>fake-good</b>, and it drops when used for real. Like a student who saw the exam questions in advance: a high score that doesn't reflect real ability.</p>
 
-<h4>Bài tập: tìm lỗi trong pipeline cho sẵn</h4>
-<p>Pipeline dưới đây chạy được và cho điểm cao. Nó có <b>4 chỗ rò rỉ</b> — thử tìm trước khi mở đáp án.</p>
+<h4>Exercise: find the bugs in a given pipeline</h4>
+<p>The pipeline below runs and gives a high score. It has <b>4 leaks</b> — try to find them before opening the answer.</p>
 <pre><code>df = pd.read_json("intents.jsonl", lines=True)
-df = pd.concat([df, df[df.label == "cancellation"]])            <span class="cm"># tăng lớp hiếm</span>
+df = pd.concat([df, df[df.label == "cancellation"]])            <span class="cm"># boost the rare class</span>
 
 vec = TfidfVectorizer().fit(df.text)
 X = vec.transform(df.text)
@@ -979,146 +979,146 @@ best_t = max(thresholds, key=lambda t: hybrid_f1(model, X_test, y_test, t))
 print("Macro-F1:", hybrid_f1(model, X_test, y_test, best_t))</code></pre>
 
 <details>
-  <summary>Xem đáp án: 4 chỗ rò rỉ</summary>
+  <summary>See the answer: 4 leaks</summary>
   <div class="body">
     <div class="table-wrap"><table>
-      <thead><tr><th>#</th><th>Dòng lỗi</th><th>Vì sao rò rỉ</th><th>Cách sửa</th></tr></thead>
+      <thead><tr><th>#</th><th>Faulty line</th><th>Why it leaks</th><th>How to fix</th></tr></thead>
       <tbody>
-        <tr><td>1</td><td><code>pd.concat([df, df[...cancellation]])</code></td><td>Nhân bản tin <b>trước khi chia</b> → cùng một tin nằm ở cả train và test. Model "nhớ" đáp án.</td><td>Chia trước, chỉ cân bằng trên train; hoặc dùng <code>class_weight="balanced"</code> thay vì nhân bản.</td></tr>
-        <tr><td>2</td><td><code>TfidfVectorizer().fit(df.text)</code></td><td>Học từ vựng và trọng số IDF từ <b>cả</b> tin test → model biết trước những từ sẽ xuất hiện trong đề thi.</td><td>Đặt vectorizer trong <code>Pipeline</code>, chỉ <code>fit</code> trên train (và trên từng fold khi cross-validation).</td></tr>
-        <tr><td>3</td><td><code>train_test_split(X, df.label)</code></td><td>Không lọc tin trùng / gần trùng (tin sinh bằng LLM hay lặp ý) → test có "bản sao" trong train. Cũng không <code>stratify</code>.</td><td>Lọc trùng trước khi chia; <code>stratify=df.label</code>; kiểm tra độ giống train–test.</td></tr>
-        <tr><td>4</td><td><code>best_t = max(..., X_test, y_test ...)</code></td><td>Chọn ngưỡng <b>trên chính tập test</b> rồi báo cáo điểm trên tập test đó.</td><td>Chọn ngưỡng trên val hoặc out-of-fold của train; test chỉ dùng một lần ở cuối.</td></tr>
+        <tr><td>1</td><td><code>pd.concat([df, df[...cancellation]])</code></td><td>Duplicates messages <b>before splitting</b> → the same message ends up in both train and test. The model "remembers" the answer.</td><td>Split first, balance only on train; or use <code>class_weight="balanced"</code> instead of duplicating.</td></tr>
+        <tr><td>2</td><td><code>TfidfVectorizer().fit(df.text)</code></td><td>Learns the vocabulary and IDF weights from the test messages <b>too</b> → the model knows in advance which words will appear in the exam.</td><td>Put the vectorizer inside a <code>Pipeline</code> and only <code>fit</code> it on train (and on each fold during cross-validation).</td></tr>
+        <tr><td>3</td><td><code>train_test_split(X, df.label)</code></td><td>Doesn't remove duplicates / near-duplicates (LLM-generated messages often repeat ideas) → test has "copies" in train. Also no <code>stratify</code>.</td><td>Deduplicate before splitting; <code>stratify=df.label</code>; check train–test similarity.</td></tr>
+        <tr><td>4</td><td><code>best_t = max(..., X_test, y_test ...)</code></td><td>Chooses the threshold <b>on the test set itself</b> and then reports the score on that same test set.</td><td>Choose the threshold on val or on out-of-fold predictions from train; use test only once at the end.</td></tr>
       </tbody>
     </table></div>
   </div>
 </details>
 
-<h4>Dự án này đã chặn rò rỉ như thế nào — và kiểm tra bằng số</h4>
+<h4>How this project blocked leakage — and checked it with numbers</h4>
 <div class="table-wrap"><table>
-  <thead><tr><th>Nguy cơ</th><th>Cách chặn</th><th>Kiểm tra</th></tr></thead>
+  <thead><tr><th>Risk</th><th>How it's blocked</th><th>Check</th></tr></thead>
   <tbody>
-    <tr><td>Tin trùng giữa các tập</td><td>Bỏ dấu, chữ thường, bỏ ký tự đặc biệt rồi loại trùng (<code>normalize()</code>) trước khi chia</td><td>2.135 tin sinh → loại 2 tin trùng nhau + 1 tin chép y nguyên tin seed. 0 cặp test–train giống nhau quá 0,9 (cosine)</td></tr>
-    <tr><td>Tin sinh "bắt chước" tin seed</td><td>Khi sinh, LLM được xem 6 tin seed làm mẫu nhưng được yêu cầu không lặp ý</td><td>Cặp test–train giống nhất chỉ 0,899 — hai câu khác chữ, cùng ý ("thất vọng về dịch vụ")</td></tr>
-    <tr><td>Fit TF-IDF trên cả test</td><td><code>make_pipeline(TfidfVectorizer, LogisticRegression)</code> — mọi bước fit lại trong từng fold / chỉ trên train</td><td>Xem <code>experiments.tfidf_lr()</code></td></tr>
-    <tr><td>Cân bằng lớp bằng nhân bản</td><td>Dùng <code>class_weight</code>, không nhân bản tin; thí nghiệm lớp hiếm chỉ bớt tin ở <b>train fold</b></td><td>Xem <code>experiments.rare_class_ablation()</code></td></tr>
-    <tr><td>Chọn ngưỡng trên test</td><td>Chọn trên out-of-fold của train+val, test chỉ dùng để báo cáo</td><td><b>Nếu chọn trên test</b>, A + D sẽ báo cáo <span class="bad">95,1</span> (ngưỡng 0,93) thay vì <b>93,1</b> — đẹp giả 2 điểm</td></tr>
-    <tr><td>Nhãn test do cùng họ model với D gán</td><td>Không hẳn là rò rỉ nhưng gây thiên vị → so thêm trên tin có nhãn người</td><td>Trên 37 tin test nhãn người: D 97,3, A 90,5 — thứ hạng không đổi</td></tr>
+    <tr><td>Duplicate messages across sets</td><td>Strip diacritics, lowercase, remove special characters, then deduplicate (<code>normalize()</code>) before splitting</td><td>2,135 generated messages → removed 2 duplicates of each other + 1 verbatim copy of a seed message. 0 test–train pairs more similar than 0.9 (cosine)</td></tr>
+    <tr><td>Generated messages "imitating" seed messages</td><td>During generation, the LLM sees 6 seed messages as examples but is told not to repeat their ideas</td><td>The most similar test–train pair is only 0.899 — two sentences with different words but the same idea ("thất vọng về dịch vụ" ("disappointed with the service"))</td></tr>
+    <tr><td>Fitting TF-IDF on test too</td><td><code>make_pipeline(TfidfVectorizer, LogisticRegression)</code> — every step is refit in each fold / only on train</td><td>See <code>experiments.tfidf_lr()</code></td></tr>
+    <tr><td>Balancing classes by duplication</td><td>Use <code>class_weight</code>, don't duplicate messages; the rare-class experiment only removes messages from the <b>train fold</b></td><td>See <code>experiments.rare_class_ablation()</code></td></tr>
+    <tr><td>Choosing the threshold on test</td><td>Choose on out-of-fold predictions from train+val; test is only used for reporting</td><td><b>If chosen on test</b>, A + D would report <span class="bad">95.1</span> (threshold 0.93) instead of <b>93.1</b> — 2 fake points</td></tr>
+    <tr><td>Test labels assigned by the same model family as D</td><td>Not exactly leakage, but it causes bias → also compare on human-labelled messages</td><td>On the 37 human-labelled test messages: D 97.3, A 90.5 — the ranking doesn't change</td></tr>
   </tbody>
 </table></div>
 
-<h3 id="hoan-thanh">3. Bài tập lớn hoàn thành</h3>
+<h3 id="hoan-thanh">3. Course project completed</h3>
 <ul>
-  <li>Bảng so sánh ML cổ điển (A, B, C) và LLM (D) theo macro-F1, p95 latency và $/100k tin: <a href="#bang-xep-hang">Bảng xếp hạng</a> và <code>results/comparison.md</code>.</li>
-  <li>Confusion matrix, cross-validation, phân tích lỗi, chiến lược kết hợp với đường chi phí – chất lượng: mục "Chi tiết theo tiêu chí chấm điểm" ở trên.</li>
-  <li>Notebook chạy lại được: <code>notebooks/intent_router.ipynb</code> · Blog: <a href="blog-khi-nao-khong-can-llm.md">Khi nào không cần LLM?</a> · Code: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">GitHub</a>.</li>
+  <li>Comparison table of classical ML (A, B, C) and LLM (D) by macro-F1, p95 latency and $/100k messages: <a href="#bang-xep-hang">Leaderboard</a> and <code>results/comparison.md</code>.</li>
+  <li>Confusion matrices, cross-validation, error analysis, hybrid strategy with a cost–quality curve: the "Details by grading criterion" section above.</li>
+  <li>Re-runnable notebook: <code>notebooks/intent_router.ipynb</code> · Blog: <a href="blog-when-you-dont-need-an-llm.md">When you don't need an LLM?</a> · Code: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">GitHub</a>.</li>
 </ul>
 
-<h2 id="phong-van">Câu hỏi phỏng vấn giai đoạn 0.5</h2>
-<p>5 câu trong lộ trình (trang 11–12). Cách tự kiểm tra: <b>trả lời to thành tiếng trong 2 phút, không nhìn tài liệu</b>. Mỗi câu dưới đây có: hiểu đơn giản → số liệu từ chính dự án này → câu trả lời mẫu → từ khóa nên nhắc.</p>
+<h2 id="phong-van">Stage 0.5 interview questions</h2>
+<p>The 5 questions from the roadmap (pp. 11–12). How to test yourself: <b>answer out loud within 2 minutes, without looking at your notes</b>. Each question below has: the simple idea → numbers from this very project → a sample answer → keywords worth mentioning.</p>
 
 <div class="iq">
-<h3>1. Dữ liệu có 1% gian lận. Model đạt accuracy 99%. Có tốt không?</h3>
-<div class="lbl">Hiểu đơn giản</div>
-<p>10.000 giao dịch, 100 gian lận. Một "model" lười biếng nói <b>"không gian lận"</b> cho mọi giao dịch: đúng 9.900/10.000 = <b>accuracy 99%</b> — nhưng bắt được <b>0</b> vụ gian lận (recall 0%). Accuracy bị lớp đông áp đảo, che mất lớp hiếm — mà lớp hiếm lại là thứ mình cần bắt.</p>
-<div class="lbl">Số liệu từ dự án</div>
+<h3>1. The data has 1% fraud. The model gets 99% accuracy. Is that good?</h3>
+<div class="lbl">The simple idea</div>
+<p>10,000 transactions, 100 of them fraud. A lazy "model" says <b>"not fraud"</b> for every transaction: right on 9,900/10,000 = <b>99% accuracy</b> — but it catches <b>0</b> fraud cases (0% recall). Accuracy is dominated by the majority class and hides the rare class — and the rare class is exactly what you need to catch.</p>
+<div class="lbl">Numbers from the project</div>
 <ul>
-  <li>Một model không bao giờ đoán "hủy gói" vẫn có accuracy <b>89,7%</b>, nhưng macro-F1 chỉ <b>76</b>.</li>
-  <li>Khi ép "hủy gói" còn 2,9% và không cân bằng trọng số: model A chỉ bắt được <b>57%</b> tin hủy; bật <code>class_weight="balanced"</code> → <b>72%</b>.</li>
-  <li><b>PR-AUC</b> của model A cho nhãn "hủy gói" trên val: <b>0,969</b> (đoán bừa chỉ được ~0,107 — bằng tỷ lệ tin hủy).</li>
+  <li>A model that never guesses "cancellation" still has <b>89.7%</b> accuracy, but macro-F1 is only <b>76</b>.</li>
+  <li>When "cancellation" is forced down to 2.9% with no weight balancing: model A only catches <b>57%</b> of cancellation messages; turning on <code>class_weight="balanced"</code> → <b>72%</b>.</li>
+  <li>Model A's <b>PR-AUC</b> for the "cancellation" label on val: <b>0.969</b> (random guessing would only get ~0.107 — the share of cancellation messages).</li>
 </ul>
-<div class="lbl">Trả lời mẫu</div>
-<blockquote>Chưa chắc tốt. Với 1% gian lận, model đoán "không gian lận" cho mọi trường hợp cũng đạt 99% accuracy mà không bắt được vụ nào. Tôi sẽ xem confusion matrix, đo precision và recall của lớp gian lận, và PR-AUC — chỉ số tóm tắt precision/recall qua mọi ngưỡng, hợp với dữ liệu mất cân bằng hơn ROC-AUC. Để cải thiện: trọng số lớp hoặc lấy mẫu lại (chỉ trên tập train), rồi chọn ngưỡng dựa trên chi phí thật: bỏ sót một vụ gian lận tốn bao nhiêu, chặn nhầm một giao dịch thật tốn bao nhiêu.</blockquote>
-<p class="kw">Từ khóa: <code>accuracy paradox</code><code>confusion matrix</code><code>precision / recall</code><code>PR-AUC</code><code>class weight</code><code>resampling</code><code>ngưỡng theo chi phí</code></p>
+<div class="lbl">Sample answer</div>
+<blockquote>Not necessarily. With 1% fraud, a model that predicts "not fraud" for everything also gets 99% accuracy without catching a single case. I'd look at the confusion matrix, measure precision and recall for the fraud class, and PR-AUC — a metric that summarises precision/recall across all thresholds and suits imbalanced data better than ROC-AUC. To improve: class weights or resampling (on the training set only), then choose the threshold based on the real costs: how much a missed fraud costs, and how much wrongly blocking a genuine transaction costs.</blockquote>
+<p class="kw">Keywords: <code>accuracy paradox</code><code>confusion matrix</code><code>precision / recall</code><code>PR-AUC</code><code>class weight</code><code>resampling</code><code>cost-based threshold</code></p>
 </div>
 
 <div class="iq">
-<h3>2. Data leakage là gì? Kể một ví dụ.</h3>
-<div class="lbl">Hiểu đơn giản</div>
-<p>Thông tin của đáp án "lọt" vào lúc train → điểm đẹp giả, ra thực tế thì tụt. Như học sinh được xem trước đề thi.</p>
-<div class="lbl">3 ví dụ kinh điển</div>
+<h3>2. What is data leakage? Give an example.</h3>
+<div class="lbl">The simple idea</div>
+<p>Information about the answers "leaks" in during training → a fake-good score that drops in the real world. Like a student who saw the exam questions in advance.</p>
+<div class="lbl">3 classic examples</div>
 <ul>
-  <li><b>Dùng thông tin từ tương lai</b>: dự đoán khách có rời bỏ tháng sau không, nhưng feature lại có "số lần gọi tổng đài hủy dịch vụ" — thứ chỉ xảy ra <i>sau</i> khi khách đã quyết định rời.</li>
-  <li><b>Chuẩn hóa trước khi chia</b>: tính trung bình / độ lệch (hoặc từ vựng TF-IDF) trên toàn bộ dữ liệu rồi mới chia train/test → train đã "nhìn thấy" test.</li>
-  <li><b>Cùng một đối tượng ở cả train và test</b>: nhiều giao dịch của cùng một khách nằm ở cả hai tập → model nhớ khách chứ không học quy luật. Cách sửa: chia theo khách (<code>GroupKFold</code>).</li>
+  <li><b>Using information from the future</b>: predicting whether a customer will churn next month, but a feature is "number of calls to the hotline to cancel service" — something that only happens <i>after</i> the customer has already decided to leave.</li>
+  <li><b>Normalising before splitting</b>: computing the mean / standard deviation (or the TF-IDF vocabulary) on all the data before splitting into train/test → train has already "seen" test.</li>
+  <li><b>The same entity in both train and test</b>: many transactions from the same customer end up in both sets → the model memorises the customer instead of learning the pattern. Fix: split by customer (<code>GroupKFold</code>).</li>
 </ul>
-<div class="lbl">Ví dụ từ dự án</div>
+<div class="lbl">Example from the project</div>
 <ul>
-  <li>Nếu chọn ngưỡng router trên chính tập test, điểm báo cáo là <b>95,1</b> thay vì <b>93,1</b> — đẹp giả 2 điểm. Dự án chọn trên out-of-fold của train + val.</li>
-  <li>Tin do LLM sinh có thể na ná nhau → lọc trùng trước khi chia, và kiểm tra: không cặp test–train nào giống nhau quá 0,9.</li>
-  <li>TF-IDF nằm trong <code>Pipeline</code> nên chỉ học từ vựng trên train (và trên từng fold).</li>
+  <li>If the router threshold were chosen on the test set itself, the reported score would be <b>95.1</b> instead of <b>93.1</b> — 2 fake points. The project chooses it on out-of-fold predictions from train + val.</li>
+  <li>LLM-generated messages can be very similar to each other → deduplicate before splitting, and check: no test–train pair is more similar than 0.9.</li>
+  <li>TF-IDF sits inside a <code>Pipeline</code>, so it only learns the vocabulary on train (and on each fold).</li>
 </ul>
-<div class="lbl">Trả lời mẫu</div>
-<blockquote>Data leakage là khi thông tin mà lúc dự đoán thật mình không có lại lọt vào quá trình train hoặc chọn model, nên điểm offline đẹp giả. Ví dụ trong dự án phân loại ý định của tôi: nếu chọn ngưỡng chuyển sang LLM bằng chính tập test, điểm báo cáo là 95,1 trong khi điểm trung thực là 93,1. Tôi tránh bằng cách chọn ngưỡng trên dự đoán out-of-fold của train+val. Ngoài ra tôi lọc tin trùng trước khi chia, đặt TF-IDF trong Pipeline để chỉ fit trên train, và kiểm tra độ giống nhau giữa test và train. Các dạng khác hay gặp: feature lấy từ tương lai, chuẩn hóa trước khi chia, cùng một khách nằm ở cả train và test.</blockquote>
-<p class="kw">Từ khóa: <code>train/test contamination</code><code>target leakage</code><code>fit chỉ trên train</code><code>Pipeline</code><code>GroupKFold</code><code>time-based split</code></p>
+<div class="lbl">Sample answer</div>
+<blockquote>Data leakage is when information you wouldn't have at real prediction time leaks into training or model selection, so the offline score looks better than it really is. An example from my intent classification project: if I chose the threshold for routing to the LLM using the test set itself, the reported score would be 95.1, while the honest score is 93.1. I avoid that by choosing the threshold on out-of-fold predictions from train+val. I also deduplicate messages before splitting, put TF-IDF inside a Pipeline so it's only fit on train, and check the similarity between test and train. Other common forms: features taken from the future, normalising before splitting, and the same customer appearing in both train and test.</blockquote>
+<p class="kw">Keywords: <code>train/test contamination</code><code>target leakage</code><code>fit on train only</code><code>Pipeline</code><code>GroupKFold</code><code>time-based split</code></p>
 </div>
 
 <div class="iq">
-<h3>3. Khi nào dùng model cổ điển thay vì LLM?</h3>
-<div class="lbl">Hiểu đơn giản</div>
-<p>Model cổ điển như nhân viên chuyên một việc: nhanh, rẻ, làm tốt việc quen. LLM như chuyên gia đa năng: hiểu mọi thứ nhưng chậm và tính phí từng câu. Việc hẹp, lặp đi lặp lại, số lượng lớn → giao cho nhân viên chuyên trách.</p>
-<div class="lbl">Số liệu từ dự án</div>
+<h3>3. When should you use a classical model instead of an LLM?</h3>
+<div class="lbl">The simple idea</div>
+<p>A classical model is like a specialist employee who does one job: fast, cheap, good at familiar work. An LLM is like an all-round expert: understands everything, but slow and charges for every sentence. Narrow, repetitive, high-volume work → give it to the specialist employee.</p>
+<div class="lbl">Numbers from the project</div>
 <ul>
-  <li>Model A: 90,6 điểm, &lt; 1 ms, ~$0. LLM: 94,3 điểm, ~0,9 giây, $32 / 1 triệu tin.</li>
-  <li>Dự án chính là mẫu "LLM gán nhãn → train model rẻ → LLM chỉ xử lý ca khó": <code>gpt-4o</code> gán 1.700 nhãn → train model A → router để A xử lý 75% tin, LLM 25% → 93,1 điểm với $8 / 1 triệu tin.</li>
+  <li>Model A: 90.6 points, &lt; 1 ms, ~$0. LLM: 94.3 points, ~0.9 seconds, $32 / 1 million messages.</li>
+  <li>The project itself follows the pattern "LLM labels the data → train a cheap model → the LLM only handles hard cases": <code>gpt-4o</code> assigns 1,700 labels → train model A → the router lets A handle 75% of messages and the LLM 25% → 93.1 points at $8 / 1 million messages.</li>
 </ul>
-<div class="lbl">Trả lời mẫu</div>
-<blockquote>Khi tác vụ hẹp và lặp lại (phân loại vài nhãn cố định), lưu lượng lớn, cần độ trễ thấp, và có hoặc tạo được dữ liệu có nhãn. Trong dự án phân loại ý định, TF-IDF + logistic regression đạt 90,6 macro-F1 dưới 1 ms gần như miễn phí, còn LLM đạt 94,3 nhưng mất ~0,9 giây và $32 cho mỗi triệu tin. Thực tế tôi thường kết hợp: dùng LLM gán nhãn để có dữ liệu, train model rẻ, rồi chỉ chuyển ca khó — model rẻ không tự tin — cho LLM. Cách đó giữ được 93,1 điểm với chi phí giảm 75%. LLM phù hợp hơn khi tác vụ mở, ít dữ liệu, cần suy luận hoặc thay đổi thường xuyên.</blockquote>
-<p class="kw">Từ khóa: <code>latency</code><code>cost per request</code><code>LLM-as-labeler</code><code>distillation</code><code>confidence-based routing / cascade</code></p>
+<div class="lbl">Sample answer</div>
+<blockquote>When the task is narrow and repetitive (classifying into a few fixed labels), traffic is high, low latency is needed, and you have or can create labelled data. In my intent classification project, TF-IDF + logistic regression reached 90.6 macro-F1 in under 1 ms almost for free, while the LLM reached 94.3 but took ~0.9 seconds and $32 per million messages. In practice I usually combine them: use the LLM to label data, train a cheap model, and then send only the hard cases — where the cheap model isn't confident — to the LLM. That kept 93.1 points while cutting cost by 75%. An LLM is a better fit when the task is open-ended, data is scarce, reasoning is needed, or the task changes often.</blockquote>
+<p class="kw">Keywords: <code>latency</code><code>cost per request</code><code>LLM-as-labeler</code><code>distillation</code><code>confidence-based routing / cascade</code></p>
 </div>
 
 <div class="iq">
-<h3>4. Precision hay recall quan trọng hơn?</h3>
-<div class="lbl">Hiểu đơn giản</div>
-<p>Hỏi ngược lại: <b>sai kiểu nào đắt hơn?</b> Chặn nhầm thư của sếp vào thư rác (bắt nhầm) → cần <b>precision</b>. Bỏ lọt một vụ gian lận hay nội dung độc hại (bỏ sót) → cần <b>recall</b>.</p>
-<div class="lbl">Số liệu từ dự án: đổi ngưỡng cho nhãn "hủy gói" (model A, 300 tin val, 32 tin hủy thật)</div>
+<h3>4. Which matters more, precision or recall?</h3>
+<div class="lbl">The simple idea</div>
+<p>Turn the question around: <b>which kind of mistake is more expensive?</b> Wrongly sending your boss's email to spam (a false alarm) → you need <b>precision</b>. Letting a fraud case or harmful content slip through (a miss) → you need <b>recall</b>.</p>
+<div class="lbl">Numbers from the project: changing the threshold for the "cancellation" label (model A, 300 val messages, 32 real cancellation messages)</div>
 <div class="table-wrap"><table>
-  <thead><tr><th class="num">Ngưỡng</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">Bỏ sót</th><th class="num">Bắt nhầm</th><th class="num">Chi phí nếu bỏ sót = 10, bắt nhầm = 1</th><th class="num">Chi phí nếu bỏ sót = 1, bắt nhầm = 10</th></tr></thead>
+  <thead><tr><th class="num">Threshold</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">Missed</th><th class="num">False alarms</th><th class="num">Cost if miss = 10, false alarm = 1</th><th class="num">Cost if miss = 1, false alarm = 10</th></tr></thead>
   <tbody>
-    <tr><td class="num">0,2</td><td class="num">86,1%</td><td class="num">96,9%</td><td class="num">1</td><td class="num">5</td><td class="num"><b>15</b> ← rẻ nhất</td><td class="num">51</td></tr>
-    <tr><td class="num">0,3</td><td class="num">88,2%</td><td class="num">93,8%</td><td class="num">2</td><td class="num">4</td><td class="num">24</td><td class="num">42</td></tr>
-    <tr><td class="num">0,5</td><td class="num">93,5%</td><td class="num">90,6%</td><td class="num">3</td><td class="num">2</td><td class="num">32</td><td class="num">23</td></tr>
-    <tr><td class="num">0,7</td><td class="num">96,2%</td><td class="num">78,1%</td><td class="num">7</td><td class="num">1</td><td class="num">71</td><td class="num">17</td></tr>
-    <tr><td class="num">0,9</td><td class="num">100%</td><td class="num">62,5%</td><td class="num">12</td><td class="num">0</td><td class="num">120</td><td class="num"><b>12</b> ← rẻ nhất</td></tr>
+    <tr><td class="num">0.2</td><td class="num">86.1%</td><td class="num">96.9%</td><td class="num">1</td><td class="num">5</td><td class="num"><b>15</b> ← cheapest</td><td class="num">51</td></tr>
+    <tr><td class="num">0.3</td><td class="num">88.2%</td><td class="num">93.8%</td><td class="num">2</td><td class="num">4</td><td class="num">24</td><td class="num">42</td></tr>
+    <tr><td class="num">0.5</td><td class="num">93.5%</td><td class="num">90.6%</td><td class="num">3</td><td class="num">2</td><td class="num">32</td><td class="num">23</td></tr>
+    <tr><td class="num">0.7</td><td class="num">96.2%</td><td class="num">78.1%</td><td class="num">7</td><td class="num">1</td><td class="num">71</td><td class="num">17</td></tr>
+    <tr><td class="num">0.9</td><td class="num">100%</td><td class="num">62.5%</td><td class="num">12</td><td class="num">0</td><td class="num">120</td><td class="num"><b>12</b> ← cheapest</td></tr>
   </tbody>
 </table></div>
-<p>Hạ ngưỡng → recall tăng, precision giảm, và ngược lại. Chi phí 10 và 1 là số giả định để minh họa: tổng chi phí = số bỏ sót × giá bỏ sót + số bắt nhầm × giá bắt nhầm. Đổi giá thì ngưỡng tốt nhất đổi theo.</p>
-<div class="lbl">Trả lời mẫu</div>
-<blockquote>Tùy chi phí của từng loại sai. Bắt nhầm đắt — như chặn email thật — thì ưu tiên precision. Bỏ sót đắt — như gian lận, nội dung độc hại, hay khách muốn hủy gói mà không được xử lý — thì ưu tiên recall. Hai chỉ số đánh đổi qua ngưỡng: trong dự án của tôi, hạ ngưỡng nhãn "hủy gói" từ 0,9 xuống 0,2 đưa recall từ 62% lên 97% nhưng precision giảm từ 100% xuống 86%. Tôi chọn ngưỡng bằng cách gán chi phí cho mỗi loại sai và lấy ngưỡng có tổng chi phí thấp nhất trên tập validation. Nếu cần một con số chung thì dùng F1, hoặc F-beta để nghiêng về phía recall.</blockquote>
-<p class="kw">Từ khóa: <code>false positive / false negative</code><code>precision-recall trade-off</code><code>threshold tuning</code><code>cost-sensitive</code><code>F-beta</code></p>
+<p>Lower the threshold → recall goes up, precision goes down, and vice versa. The costs 10 and 1 are made-up numbers for illustration: total cost = misses × cost per miss + false alarms × cost per false alarm. Change the costs and the best threshold changes with them.</p>
+<div class="lbl">Sample answer</div>
+<blockquote>It depends on the cost of each kind of mistake. If false alarms are expensive — like blocking real email — prioritise precision. If misses are expensive — like fraud, harmful content, or a customer who wants to cancel but isn't handled — prioritise recall. The two trade off through the threshold: in my project, lowering the threshold for the "cancellation" label from 0.9 to 0.2 raised recall from 62% to 97%, but precision dropped from 100% to 86%. I choose the threshold by assigning a cost to each kind of mistake and taking the threshold with the lowest total cost on the validation set. If I need a single number, I use F1, or F-beta to lean towards recall.</blockquote>
+<p class="kw">Keywords: <code>false positive / false negative</code><code>precision-recall trade-off</code><code>threshold tuning</code><code>cost-sensitive</code><code>F-beta</code></p>
 </div>
 
 <div class="iq">
-<h3>5. Model train tốt nhưng test kém. Bạn làm gì?</h3>
-<div class="lbl">Hiểu đơn giản</div>
-<p>Học sinh thuộc lòng lời giải trong sách nhưng gặp đề mới thì lúng túng — <b>overfitting</b> (học thuộc thay vì hiểu). Ngược lại, nếu cả bài tập lẫn đề thi đều kém — <b>underfitting</b> (chưa học đủ, hoặc "não" quá đơn giản).</p>
-<div class="lbl">Số liệu từ dự án</div>
+<h3>5. The model does well on train but poorly on test. What do you do?</h3>
+<div class="lbl">The simple idea</div>
+<p>A student who memorised the worked solutions in the book but gets stuck on new exam questions — <b>overfitting</b> (memorising instead of understanding). Conversely, if they do badly on both the exercises and the exam — <b>underfitting</b> (hasn't studied enough, or the "brain" is too simple).</p>
+<div class="lbl">Numbers from the project</div>
 <ul>
-  <li>Model A: <b>100</b> điểm trên train, <b>88,5</b> trên val → có overfitting.</li>
-  <li><b>Thêm dữ liệu giúp rõ rệt</b> (train luôn 100, val tăng dần):</li>
+  <li>Model A: <b>100</b> points on train, <b>88.5</b> on val → there is overfitting.</li>
+  <li><b>More data clearly helps</b> (train always 100, val keeps rising):</li>
 </ul>
 <div class="table-wrap"><table>
-  <thead><tr><th class="num">Số tin train</th><th class="num">175</th><th class="num">350</th><th class="num">700</th><th class="num">1.400</th></tr></thead>
-  <tbody><tr><td class="num">Điểm val</td><td class="num">76,9</td><td class="num">81,7</td><td class="num">86,0</td><td class="num">88,5</td></tr></tbody>
+  <thead><tr><th class="num">Training messages</th><th class="num">175</th><th class="num">350</th><th class="num">700</th><th class="num">1,400</th></tr></thead>
+  <tbody><tr><td class="num">Val score</td><td class="num">76.9</td><td class="num">81.7</td><td class="num">86.0</td><td class="num">88.5</td></tr></tbody>
 </table></div>
 <ul>
-  <li><b>Regularization</b> (thông số <code>C</code> — C nhỏ = ràng buộc mạnh): C = 0,1 → train 92,9 / val 87,4 (bớt học thuộc nhưng hơi "yếu"); C = 100 → train 100 / val 87,2 (học thuộc); C = 10 → val tốt nhất 88,5.</li>
+  <li><b>Regularization</b> (the <code>C</code> parameter — small C = strong constraint): C = 0.1 → train 92.9 / val 87.4 (less memorising but a bit "weak"); C = 100 → train 100 / val 87.2 (memorising); C = 10 → best val 88.5.</li>
 </ul>
-<div class="lbl">Trả lời mẫu</div>
-<blockquote>Train tốt mà test kém là overfitting — model học thuộc dữ liệu train thay vì quy luật. Trước tiên tôi kiểm tra không có data leakage hay khác biệt phân bố giữa train và test. Sau đó: thêm dữ liệu, giảm độ phức tạp của model, tăng regularization, early stopping với model huấn luyện theo vòng lặp, và dùng cross-validation để chọn thông số. Trong dự án phân loại ý định, model đạt 100 trên train nhưng 88,5 trên val; tăng dữ liệu train từ 175 lên 1.400 tin đưa val từ 76,9 lên 88,5, và chọn mức regularization bằng val. Nếu cả train cũng kém thì là underfitting — cần feature tốt hơn hoặc model mạnh hơn.</blockquote>
-<p class="kw">Từ khóa: <code>overfitting / underfitting</code><code>bias–variance</code><code>learning curve</code><code>regularization</code><code>early stopping</code><code>cross-validation</code></p>
+<div class="lbl">Sample answer</div>
+<blockquote>Good on train but poor on test is overfitting — the model memorises the training data instead of the pattern. First I check there's no data leakage or distribution shift between train and test. Then: add more data, reduce model complexity, increase regularization, use early stopping for iteratively trained models, and use cross-validation to choose parameters. In my intent classification project, the model scored 100 on train but 88.5 on val; growing the training data from 175 to 1,400 messages raised val from 76.9 to 88.5, and I chose the regularization level with val. If train is also poor, that's underfitting — you need better features or a stronger model.</blockquote>
+<p class="kw">Keywords: <code>overfitting / underfitting</code><code>bias–variance</code><code>learning curve</code><code>regularization</code><code>early stopping</code><code>cross-validation</code></p>
 </div>
 
-<h2 id="gioi-han">Giới hạn</h2>
+<h2 id="gioi-han">Limitations</h2>
 <div class="note">
   <ul style="margin:0;padding-left:20px">
-    <li>300 tin gán tay và 100 tin review được soạn cùng Claude Code. Nếu cần nhãn do chính bạn gán, sửa <code>data/seed_raw.tsv</code> và <code>data/audit_sample.csv</code> rồi chạy lại.</li>
-    <li>Phần lớn nhãn do <code>gpt-4o</code> gán — cùng họ với LLM đang thi — nên kết quả có thể hơi thiên vị LLM.</li>
-    <li>Tin nhắn do máy viết "sạch" hơn tin nhắn thật; cần kiểm tra lại trên dữ liệu thật trước khi dùng.</li>
+    <li>The 300 hand-labelled messages and the 100 reviewed messages were prepared together with Claude Code. If you need labels assigned by you personally, edit <code>data/seed_raw.tsv</code> and <code>data/audit_sample.csv</code> and rerun.</li>
+    <li>Most labels were assigned by <code>gpt-4o</code> — from the same family as the LLM being tested — so the results may be slightly biased in the LLM's favour.</li>
+    <li>Machine-written messages are "cleaner" than real messages; recheck on real data before using this in production.</li>
   </ul>
 </div>
 
 <footer>
-  Repo: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">github.com/dangphamv/intent-router-ml-vs-llm</a> · Số liệu đầy đủ: <code>results/metrics.json</code>
+  Repo: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">github.com/dangphamv/intent-router-ml-vs-llm</a> · Full numbers: <code>results/metrics.json</code>
 </footer>
 </div>
 <script>

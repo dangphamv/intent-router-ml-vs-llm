@@ -12,13 +12,6 @@ MODELS = ROOT / "models"
 load_dotenv(ROOT / ".env")
 
 LABELS = ["pricing", "complaint", "cancellation", "tech_support", "other"]
-LABELS_VI = {
-    "pricing": "hỏi giá",
-    "complaint": "khiếu nại",
-    "cancellation": "hủy gói",
-    "tech_support": "hỗ trợ kỹ thuật",
-    "other": "khác",
-}
 
 LLM_MODEL = os.getenv("LLM_MODEL", "gpt-4o-mini")
 LABEL_MODEL = os.getenv("LABEL_MODEL", "gpt-4o")
