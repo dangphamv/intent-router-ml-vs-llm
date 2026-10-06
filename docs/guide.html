@@ -105,6 +105,11 @@ figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .stage li { margin: 8px 0; padding-left: 30px; position: relative; }
 .stage li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
 .bad { color: #c0392b; font-weight: 700; }
+.iq { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px 20px 14px; margin: 18px 0; }
+.iq h3 { margin-top: 16px; }
+.iq .lbl { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; margin: 14px 0 4px; }
+.iq blockquote { margin: 6px 0; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+.kw code { margin-right: 4px; }
 nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
 nav.toc a { font-size: 14px; color: var(--text); text-decoration: none; padding: 5px 12px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); }
 nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
@@ -167,7 +172,7 @@ footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--border
     <a href="#ket-hop">Kết hợp</a><a href="#rut-ra">Rút ra</a><a href="#thuat-ngu">Thuật ngữ</a>
     <a class="faq" href="#hoi-dap">Hỏi đáp cho người mới</a><a href="#thu-vien">Thư viện</a>
     <a href="#cach-chay">Cách chạy</a><a href="#input">Input</a><a href="#output">Kiểm tra output</a>
-    <a href="#tieu-chi">Tiêu chí chấm</a><a href="#giai-doan">Hoàn thành giai đoạn</a><a href="#gioi-han">Giới hạn</a>
+    <a href="#tieu-chi">Tiêu chí chấm</a><a href="#giai-doan">Hoàn thành giai đoạn</a><a class="faq" href="#phong-van">Câu hỏi phỏng vấn</a><a href="#gioi-han">Giới hạn</a>
   </nav>
 </header>
 
@@ -967,6 +972,101 @@ print("Macro-F1:", hybrid_f1(model, X_test, y_test, best_t))</code></pre>
   <li>Confusion matrix, cross-validation, phân tích lỗi, chiến lược kết hợp với đường chi phí – chất lượng: mục "Chi tiết theo tiêu chí chấm điểm" ở trên.</li>
   <li>Notebook chạy lại được: <code>notebooks/intent_router.ipynb</code> · Blog: <a href="blog-khi-nao-khong-can-llm.md">Khi nào không cần LLM?</a> · Code: <a href="https://github.com/dangphamv/intent-router-ml-vs-llm">GitHub</a>.</li>
 </ul>
+
+<h2 id="phong-van">Câu hỏi phỏng vấn giai đoạn 0.5</h2>
+<p>5 câu trong lộ trình (trang 11–12). Cách tự kiểm tra: <b>trả lời to thành tiếng trong 2 phút, không nhìn tài liệu</b>. Mỗi câu dưới đây có: hiểu đơn giản → số liệu từ chính dự án này → câu trả lời mẫu → từ khóa nên nhắc.</p>
+
+<div class="iq">
+<h3>1. Dữ liệu có 1% gian lận. Model đạt accuracy 99%. Có tốt không?</h3>
+<div class="lbl">Hiểu đơn giản</div>
+<p>10.000 giao dịch, 100 gian lận. Một "model" lười biếng nói <b>"không gian lận"</b> cho mọi giao dịch: đúng 9.900/10.000 = <b>accuracy 99%</b> — nhưng bắt được <b>0</b> vụ gian lận (recall 0%). Accuracy bị lớp đông áp đảo, che mất lớp hiếm — mà lớp hiếm lại là thứ mình cần bắt.</p>
+<div class="lbl">Số liệu từ dự án</div>
+<ul>
+  <li>Một model không bao giờ đoán "hủy gói" vẫn có accuracy <b>89,7%</b>, nhưng macro-F1 chỉ <b>76</b>.</li>
+  <li>Khi ép "hủy gói" còn 2,9% và không cân bằng trọng số: model A chỉ bắt được <b>57%</b> tin hủy; bật <code>class_weight="balanced"</code> → <b>72%</b>.</li>
+  <li><b>PR-AUC</b> của model A cho nhãn "hủy gói" trên val: <b>0,969</b> (đoán bừa chỉ được ~0,107 — bằng tỷ lệ tin hủy).</li>
+</ul>
+<div class="lbl">Trả lời mẫu</div>
+<blockquote>Chưa chắc tốt. Với 1% gian lận, model đoán "không gian lận" cho mọi trường hợp cũng đạt 99% accuracy mà không bắt được vụ nào. Tôi sẽ xem confusion matrix, đo precision và recall của lớp gian lận, và PR-AUC — chỉ số tóm tắt precision/recall qua mọi ngưỡng, hợp với dữ liệu mất cân bằng hơn ROC-AUC. Để cải thiện: trọng số lớp hoặc lấy mẫu lại (chỉ trên tập train), rồi chọn ngưỡng dựa trên chi phí thật: bỏ sót một vụ gian lận tốn bao nhiêu, chặn nhầm một giao dịch thật tốn bao nhiêu.</blockquote>
+<p class="kw">Từ khóa: <code>accuracy paradox</code><code>confusion matrix</code><code>precision / recall</code><code>PR-AUC</code><code>class weight</code><code>resampling</code><code>ngưỡng theo chi phí</code></p>
+</div>
+
+<div class="iq">
+<h3>2. Data leakage là gì? Kể một ví dụ.</h3>
+<div class="lbl">Hiểu đơn giản</div>
+<p>Thông tin của đáp án "lọt" vào lúc train → điểm đẹp giả, ra thực tế thì tụt. Như học sinh được xem trước đề thi.</p>
+<div class="lbl">3 ví dụ kinh điển</div>
+<ul>
+  <li><b>Dùng thông tin từ tương lai</b>: dự đoán khách có rời bỏ tháng sau không, nhưng feature lại có "số lần gọi tổng đài hủy dịch vụ" — thứ chỉ xảy ra <i>sau</i> khi khách đã quyết định rời.</li>
+  <li><b>Chuẩn hóa trước khi chia</b>: tính trung bình / độ lệch (hoặc từ vựng TF-IDF) trên toàn bộ dữ liệu rồi mới chia train/test → train đã "nhìn thấy" test.</li>
+  <li><b>Cùng một đối tượng ở cả train và test</b>: nhiều giao dịch của cùng một khách nằm ở cả hai tập → model nhớ khách chứ không học quy luật. Cách sửa: chia theo khách (<code>GroupKFold</code>).</li>
+</ul>
+<div class="lbl">Ví dụ từ dự án</div>
+<ul>
+  <li>Nếu chọn ngưỡng router trên chính tập test, điểm báo cáo là <b>95,1</b> thay vì <b>93,1</b> — đẹp giả 2 điểm. Dự án chọn trên out-of-fold của train + val.</li>
+  <li>Tin do LLM sinh có thể na ná nhau → lọc trùng trước khi chia, và kiểm tra: không cặp test–train nào giống nhau quá 0,9.</li>
+  <li>TF-IDF nằm trong <code>Pipeline</code> nên chỉ học từ vựng trên train (và trên từng fold).</li>
+</ul>
+<div class="lbl">Trả lời mẫu</div>
+<blockquote>Data leakage là khi thông tin mà lúc dự đoán thật mình không có lại lọt vào quá trình train hoặc chọn model, nên điểm offline đẹp giả. Ví dụ trong dự án phân loại ý định của tôi: nếu chọn ngưỡng chuyển sang LLM bằng chính tập test, điểm báo cáo là 95,1 trong khi điểm trung thực là 93,1. Tôi tránh bằng cách chọn ngưỡng trên dự đoán out-of-fold của train+val. Ngoài ra tôi lọc tin trùng trước khi chia, đặt TF-IDF trong Pipeline để chỉ fit trên train, và kiểm tra độ giống nhau giữa test và train. Các dạng khác hay gặp: feature lấy từ tương lai, chuẩn hóa trước khi chia, cùng một khách nằm ở cả train và test.</blockquote>
+<p class="kw">Từ khóa: <code>train/test contamination</code><code>target leakage</code><code>fit chỉ trên train</code><code>Pipeline</code><code>GroupKFold</code><code>time-based split</code></p>
+</div>
+
+<div class="iq">
+<h3>3. Khi nào dùng model cổ điển thay vì LLM?</h3>
+<div class="lbl">Hiểu đơn giản</div>
+<p>Model cổ điển như nhân viên chuyên một việc: nhanh, rẻ, làm tốt việc quen. LLM như chuyên gia đa năng: hiểu mọi thứ nhưng chậm và tính phí từng câu. Việc hẹp, lặp đi lặp lại, số lượng lớn → giao cho nhân viên chuyên trách.</p>
+<div class="lbl">Số liệu từ dự án</div>
+<ul>
+  <li>Model A: 90,6 điểm, &lt; 1 ms, ~$0. LLM: 94,3 điểm, ~0,9 giây, $32 / 1 triệu tin.</li>
+  <li>Dự án chính là mẫu "LLM gán nhãn → train model rẻ → LLM chỉ xử lý ca khó": <code>gpt-4o</code> gán 1.700 nhãn → train model A → router để A xử lý 75% tin, LLM 25% → 93,1 điểm với $8 / 1 triệu tin.</li>
+</ul>
+<div class="lbl">Trả lời mẫu</div>
+<blockquote>Khi tác vụ hẹp và lặp lại (phân loại vài nhãn cố định), lưu lượng lớn, cần độ trễ thấp, và có hoặc tạo được dữ liệu có nhãn. Trong dự án phân loại ý định, TF-IDF + logistic regression đạt 90,6 macro-F1 dưới 1 ms gần như miễn phí, còn LLM đạt 94,3 nhưng mất ~0,9 giây và $32 cho mỗi triệu tin. Thực tế tôi thường kết hợp: dùng LLM gán nhãn để có dữ liệu, train model rẻ, rồi chỉ chuyển ca khó — model rẻ không tự tin — cho LLM. Cách đó giữ được 93,1 điểm với chi phí giảm 75%. LLM phù hợp hơn khi tác vụ mở, ít dữ liệu, cần suy luận hoặc thay đổi thường xuyên.</blockquote>
+<p class="kw">Từ khóa: <code>latency</code><code>cost per request</code><code>LLM-as-labeler</code><code>distillation</code><code>confidence-based routing / cascade</code></p>
+</div>
+
+<div class="iq">
+<h3>4. Precision hay recall quan trọng hơn?</h3>
+<div class="lbl">Hiểu đơn giản</div>
+<p>Hỏi ngược lại: <b>sai kiểu nào đắt hơn?</b> Chặn nhầm thư của sếp vào thư rác (bắt nhầm) → cần <b>precision</b>. Bỏ lọt một vụ gian lận hay nội dung độc hại (bỏ sót) → cần <b>recall</b>.</p>
+<div class="lbl">Số liệu từ dự án: đổi ngưỡng cho nhãn "hủy gói" (model A, 300 tin val, 32 tin hủy thật)</div>
+<div class="table-wrap"><table>
+  <thead><tr><th class="num">Ngưỡng</th><th class="num">Precision</th><th class="num">Recall</th><th class="num">Bỏ sót</th><th class="num">Bắt nhầm</th><th class="num">Chi phí nếu bỏ sót = 10, bắt nhầm = 1</th><th class="num">Chi phí nếu bỏ sót = 1, bắt nhầm = 10</th></tr></thead>
+  <tbody>
+    <tr><td class="num">0,2</td><td class="num">86,1%</td><td class="num">96,9%</td><td class="num">1</td><td class="num">5</td><td class="num"><b>15</b> ← rẻ nhất</td><td class="num">51</td></tr>
+    <tr><td class="num">0,3</td><td class="num">88,2%</td><td class="num">93,8%</td><td class="num">2</td><td class="num">4</td><td class="num">24</td><td class="num">42</td></tr>
+    <tr><td class="num">0,5</td><td class="num">93,5%</td><td class="num">90,6%</td><td class="num">3</td><td class="num">2</td><td class="num">32</td><td class="num">23</td></tr>
+    <tr><td class="num">0,7</td><td class="num">96,2%</td><td class="num">78,1%</td><td class="num">7</td><td class="num">1</td><td class="num">71</td><td class="num">17</td></tr>
+    <tr><td class="num">0,9</td><td class="num">100%</td><td class="num">62,5%</td><td class="num">12</td><td class="num">0</td><td class="num">120</td><td class="num"><b>12</b> ← rẻ nhất</td></tr>
+  </tbody>
+</table></div>
+<p>Hạ ngưỡng → recall tăng, precision giảm, và ngược lại. Chi phí 10 và 1 là số giả định để minh họa: tổng chi phí = số bỏ sót × giá bỏ sót + số bắt nhầm × giá bắt nhầm. Đổi giá thì ngưỡng tốt nhất đổi theo.</p>
+<div class="lbl">Trả lời mẫu</div>
+<blockquote>Tùy chi phí của từng loại sai. Bắt nhầm đắt — như chặn email thật — thì ưu tiên precision. Bỏ sót đắt — như gian lận, nội dung độc hại, hay khách muốn hủy gói mà không được xử lý — thì ưu tiên recall. Hai chỉ số đánh đổi qua ngưỡng: trong dự án của tôi, hạ ngưỡng nhãn "hủy gói" từ 0,9 xuống 0,2 đưa recall từ 62% lên 97% nhưng precision giảm từ 100% xuống 86%. Tôi chọn ngưỡng bằng cách gán chi phí cho mỗi loại sai và lấy ngưỡng có tổng chi phí thấp nhất trên tập validation. Nếu cần một con số chung thì dùng F1, hoặc F-beta để nghiêng về phía recall.</blockquote>
+<p class="kw">Từ khóa: <code>false positive / false negative</code><code>precision-recall trade-off</code><code>threshold tuning</code><code>cost-sensitive</code><code>F-beta</code></p>
+</div>
+
+<div class="iq">
+<h3>5. Model train tốt nhưng test kém. Bạn làm gì?</h3>
+<div class="lbl">Hiểu đơn giản</div>
+<p>Học sinh thuộc lòng lời giải trong sách nhưng gặp đề mới thì lúng túng — <b>overfitting</b> (học thuộc thay vì hiểu). Ngược lại, nếu cả bài tập lẫn đề thi đều kém — <b>underfitting</b> (chưa học đủ, hoặc "não" quá đơn giản).</p>
+<div class="lbl">Số liệu từ dự án</div>
+<ul>
+  <li>Model A: <b>100</b> điểm trên train, <b>88,5</b> trên val → có overfitting.</li>
+  <li><b>Thêm dữ liệu giúp rõ rệt</b> (train luôn 100, val tăng dần):</li>
+</ul>
+<div class="table-wrap"><table>
+  <thead><tr><th class="num">Số tin train</th><th class="num">175</th><th class="num">350</th><th class="num">700</th><th class="num">1.400</th></tr></thead>
+  <tbody><tr><td class="num">Điểm val</td><td class="num">76,9</td><td class="num">81,7</td><td class="num">86,0</td><td class="num">88,5</td></tr></tbody>
+</table></div>
+<ul>
+  <li><b>Regularization</b> (thông số <code>C</code> — C nhỏ = ràng buộc mạnh): C = 0,1 → train 92,9 / val 87,4 (bớt học thuộc nhưng hơi "yếu"); C = 100 → train 100 / val 87,2 (học thuộc); C = 10 → val tốt nhất 88,5.</li>
+</ul>
+<div class="lbl">Trả lời mẫu</div>
+<blockquote>Train tốt mà test kém là overfitting — model học thuộc dữ liệu train thay vì quy luật. Trước tiên tôi kiểm tra không có data leakage hay khác biệt phân bố giữa train và test. Sau đó: thêm dữ liệu, giảm độ phức tạp của model, tăng regularization, early stopping với model huấn luyện theo vòng lặp, và dùng cross-validation để chọn thông số. Trong dự án phân loại ý định, model đạt 100 trên train nhưng 88,5 trên val; tăng dữ liệu train từ 175 lên 1.400 tin đưa val từ 76,9 lên 88,5, và chọn mức regularization bằng val. Nếu cả train cũng kém thì là underfitting — cần feature tốt hơn hoặc model mạnh hơn.</blockquote>
+<p class="kw">Từ khóa: <code>overfitting / underfitting</code><code>bias–variance</code><code>learning curve</code><code>regularization</code><code>early stopping</code><code>cross-validation</code></p>
+</div>
 
 <h2 id="gioi-han">Giới hạn</h2>
 <div class="note">
